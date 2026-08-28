@@ -1,0 +1,113 @@
+{
+  "barriers": [
+    "b0",
+    "b1",
+    "b2"
+  ],
+  "cells": [
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_naive",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "duplicated": 50
+      },
+      "k": 50,
+      "modal": "duplicated",
+      "modal_rate": 1.0,
+      "predicted": "duplicated",
+      "runtime": "r_lg_naive",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_naive",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_idem",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_idem",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_idem",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    }
+  ],
+  "disagreements": [],
+  "k": 50,
+  "name": "langgraph",
+  "receipt": "cp1_ceba207b168060687925c4f9b7f7f62fc6de4b3a09e201080f029a1e972268b4",
+  "runtimes": [
+    "r_lg_naive",
+    "r_lg_idem"
+  ]
+}

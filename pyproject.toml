@@ -1,0 +1,50 @@
+[project]
+name = "crashpoint"
+version = "0.0.0"
+description = "Durable-execution runtimes guarantee exactly-once for the journaled result, but at-least-once for the external side effect unless it is idempotent. crashpoint crashes them at named barriers and measures the exactly-once property through an out-of-process ledger they cannot forge."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Mathew Stevens" }]
+requires-python = ">=3.12,<3.14"
+dependencies = []
+
+[project.optional-dependencies]
+# The real runtimes under test. Kept optional so the model core and its tests have zero third-party
+# dependencies, exactly as tests/test_contract.py asserts. Each is gated on a Day-0 smoke test.
+langgraph = ["langgraph>=0.2", "langgraph-checkpoint-sqlite>=2.0"]
+temporal = ["temporalio>=1.7"]
+dbos = ["dbos>=0.20"]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.6", "mypy>=1.11"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/crashpoint"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+
+# The real runtimes are optional dependencies; the model core and its tests never import them.
+# mypy in the default (model-only) env cannot see their stubs, so their imports are ignored here.
+[[tool.mypy.overrides]]
+module = ["langgraph.*", "temporalio.*", "dbos.*"]
+ignore_missing_imports = true

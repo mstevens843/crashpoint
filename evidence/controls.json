@@ -1,0 +1,211 @@
+{
+  "barriers": [
+    "b0",
+    "b1",
+    "b2"
+  ],
+  "cells": [
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_null",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "duplicated": 100
+      },
+      "k": 100,
+      "modal": "duplicated",
+      "modal_rate": 1.0,
+      "predicted": "duplicated",
+      "runtime": "r_null",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "duplicated": 100
+      },
+      "k": 100,
+      "modal": "duplicated",
+      "modal_rate": 1.0,
+      "predicted": "duplicated",
+      "runtime": "r_null",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_dup",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "duplicated": 100
+      },
+      "k": 100,
+      "modal": "duplicated",
+      "modal_rate": 1.0,
+      "predicted": "duplicated",
+      "runtime": "r_dup",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_dup",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lost",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "lost": 100
+      },
+      "k": 100,
+      "modal": "lost",
+      "modal_rate": 1.0,
+      "predicted": "lost",
+      "runtime": "r_lost",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lost",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_idem",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_idem",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_idem",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    }
+  ],
+  "disagreements": [],
+  "k": 100,
+  "name": "controls",
+  "receipt": "cp1_cc071c0154b877a1e154bb623d8087ffcdc311518e1b8b5850595a7af74f6da5",
+  "runtimes": [
+    "r_null",
+    "r_dup",
+    "r_lost",
+    "r_idem"
+  ]
+}
