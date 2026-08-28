@@ -1,9 +1,10 @@
 # Disclosure draft - the exactly-once external-effect fixture for durable-execution runtimes
 
 **To:** the LangGraph maintainers and the participants of `langchain-ai/langgraph#8039` (in
-particular @sajjadanwar0, who opened it, @vasilisnasopoulos and @safal207, whose analyses framed it,
-and @tamilov, who asked for exactly this - "actually run the check against current behavior"); and,
-as shorter notes, the Temporal and DBOS maintainers.
+particular @sajjadanwar0, who opened it; @vasilisnasopoulos, whose RS1-RS3 write-up named the receiver
+half of the property and asked for it to be made empirical; @safal207, who built and published the
+first executable recovery-safety benchmark for this issue; and @tamilov, who pushed the thread from
+discussing the property to running it); and, as shorter notes, the Temporal and DBOS maintainers.
 **From:** Mathew Stevens. **Nature:** defensive reliability research on public MIT/Apache code, run in
 a local sandbox. The workflows crash processes the author controls; the only external side effect is a
 local ledger the fixture owns. No system the author does not control was touched.
@@ -22,9 +23,32 @@ DUPLICATED / LOST / EXACTLY_ONCE on demand.
 
 The thread establishes, by reading the code, that under `durability="sync"` `put_writes` and the
 superseding `put` are dispatched to a shared executor with no ordering edge, so whether recovery
-replays the pending writes or re-executes the node depends on a race, and differs across hosts. What
-was asked for and not yet posted is a fixture that runs the check against current behavior. This is
-that fixture.
+replays the pending writes or re-executes the node depends on a race, and differs across hosts. #8055,
+the narrow ordering fix, was closed unmerged on 2026-06-12, so this is still current behavior; the
+measurements below were taken on `langgraph 1.2.11`, the current release.
+
+The thread already has an executable check for this issue: @safal207's
+[`langgraph-recovery-safety-v0.1`](https://github.com/safal207/ContractGraph-QA/tree/main/benchmarks/langgraph-recovery-safety-v0.1)
+(merged 2026-08-27), adapting @vasilisnasopoulos's
+[RS1-RS3](https://github.com/vasilisnasopoulos/recovery-safety-property). This is not a second copy of
+it. crashpoint measures the same property from outside the runtime and across three engines, and adds
+three things to that work rather than substituting for it:
+
+- **The side-effect count is observed, not self-reported.** The ledger is a separate process behind two
+  Unix sockets. The subject holds an execute-only invoke socket and an opaque receipt - it cannot read,
+  reset, or seal the count - and every record is hash-chained, so an edited record makes the oracle emit
+  VOID instead of a number. The answer to "did the effect cross twice" comes from something the crashed
+  process could not have written, which is the form of the answer a vendor rebuttal does not reach.
+- **The receiver control is a measured row, not an assertion.** @vasilisnasopoulos asked for exactly
+  this on 2026-08-27: running append and dedup receivers "against the same crash makes the boundary
+  empirical instead of asserted." The `langgraph_naive` and `langgraph_idem` rows are that pair, at all
+  three barriers, k=50 - the identity alone duplicates, the identity plus a receiver that honours it
+  does not.
+- **The oracle is calibrated before it is trusted.** Three control adapters pin DUPLICATED / LOST /
+  EXACTLY_ONCE on demand over 240 trials with zero disagreements, so a real runtime reading
+  EXACTLY_ONCE means the harness discriminates rather than painting every cell green.
+
+### What it measures
 
 - The adapter is a one-node durable graph whose node performs the external effect, with a
   `RacingSaver(SqliteSaver)` that self-SIGKILLs at an enumerated barrier, run under `durability="sync"`
@@ -69,5 +93,6 @@ fixture makes it concrete.
   `uv run`, so the check can be re-run against any future LangGraph release to confirm a fix.
 - The naive-vs-idempotent contrast as a ready-made regression test for whichever ordering guarantee
   #8039 lands on.
-- Credit in the writeup to the issue authors named above; this fixture is the thing the thread asked
-  for, not a new claim.
+- Credit in the writeup to everyone named above. The property is the thread's, not mine:
+  @vasilisnasopoulos stated it, @safal207 first made it executable, and this is the same check run
+  against an oracle the runtime cannot write and two runtimes beyond LangGraph.
