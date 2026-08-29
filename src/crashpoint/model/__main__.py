@@ -14,7 +14,7 @@ from .predict import PREDICTED, summarize
 from .runtimes import RUNTIMES
 
 _SYM = {Outcome.EXACTLY_ONCE: "ONCE", Outcome.DUPLICATED: "DUP ", Outcome.LOST: "LOST",
-        Outcome.VOID: "VOID"}
+        Outcome.DIVERGED: "DIVERGED", Outcome.VOID: "VOID"}
 
 
 def render() -> str:
@@ -32,11 +32,13 @@ def render() -> str:
     lines.append("")
     for rt in RUNTIMES:
         s = summarize(rt)
-        verdict = "clean" if s.is_clean else f"dup={list(s.duplicated)} lost={list(s.lost)}"
+        verdict = "clean" if s.is_clean else (
+            f"dup={list(s.duplicated)} lost={list(s.lost)} diverged={list(s.diverged)}")
         lines.append(f"{rt.slug:22} exactly_once={len(s.exactly_once)}  {verdict}")
     lines.append("")
-    lines.append("Legend: ONCE exactly-once, DUP duplicated (charged twice), LOST never crossed, "
-                 "VOID cannot certify. The BETWEEN column is the finding.")
+    lines.append("Legend: ONCE exactly-once, DUP duplicated (charged twice), DIVERGED crossed "
+                 "twice with DIFFERENT content (two different charges), LOST never crossed, VOID "
+                 "cannot certify. The BETWEEN column is the finding.")
     return "\n".join(lines)
 
 

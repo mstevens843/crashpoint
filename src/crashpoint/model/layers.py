@@ -35,6 +35,12 @@ class Outcome(Enum):
     LOST         - the effect never crossed, though it was required. Recovery skipped a step marked
                    complete before its effect actually ran. A customer never charged for a completed
                    order.
+    DIVERGED     - the effect crossed two or more times AND the crossings differ in content. Not a
+                   duplicate: two DIFFERENT charges, not one charge twice. Strictly worse, because
+                   the usual reconciliations do not reach it - you cannot dedup by matching, and you
+                   cannot refund "the second one" without deciding which was real. This is what a
+                   crash does to a step whose effect payload was not reproducible from the step's
+                   durable inputs. See ``Determinism``.
     VOID         - the ledger cannot certify the trial: the system under test touched the ledger's
                    storage, the hash chain broke, or the ledger's own integrity was in doubt.
                    Fail-closed - doubt is never scored EXACTLY_ONCE. This is the IN_DOUBT/UNKNOWN
@@ -44,6 +50,7 @@ class Outcome(Enum):
 
     EXACTLY_ONCE = "exactly_once"
     DUPLICATED = "duplicated"
+    DIVERGED = "diverged"
     LOST = "lost"
     VOID = "void"
 
@@ -89,6 +96,29 @@ class EffectMode(Enum):
 
     NAIVE = "naive"
     IDEMPOTENT = "idempotent"
+
+
+class Determinism(Enum):
+    """Is the step's external effect reproducible from the step's DURABLE INPUTS alone?
+
+    This axis was added after the model's first four rows were measured, in response to
+    @vasilisnasopoulos on langchain-ai/langgraph#8039: an idempotency key derived from what the
+    action IS only survives a crash if replaying the step actually reproduces that action. The test
+    he named is the definition used here - can a process that did not run the step recompute the
+    effect's identity from the durable inputs alone?
+
+    DETERMINISTIC    - yes. Replay reproduces the same effect, so a content-derived key is stable
+                       across the crash and the ledger dedups the re-run.
+    NONDETERMINISTIC - no. The effect's content depends on a draw made DURING the step - a model
+                       call, a sampled value, a clock read - which does not exist until after the
+                       step has already run. Replay produces a DIFFERENT effect, so the re-derived
+                       key differs, the dedup misses, and the second crossing is not even the same
+                       action. The idempotent boundary does not fail loudly here; it silently stops
+                       applying.
+    """
+
+    DETERMINISTIC = "deterministic"
+    NONDETERMINISTIC = "nondeterministic"
 
 
 class Phase(Enum):

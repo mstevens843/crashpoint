@@ -26,7 +26,7 @@ from .trial import run_trial
 from .wilson import wilson
 
 _SYM = {Outcome.EXACTLY_ONCE: "ONCE", Outcome.DUPLICATED: "DUP", Outcome.LOST: "LOST",
-        Outcome.VOID: "VOID"}
+        Outcome.DIVERGED: "DIVERGE", Outcome.VOID: "VOID"}
 
 
 def run_cell(

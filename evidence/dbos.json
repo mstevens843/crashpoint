@@ -100,14 +100,63 @@
         0.8865,
         1.0
       ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_dbos_nondet",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "diverged": 30
+      },
+      "k": 30,
+      "modal": "diverged",
+      "modal_rate": 1.0,
+      "predicted": "diverged",
+      "runtime": "r_dbos_nondet",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_dbos_nondet",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
     }
   ],
   "disagreements": [],
   "k": 30,
   "name": "dbos",
-  "receipt": "cp1_5bf24fa38422f1d1b9c6faf6455ae72ef81cb038161072467893b15d95a55d90",
+  "receipt": "cp1_a48fe98eadfcfd9a8cf2480df00ed5c61e2439623c51578da9bc47c43fe3781c",
   "runtimes": [
     "r_dbos_naive",
-    "r_dbos_idem"
+    "r_dbos_idem",
+    "r_dbos_nondet"
   ]
 }

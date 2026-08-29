@@ -1,4 +1,4 @@
-"""The Outcome oracle: classify one intent's ledger record into the model's four-value outcome.
+"""The Outcome oracle: classify one intent's ledger record into the model's five-value outcome.
 
 Fail-closed. Any integrity doubt is VOID, never EXACTLY_ONCE. This is the crashpoint analogue of the
 durable-agent-outbox audit-legality checker (DUPLICATE_EXECUTION when an intent crosses the boundary
@@ -33,4 +33,11 @@ def classify(
         return Outcome.LOST if required else Outcome.EXACTLY_ONCE
     if n == 1:
         return Outcome.EXACTLY_ONCE
-    return Outcome.DUPLICATED
+    # More than one crossing. WHICH failure it is depends on whether the crossings were the same
+    # action: the same charge twice is DUPLICATED, two different charges is DIVERGED. Without a
+    # digest per crossing the two are indistinguishable, and fail-closed means we say so.
+    digests_map = dump.get("effect_digests", {})
+    digests = digests_map.get(intent_id) if isinstance(digests_map, dict) else None
+    if not isinstance(digests, list) or len(digests) != n:
+        return Outcome.VOID
+    return Outcome.DIVERGED if len(set(digests)) > 1 else Outcome.DUPLICATED

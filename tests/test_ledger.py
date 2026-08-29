@@ -64,3 +64,31 @@ def test_idempotency_key_refuses_per_attempt_fields() -> None:
     for bad in ({"attempt": 2}, {"retryCount": 1}, {"nested": {"epoch": 5}}, {"delivery_id": "x"}):
         with pytest.raises(ForbiddenIdentityField):
             derive_idempotency_key("n", "s", 1, bad)
+
+
+def test_each_distinct_effect_records_its_payload_digest_and_key(tmp_path: Path) -> None:
+    led = LedgerState(path=tmp_path / "c.jsonl")
+    led.execute("i", None, {"memo": "a"})
+    led.execute("i", None, {"memo": "b"})
+    assert led.side_effects["i"] == 2
+    assert len(led.effect_digests["i"]) == 2
+    assert len(set(led.effect_digests["i"])) == 2  # the crossings differ in content
+    assert led.effect_keys["i"] == [None, None]
+
+
+def test_a_deduped_repeat_adds_no_digest(tmp_path: Path) -> None:
+    led = LedgerState(path=tmp_path / "c.jsonl")
+    k = "cp1key_abc"
+    led.execute("i", k, {"amount": 1})
+    led.execute("i", k, {"amount": 1})
+    assert led.attempts["i"] == 2
+    assert led.effect_digests["i"] == led.effect_digests["i"][:1]  # one crossing only
+    assert led.effect_keys["i"] == [k]
+
+
+def test_identical_payloads_digest_identically(tmp_path: Path) -> None:
+    # So DUPLICATED (same digest twice) is distinguishable from DIVERGED (two digests).
+    led = LedgerState(path=tmp_path / "c.jsonl")
+    led.execute("i", None, {"amount": 1, "to": "x"})
+    led.execute("i", None, {"to": "x", "amount": 1})  # same meaning, different key order
+    assert len(set(led.effect_digests["i"])) == 1

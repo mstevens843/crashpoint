@@ -196,16 +196,65 @@
         0.963,
         1.0
       ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_diverge",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "diverged": 100
+      },
+      "k": 100,
+      "modal": "diverged",
+      "modal_rate": 1.0,
+      "predicted": "diverged",
+      "runtime": "r_diverge",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_diverge",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
     }
   ],
   "disagreements": [],
   "k": 100,
   "name": "controls",
-  "receipt": "cp1_cc071c0154b877a1e154bb623d8087ffcdc311518e1b8b5850595a7af74f6da5",
+  "receipt": "cp1_9cfdda4cbe54de5bf8f2889cdc49ee08ffd4e73106506f8834327ee776d1ac93",
   "runtimes": [
     "r_null",
     "r_dup",
     "r_lost",
-    "r_idem"
+    "r_idem",
+    "r_diverge"
   ]
 }

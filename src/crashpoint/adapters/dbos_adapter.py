@@ -15,7 +15,10 @@ reused Postgres only touches this trial's workflow. The Postgres URL comes from 
 (default: a local dev container on 5433).
 
 Run: `python -m crashpoint.adapters.dbos_adapter --ledger <sock> --intent <id>
---mode naive|idem --barrier b0|b1|b2|none --recovery 0|1 --checkpoint <path>`.
+--mode naive|idem|nondet --barrier b0|b1|b2|none --recovery 0|1 --checkpoint <path>`.
+
+`nondet` is `idem` plus a value drawn inside the step, so the recovery re-run of an uncommitted step
+re-runs the draw with it.
 """
 
 from __future__ import annotations
@@ -35,6 +38,7 @@ _BARRIER = "none"
 _LEDGER = ""
 _INTENT = ""
 _IDEMPOTENT = False
+_NONDET = False
 
 _DEFAULT_URL = "postgresql://cpuser:dbos@localhost:5433/cpdbos"
 
@@ -43,7 +47,7 @@ _DEFAULT_URL = "postgresql://cpuser:dbos@localhost:5433/cpdbos"
 def effect_step() -> str:
     if _BARRIER == "b0":
         crash()  # before the effect: recovery re-runs the step, the effect crosses once
-    effect(_LEDGER, _INTENT, _IDEMPOTENT)
+    effect(_LEDGER, _INTENT, _IDEMPOTENT, _NONDET)
     if _BARRIER == "b1":
         crash()  # after the effect, before the step output commits: recovery re-runs the effect
     return "ok"
@@ -86,11 +90,11 @@ def _recovery_run(wfid: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    global _BARRIER, _LEDGER, _INTENT, _IDEMPOTENT
+    global _BARRIER, _LEDGER, _INTENT, _IDEMPOTENT, _NONDET
     ap = argparse.ArgumentParser()
     ap.add_argument("--ledger", required=True)
     ap.add_argument("--intent", required=True)
-    ap.add_argument("--mode", required=True, choices=["naive", "idem"])
+    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet"])
     ap.add_argument("--barrier", required=True, choices=["b0", "b1", "b2", "none"])
     ap.add_argument("--recovery", type=int, default=0)
     ap.add_argument("--checkpoint", required=True)  # per-trial unique path -> workflow/executor id
@@ -99,7 +103,8 @@ def main(argv: list[str] | None = None) -> int:
     _BARRIER = args.barrier
     _LEDGER = args.ledger
     _INTENT = args.intent
-    _IDEMPOTENT = args.mode == "idem"
+    _IDEMPOTENT = args.mode in ("idem", "nondet")
+    _NONDET = args.mode == "nondet"
     digest = hashlib.sha256(args.checkpoint.encode()).hexdigest()[:16]
     wfid = "cp-" + digest
     _configure(args.db_url, "cp-exec-" + digest)

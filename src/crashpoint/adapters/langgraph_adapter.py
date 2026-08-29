@@ -13,8 +13,11 @@ ledger effect and sets a flag; the RacingSaver self-SIGKILLs at one enumerated b
 Enumerating b1 and b2 removes the production race and shows both of its outcomes deterministically.
 Recovery re-invokes with the same thread and checkpoint file, and LangGraph resumes from there.
 
+The `nondet` mode is `idem` plus a value drawn inside the node, so the b1 re-run derives a
+different key: the same idempotent boundary, on a node that is not reproducible from its inputs.
+
 Run: `python -m crashpoint.adapters.langgraph_adapter --ledger <sock> --checkpoint <db>
---intent <id> --mode naive|idem --barrier b0|b1|b2|none --recovery 0|1`.
+--intent <id> --mode naive|idem|nondet --barrier b0|b1|b2|none --recovery 0|1`.
 """
 
 from __future__ import annotations
@@ -65,7 +68,7 @@ def _build(
             return r
 
     def node(state: _S) -> _S:
-        effect(ledger, intent, mode == "idem")
+        effect(ledger, intent, mode in ("idem", "nondet"), mode == "nondet")
         _STATE["effect_done"] = True
         return {"started": True, "done": True}
 
@@ -85,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--ledger", required=True)
     ap.add_argument("--checkpoint", required=True)
     ap.add_argument("--intent", required=True)
-    ap.add_argument("--mode", required=True, choices=["naive", "idem"])
+    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet"])
     ap.add_argument("--barrier", required=True, choices=["b0", "b1", "b2", "none"])
     ap.add_argument("--recovery", type=int, default=0)
     args = ap.parse_args(argv)

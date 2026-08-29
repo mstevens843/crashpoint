@@ -32,12 +32,16 @@ REGISTRY: dict[str, AdapterSpec] = {
     "r_dup": AdapterSpec("crashpoint.adapters.controls", "dup"),
     "r_lost": AdapterSpec("crashpoint.adapters.controls", "lost"),
     "r_idem": AdapterSpec("crashpoint.adapters.controls", "idem"),
+    "r_diverge": AdapterSpec("crashpoint.adapters.controls", "diverge"),
     "r_lg_naive": AdapterSpec("crashpoint.adapters.langgraph_adapter", "naive"),
     "r_lg_idem": AdapterSpec("crashpoint.adapters.langgraph_adapter", "idem"),
     "r_tmp_naive": AdapterSpec("crashpoint.adapters.temporal_adapter", "naive"),
     "r_tmp_idem": AdapterSpec("crashpoint.adapters.temporal_adapter", "idem"),
     "r_dbos_naive": AdapterSpec("crashpoint.adapters.dbos_adapter", "naive"),
     "r_dbos_idem": AdapterSpec("crashpoint.adapters.dbos_adapter", "idem"),
+    "r_lg_nondet": AdapterSpec("crashpoint.adapters.langgraph_adapter", "nondet"),
+    "r_tmp_nondet": AdapterSpec("crashpoint.adapters.temporal_adapter", "nondet"),
+    "r_dbos_nondet": AdapterSpec("crashpoint.adapters.dbos_adapter", "nondet"),
 }
 
 _CONTROLS_MODULE = "crashpoint.adapters.controls"
