@@ -2,7 +2,7 @@
 control adapters that pin each outcome, to the real durable-execution engines in naive and
 idempotent variants.
 
-WHAT THIS IS. Twenty-two rows, each a bundle of the orthogonal properties ``predict`` reads: whether
+WHAT THIS IS. Twenty-six rows, each a bundle of the orthogonal properties ``predict`` reads: whether
 the runtime is durable, the order in which it does the effect and the persist write, whether the
 effect is made idempotent at the ledger boundary, whether the identity was prepared before a
 nondeterministic draw, and whether the effect is reproducible from durable inputs. This file is
@@ -316,6 +316,61 @@ RUNTIMES: tuple[Runtime, ...] = (
         effect_mode=EffectMode.TWO_PHASE,
         is_real=True,
         upstream="Restate workflow input/state as two-phase identity carrier before durable step",
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    # -- Vercel Workflow DevKit: inline steps journal step_completed only after the body ---------
+    # -- returns; a dead owner's non-terminal step is re-executed once its ownership lease lapses. -
+    # -- Measured on the Local World (@workflow/world-local), which re-enqueues active runs. -------
+    Runtime(
+        id="r_vwf_naive",
+        slug="vercel_workflow_naive",
+        summary="Vercel Workflow DevKit step, naive effect. The step body runs inline in the flow "
+        "handler and its step_completed event is written only after the body returns; a crash "
+        "after the effect but before that event is durable leaves the step non-terminal, so the "
+        "recovered run re-executes the whole step and the naive effect crosses twice.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.NAIVE,
+        is_real=True,
+        upstream="Vercel Workflow DevKit: steps are retried at-least-once; the inline-ownership "
+        "lease only bounds how long a dead owner delays the re-execution",
+    ),
+    Runtime(
+        id="r_vwf_idem",
+        slug="vercel_workflow_idem",
+        summary="Vercel Workflow DevKit step, idempotent boundary. The recovered run re-executes "
+        "the non-terminal step, but the ledger dedups the reproduced content-derived key, so the "
+        "external effect is exactly-once.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.IDEMPOTENT,
+        is_real=True,
+        upstream="Vercel Workflow DevKit: idempotency of the external call is the step's job",
+    ),
+    Runtime(
+        id="r_vwf_nondet",
+        slug="vercel_workflow_nondet",
+        summary="Vercel Workflow DevKit step, idempotent boundary, NONDETERMINISTIC effect. The "
+        "re-executed step body redraws the payload, so the content-derived key differs, the dedup "
+        "misses, and the two crossings are different actions.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.IDEMPOTENT,
+        is_real=True,
+        upstream="Vercel Workflow DevKit: a re-executed step body re-runs its draw",
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    Runtime(
+        id="r_vwf_twophase",
+        slug="vercel_workflow_twophase",
+        summary="Vercel Workflow DevKit step, NONDETERMINISTIC effect, with the identity prepared "
+        "in a preceding durable step whose journaled result replays on recovery. The charge step "
+        "redraws on re-execution but reuses the prepared key.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.TWO_PHASE,
+        is_real=True,
+        upstream="Vercel Workflow DevKit: completed step results replay from the event log",
         determinism=Determinism.NONDETERMINISTIC,
     ),
 )

@@ -1,8 +1,8 @@
-"""Linux UID-drop adversary for the ledger boundary.
+"""UID-drop adversary for the ledger boundary, on Linux and natively on macOS.
 
-The default macOS fixture proves a socket privilege boundary: the subject has only the invoke socket
-and cannot use control verbs there. This module is the stronger Linux path. When run as root on
-Linux with `setpriv`, it starts the ledger with:
+The default fixture proves a socket privilege boundary: the subject has only the invoke socket and
+cannot use control verbs there. This module is the stronger UID path. When run as root, it starts
+the ledger with:
 
   * invoke socket in a traversable public directory;
   * control socket and store in a private 0700 directory;
@@ -12,8 +12,16 @@ The dropped subject is deliberately told the forbidden paths and tries to dump/r
 to the control socket, and read/write the store. The proof passes only if execute succeeds through
 the invoke socket and every privileged operation is denied.
 
-On non-Linux hosts, non-root Linux shells, or systems without `setpriv`/`nobody`, this command emits
-BLOCKED with the precise reason. Use `--require` when a Linux isolation proof is mandatory.
+How the drop happens is the only platform difference. On Linux the subject is launched through
+util-linux `setpriv --reuid/--regid --clear-groups`, the receipted Docker proof. On macOS there is
+no setpriv, so Python drops the child itself (`subprocess.run(user=..., group=...,
+extra_groups=[])`, i.e. setregid/setreuid/setgroups after fork); the socket permissions and the
+0700 directory are then enforced natively by the macOS kernel. The proof directory is created under
+`/tmp` rather than the caller's per-user temp dir, because macOS's `$TMPDIR` is 0700 and the
+dropped subject must be able to traverse to the public socket.
+
+On other hosts, non-root shells, or systems without `nobody` (or `setpriv` on Linux), this command
+emits BLOCKED with the precise reason. Use `--require` when the proof is mandatory.
 """
 
 from __future__ import annotations
@@ -48,13 +56,22 @@ class IsolationReport:
     details: dict[str, object]
 
 
+_SUPPORTED = ("Linux", "Darwin")
+
+
+def drop_method() -> str:
+    """How the subject's uid/gid is dropped on this host."""
+    return "setpriv" if platform.system() == "Linux" else "python-setreuid"
+
+
 def blocker() -> str | None:
     """Return why the strong isolation proof cannot run on this host, or None if it can."""
-    if platform.system() != "Linux":
-        return "requires Linux UID isolation; this host is not Linux"
+    system = platform.system()
+    if system not in _SUPPORTED:
+        return f"requires Linux or macOS UID isolation; this host is {system}"
     if os.geteuid() != 0:
-        return "requires root so setpriv can drop the subject process to nobody"
-    if shutil.which("setpriv") is None:
+        return "requires root so the subject process can drop to nobody"
+    if system == "Linux" and shutil.which("setpriv") is None:
         return "requires the setpriv executable from util-linux"
     try:
         pwd.getpwnam("nobody")
@@ -154,13 +171,49 @@ def _stop(proc: subprocess.Popen[str]) -> None:
         proc.kill()
 
 
-def prove_uid_isolation() -> IsolationReport:
+def _run_subject(argv: list[str], nobody: pwd.struct_passwd) -> subprocess.CompletedProcess[str]:
+    if platform.system() == "Linux":
+        cmd = [
+            "setpriv",
+            "--reuid",
+            str(nobody.pw_uid),
+            "--regid",
+            str(nobody.pw_gid),
+            "--clear-groups",
+            *argv,
+        ]
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=10, check=False)
+    # macOS has no setpriv: Python drops the child's gid, groups, and uid itself after fork.
+    return subprocess.run(
+        argv,
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=False,
+        user=nobody.pw_uid,
+        group=nobody.pw_gid,
+        extra_groups=[],
+    )
+
+
+def _proof_root(work_dir: str | None) -> str | None:
+    """Where the proof directory is created. Per-user temp dirs (macOS `$TMPDIR`) are 0700, which
+    would block the dropped subject before it ever reached the public socket, so `/tmp` is used
+    when it exists."""
+    if work_dir is not None:
+        return work_dir
+    return "/tmp" if os.path.isdir("/tmp") else None
+
+
+def prove_uid_isolation(work_dir: str | None = None) -> IsolationReport:
     blocked = blocker()
     if blocked is not None:
         return IsolationReport("BLOCKED", blocked, {})
 
     nobody = pwd.getpwnam("nobody")
-    with tempfile.TemporaryDirectory(prefix="crashpoint-isolation-") as tmp:
+    with tempfile.TemporaryDirectory(
+        prefix="crashpoint-isolation-", dir=_proof_root(work_dir)
+    ) as tmp:
         root = Path(tmp)
         os.chmod(root, 0o711)
         public = root / "public"
@@ -174,13 +227,7 @@ def prove_uid_isolation() -> IsolationReport:
         store_path = private / "ledger.jsonl"
         led = _start_ledger(invoke_path, control_path, store_path)
         try:
-            cmd = [
-                "setpriv",
-                "--reuid",
-                str(nobody.pw_uid),
-                "--regid",
-                str(nobody.pw_gid),
-                "--clear-groups",
+            argv = [
                 sys.executable,
                 "-m",
                 "crashpoint.adversaries.isolation",
@@ -194,7 +241,7 @@ def prove_uid_isolation() -> IsolationReport:
                 "--intent",
                 "order-1",
             ]
-            subject = subprocess.run(cmd, capture_output=True, text=True, timeout=10, check=False)
+            subject = _run_subject(argv, nobody)
             try:
                 subject_report = cast(dict[str, object], json.loads(subject.stdout))
             except json.JSONDecodeError:
@@ -215,6 +262,8 @@ def prove_uid_isolation() -> IsolationReport:
             "harness_side_effect_count": count,
             "dropped_uid": nobody.pw_uid,
             "dropped_gid": nobody.pw_gid,
+            "platform": platform.system(),
+            "drop_method": drop_method(),
         },
     )
 
@@ -227,8 +276,9 @@ def render(report: IsolationReport) -> str:
 
 
 def evidence_record(report: IsolationReport) -> dict[str, object]:
+    native_macos = report.details.get("platform") == "Darwin"
     record: dict[str, object] = {
-        "name": "isolation_linux_uid",
+        "name": "isolation_macos_uid" if native_macos else "isolation_linux_uid",
         "proof": "uid_dropped_subject_execute_only",
         "status": report.status,
         "reason": report.reason,
@@ -243,6 +293,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--require", action="store_true", help="exit nonzero if the proof is blocked")
     ap.add_argument("--json", action="store_true", help="emit receipted evidence JSON")
     ap.add_argument("--evidence-path", help="write receipted evidence JSON to this path")
+    ap.add_argument(
+        "--work-dir",
+        help="parent of the proof directory (default /tmp, which the dropped subject can traverse)",
+    )
     ap.add_argument("--subject", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--invoke", help=argparse.SUPPRESS)
     ap.add_argument("--control", help=argparse.SUPPRESS)
@@ -255,7 +309,7 @@ def main(argv: list[str] | None = None) -> int:
             ap.error("--subject requires --invoke, --control, and --store")
         return _subject(args.invoke, args.control, args.store, args.intent)
 
-    report = prove_uid_isolation()
+    report = prove_uid_isolation(args.work_dir)
     if args.json or args.evidence_path:
         out = json.dumps(evidence_record(report), indent=2, sort_keys=True)
         if args.evidence_path:

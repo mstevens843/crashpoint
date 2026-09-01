@@ -24,12 +24,13 @@ import pytest
 from crashpoint.canonical import receipt
 
 _EVIDENCE = Path(__file__).resolve().parents[1] / "evidence"
-_ALL = ["controls", "langgraph", "temporal", "dbos", "restate"]
+_ALL = ["controls", "langgraph", "temporal", "dbos", "restate", "vercel"]
 _REAL_PAIRS = {
     "langgraph": ("r_lg_naive", "r_lg_idem"),
     "temporal": ("r_tmp_naive", "r_tmp_idem"),
     "dbos": ("r_dbos_naive", "r_dbos_idem"),
     "restate": ("r_restate_naive", "r_restate_idem"),
+    "vercel": ("r_vwf_naive", "r_vwf_idem"),
 }
 # The idempotent arm and its nondeterministic twin: same boundary, only determinism differs.
 _NONDET = {
@@ -37,6 +38,7 @@ _NONDET = {
     "temporal": ("r_tmp_idem", "r_tmp_nondet"),
     "dbos": ("r_dbos_idem", "r_dbos_nondet"),
     "restate": ("r_restate_idem", "r_restate_nondet"),
+    "vercel": ("r_vwf_idem", "r_vwf_nondet"),
 }
 _TWO_PHASE = {
     "controls": "r_twophase",
@@ -44,6 +46,7 @@ _TWO_PHASE = {
     "temporal": "r_tmp_twophase",
     "dbos": "r_dbos_twophase",
     "restate": "r_restate_twophase",
+    "vercel": "r_vwf_twophase",
 }
 
 

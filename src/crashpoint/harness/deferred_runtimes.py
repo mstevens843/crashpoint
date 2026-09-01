@@ -23,22 +23,24 @@ class DeferredRuntime:
 
 DEFERRED_RUNTIMES: tuple[DeferredRuntime, ...] = (
     DeferredRuntime(
-        name="Vercel Workflow DevKit",
-        adapter_id_prefix="r_vercel_workflow_",
+        name="Vercel Workflow DevKit on the managed Vercel World",
+        adapter_id_prefix="r_vwf_managed_",
         blocker=(
-            "an optional JS/TS Nitro fixture was added against workflow@5.0.0-beta.47, but both "
-            "nitro build/start and nitro dev fail before any run because the bundled Local World "
-            'reports Invalid version string: "bundled" while initializing its data directory; '
-            "there is still no faithful local crash/recovery substrate to measure"
+            "the Local World rows (r_vwf_*) are modeled and measured through "
+            "crashpoint.harness.vercel_matrix, but the managed Vercel World "
+            "(@workflow/world-vercel: Vercel Queues plus Vercel Functions) runs on infrastructure "
+            "this sandbox cannot SIGKILL at a named barrier or inspect afterwards, so no faithful "
+            "managed crash/recovery substrate has been validated"
         ),
         next_step=(
-            "rerun the fixture when Vercel Workflow Local World exposes a valid package version in "
-            "Nitro bundles, or switch to a supported managed/backend substrate whose "
-            "crash/recovery semantics can be controlled and observed"
+            "deploy the fixture to a Vercel project the author controls, crash the function from "
+            "inside the step at the same barriers, read the ledger through a reachable invoke "
+            "endpoint, and only then model managed-world rows separately from the Local World rows"
         ),
         source=(
-            "Vercel Workflow docs: JS/TS and beta Python support; npm workflow@5.0.0-beta.47 "
-            "Local World/Nitro probe on 2026-09-01"
+            "Vercel Workflow docs: Worlds (Local, Postgres, Vercel); world-vercel requires "
+            "VERCEL_DEPLOYMENT_ID and platform queues; Local World measured 2026-09-01 with "
+            "workflow@5.0.0-beta.47 and @workflow/world-local@5.0.0-beta.41"
         ),
     ),
 )

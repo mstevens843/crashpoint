@@ -56,7 +56,7 @@ def test_every_naive_durable_runtime_duplicates_at_the_lethal_barrier() -> None:
 
 def test_the_idempotent_boundary_recovers_the_lethal_barrier() -> None:
     # For every real runtime, the idempotent variant is exactly-once at b1 where the naive is not.
-    for base in ("lg", "tmp", "dbos", "restate"):
+    for base in ("lg", "tmp", "dbos", "restate", "vwf"):
         naive = PREDICTED[f"r_{base}_naive"]["b1"].outcome
         idem = PREDICTED[f"r_{base}_idem"]["b1"].outcome
         assert naive is Outcome.DUPLICATED

@@ -10,10 +10,11 @@ The target is real and active. `langchain-ai/langgraph#8039` (open): under `dura
 pending-writes persist and the superseding checkpoint race on a shared executor, so whether recovery
 replays the writes or re-executes the node - and therefore whether a naive side effect duplicates -
 depends on the host. Temporal activities are at-least-once; DBOS steps should be idempotent; Restate
-durable steps journal operation results after the action returns. All of them push the exactly-once
-burden for the external effect onto the developer. crashpoint measures where that burden is unmet
-across four engines, three enumerated crash barriers, and a side-effect count the runtime cannot
-self-report.
+durable steps journal operation results after the action returns; a Vercel Workflow inline step
+journals its completion only after the body returns. All of them push the exactly-once burden for
+the external effect onto the developer. crashpoint measures where that burden is unmet across five
+engines, three enumerated crash barriers, eight hidden framework edges, and a side-effect count the
+runtime cannot self-report.
 
 This is defensive reliability research on public MIT/Apache code, run in the author's own sandbox,
 crashing runtimes the author controls on a fixture whose only side effect is its own ledger. No
@@ -27,7 +28,7 @@ production system is touched.
 >
 > - **The model, before any crash.** `src/crashpoint/model/` derives, as a pure total function over
 >   declared (durability, persist order, effect mode, determinism) and a crash barrier, the predicted
->   outcome for 22 runtime rows x 3 barriers: `uv run python -m crashpoint.model`. Purity is checked,
+>   outcome for 26 runtime rows x 3 barriers: `uv run python -m crashpoint.model`. Purity is checked,
 >   not asserted; zero third-party dependencies in the model.
 > - **The ledger is out of process and forgery-proof.** A separate daemon behind two Unix sockets
 >   records every attempt, counts distinct side effects, and hash-chains every record. The subject
@@ -43,12 +44,26 @@ production system is touched.
 >   reproducible node; the nondeterministic twin DIVERGES at the same barrier; a two-phase
 >   identity-before-draw row recovers EXACTLY_ONCE. Zero disagreements:
 >   `uv run --extra langgraph python -m crashpoint.harness.matrix --k 50 --runtimes r_lg_naive,r_lg_idem,r_lg_nondet,r_lg_twophase --name langgraph`.
-> - **LangGraph hidden edges are measured separately.** `lg_pre_first_checkpoint` is LOST at k=50,
->   and `lg_pending_writes_after_persist` is EXACTLY_ONCE at k=50. These are not folded into the
->   shared b0/b1/b2 matrix:
+> - **Eight hidden framework edges are measured separately.** A crash point inside a runtime's own
+>   persistence machinery gets its own predicted rule and its own evidence file, and is never folded
+>   into the shared b0/b1/b2 matrix. LangGraph: `lg_pre_first_checkpoint` LOST,
+>   `lg_pending_writes_after_persist` EXACTLY_ONCE, both at k=50. Temporal: a durable activity
+>   schedule with no worker attempt, and a workflow task that dies consuming a durable activity
+>   completion, both EXACTLY_ONCE at k=30. DBOS: an uncommitted step-output INSERT DUPLICATES, a
+>   committed one recovers EXACTLY_ONCE, an uncommitted terminal-status UPDATE recovers
+>   EXACTLY_ONCE, and two modules registering the same workflow name make recovery DIVERGE, all at
+>   k=30. The Temporal and DBOS commands are in [RESULTS.md](./RESULTS.md); the LangGraph pair is:
 >   `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden`
 >   and
 >   `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist`.
+> - **Vercel Workflow, the fifth engine.** The JS/TS Workflow DevKit fixture in
+>   `runtime/vercel-workflow/` runs on the Local World and shows the same b1 contrast: naive
+>   DUPLICATES, the idempotent boundary recovers EXACTLY_ONCE, the nondeterministic twin DIVERGES,
+>   and the two-phase row recovers EXACTLY_ONCE at rate 0.933 with two fail-closed VOID trials.
+>   Zero disagreements:
+>   `uv run python -m crashpoint.harness.vercel_matrix --k 30 --name vercel --timeout 60`.
+>   Reaching a running Local World needed one environment variable and no patching; the root cause
+>   is in `runtime/vercel-workflow/README.md`.
 > - **Temporal, DBOS, and Restate, the same contrast on real engines.** Temporal (local
 >   `start-dev`), DBOS (Docker Postgres), and Restate (Docker dev server plus Python ASGI service)
 >   DUPLICATE the naive effect at the lethal barrier, recover EXACTLY_ONCE with the idempotent
@@ -112,24 +127,22 @@ write: **b0** before the effect, **b1** after the effect but before the completi
 
 ## What it does not do
 
-- **No strong macOS isolation claim.** The default macOS fixture proves the socket-privilege boundary:
-  the subject has only execute/invoke capability. The stronger Linux UID-drop proof is Linux-only;
-  the direct macOS command reports BLOCKED, while the Dockerized Linux run passed and is receipted in
-  `evidence/isolation_linux.json`.
+- **No native macOS isolation receipt.** The default fixture proves the socket-privilege boundary:
+  the subject has only execute/invoke capability. The UID-drop proof now runs natively on macOS as
+  well as Linux (`setpriv` there, Python's own uid drop here), but it needs root, so the direct
+  command reports BLOCKED for a normal shell. The Dockerized Linux run passed and is receipted in
+  `evidence/isolation_linux.json`; this repo carries no native macOS receipt.
 - **No broad real-model provider claim.** `evidence/langgraph_model.json` measures Anthropic Haiku
   4.5 on the LangGraph nondeterministic/two-phase rows at k=5. It is real model-sampler evidence,
   not a claim about every model, provider cache, temperature, or seeded/local sampler.
   `scripts/anthropic_sampler.py` reads secrets from the shell or a local ignored `.env`.
-- **No hidden-barrier overclaim.** The measured cross-runtime barriers are b0/b1/b2. LangGraph's
-  pre-first-checkpoint edge is measured separately as `lg_pre_first_checkpoint` in
-  `evidence/langgraph_hidden.json`, and the pending-writes-after-persist edge is measured separately
-  as `lg_pending_writes_after_persist` in `evidence/langgraph_hidden_pending.json`. Remaining
-  framework-internal candidates stay inventoried by
-  `uv run python -m crashpoint.harness.barrier_inventory` until each has its own model rule and run.
-- **No Vercel Workflow claim yet.** An optional JS/TS Nitro fixture exists under
-  `runtime/vercel-workflow/`, but it is not a modeled or measured adapter. On 2026-09-01, both the
-  built server and `nitro dev` failed before any workflow run because the bundled Local World raised
-  `Invalid version string: "bundled"` during data-dir initialization.
-  `uv run python -m crashpoint.harness.deferred_runtimes` records the remaining Vercel blocker: it
-  still needs a faithful Workflow worker/backend crash harness before any row can be modeled or
-  measured.
+- **No hidden-barrier overclaim.** The cross-runtime barriers are b0/b1/b2. The eight
+  framework-internal edges are each measured on their own, with their own predicted rule and
+  evidence file, and are deliberately kept out of the shared matrix. One candidate remains
+  inventoried and unmeasured: a Vercel Workflow crash between world-local's step-create claim and
+  the step entity, seen as a recovery wedge in the shared matrix and scored VOID there. The full
+  list is `uv run python -m crashpoint.harness.barrier_inventory`.
+- **No managed Vercel World claim.** The measured Vercel Workflow rows run on the Local World, a
+  single-process filesystem backend. The managed world (Vercel Queues plus Vercel Functions) cannot
+  be SIGKILLed at a named barrier from this sandbox, so it stays deferred and unmodeled:
+  `uv run python -m crashpoint.harness.deferred_runtimes`.

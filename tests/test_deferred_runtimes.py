@@ -16,7 +16,12 @@ def test_deferred_runtimes_are_not_silent_model_rows() -> None:
         assert not any(runtime_id.startswith(prefix) for runtime_id in RUNTIME_IDS)
 
 
-def test_vercel_workflow_blocker_records_local_world_failure() -> None:
-    [vercel] = [r for r in DEFERRED_RUNTIMES if r.adapter_id_prefix == "r_vercel_workflow_"]
-    assert "workflow@5.0.0-beta.47" in vercel.blocker
-    assert 'Invalid version string: "bundled"' in vercel.blocker
+def test_vercel_local_world_is_modeled_and_managed_world_stays_deferred() -> None:
+    # The Local World rows entered the model once they had a faithful crash harness and evidence;
+    # the managed Vercel World has neither, so it is the entry that remains deferred.
+    for rid in ("r_vwf_naive", "r_vwf_idem", "r_vwf_nondet", "r_vwf_twophase"):
+        assert rid in RUNTIME_IDS
+    [vercel] = [r for r in DEFERRED_RUNTIMES if r.adapter_id_prefix == "r_vwf_managed_"]
+    assert "world-vercel" in vercel.blocker
+    assert "vercel_matrix" in vercel.blocker
+    assert not any(rid.startswith("r_vwf_managed_") for rid in RUNTIME_IDS)

@@ -1,0 +1,804 @@
+{
+  "agrees": true,
+  "barrier": "dbos_duplicate_workflow_name_recovery",
+  "barrier_family": "hidden",
+  "counts": {
+    "diverged": 30
+  },
+  "db_agrees_count": 30,
+  "db_rule": "before recovery: PENDING with no operation_outputs; after: SUCCESS with shipping_charge recorded, registry winner cp_shipping, result 'shipping'",
+  "k": 30,
+  "modal": "diverged",
+  "modal_rate": 1.0,
+  "name": "dbos_hidden_dupname",
+  "predicted": "diverged",
+  "prediction_rule": "the workflow_status row stores only the function name; when two registered workflows share it, recovery dispatches the pending workflow to whichever registration won in the recovery process, so the uncommitted step is re-run by a different function body and the two crossings are different actions",
+  "receipt": "cp1_0c9bcb9bde825f1edaac9c20ec113cab15745938c02090b2600ece6095d07b18",
+  "runtime": "dbos",
+  "trials": [
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "process",
+        "outputs": [
+          "shipping_charge"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_duplicate_workflow_name_recovery",
+      "before_recovery": {
+        "name": "process",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 2,
+      "effect_count": 2,
+      "observed": "diverged",
+      "predicted": "diverged",
+      "recovery_result": "shipping",
+      "recovery_returncode": 0,
+      "registry_winner": "cp_shipping",
+      "subject_returncode": -9
+    }
+  ],
+  "wilson95": [
+    0.8865,
+    1.0
+  ]
+}

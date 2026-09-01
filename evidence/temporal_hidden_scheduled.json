@@ -1,0 +1,864 @@
+{
+  "agrees": true,
+  "barrier": "tmp_activity_scheduled_before_worker_poll",
+  "barrier_family": "hidden",
+  "counts": {
+    "exactly_once": 30
+  },
+  "history_agrees_count": 30,
+  "history_rule": "exactly one ActivityTaskScheduled, the ActivityTaskStarted attempt is 1, and no WorkflowTaskTimedOut",
+  "k": 30,
+  "modal": "exactly_once",
+  "modal_rate": 1.0,
+  "name": "temporal_hidden_scheduled",
+  "predicted": "exactly_once",
+  "prediction_rule": "ActivityTaskScheduled is durable but no attempt has started; the task waits in matching and the recovery worker's first attempt runs the body once, so the effect crosses once",
+  "receipt": "cp1_474a7d54882e905f53c8a40c2534e26b48442a02c58742a257a2dc22c4c36628",
+  "runtime": "temporal",
+  "trials": [
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    },
+    {
+      "barrier": "tmp_activity_scheduled_before_worker_poll",
+      "effect_count": 1,
+      "history": {
+        "activity_last_failure": "",
+        "activity_started_attempt": 1,
+        "activity_task_scheduled": 1,
+        "activity_task_started": 1,
+        "event_counts": {
+          "activity_task_completed": 1,
+          "activity_task_scheduled": 1,
+          "activity_task_started": 1,
+          "workflow_execution_completed": 1,
+          "workflow_execution_started": 1,
+          "workflow_task_completed": 2,
+          "workflow_task_scheduled": 2,
+          "workflow_task_started": 2
+        },
+        "workflow_task_failed": 0,
+        "workflow_task_timed_out": 0
+      },
+      "history_agrees": true,
+      "observed": "exactly_once",
+      "predicted": "exactly_once",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "subject_returncode": -9
+    }
+  ],
+  "wilson95": [
+    0.8865,
+    1.0
+  ]
+}

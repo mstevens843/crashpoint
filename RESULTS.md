@@ -7,15 +7,16 @@ substrate-limited, or unproven, it says so and says why.
 
 `uv.lock` is intentionally tracked; use `uv sync --group dev --all-extras --locked` before
 reproducing these checks so the dependency graph matches the recorded evidence. The full local gate
-installs optional runtime packages for type checking, but Temporal, DBOS, and Restate still require
-their servers only for the explicit matrix runs below.
+installs optional runtime packages for type checking; Temporal, DBOS, Restate, and the Vercel
+Workflow fixture are needed only for the explicit runs below.
 
 **Frozen:** 2026-09-01
 **Toolchain:** Python 3.12.13, uv 0.11.26, pytest, ruff, mypy (strict) via `uv run`.
 **Runtimes:** LangGraph 1.2.11 (+ langgraph-checkpoint-sqlite 3.1.1); Temporal CLI 1.8.2 /
 server 1.31.2 with temporalio 1.32.0 (local `start-dev`); DBOS 2.31.0 with Postgres 16
 (Docker, on 5433); Restate server/CLI 1.7.8 with restate-sdk 1.0.4 (Docker dev server plus Python
-ASGI worker). Vercel Workflow was probed with workflow@5.0.0-beta.47 but not measured.
+ASGI worker); Vercel Workflow DevKit workflow@5.0.0-beta.47 with @workflow/world-local
+5.0.0-beta.41 on nitro 3.0.260610-beta and Node 22.22.1 (Local World).
 **Ground truth:** the distinct side-effect count recorded by a separate ledger process the runtime
 cannot read, reset, or forge - never the runtime's own report.
 
@@ -25,25 +26,31 @@ cannot read, reset, or forge - never the runtime's own report.
 |---|---|
 | Model + purity + ledger + oracle + determinism + discrimination tests (`uv run pytest`) | pass |
 | ruff / mypy --strict | clean |
-| Predicted outcome matrix (`python -m crashpoint.model`) | 22 runtime rows x 3 barriers, pure derivation, purity-checked |
+| Predicted outcome matrix (`python -m crashpoint.model`) | 26 runtime rows x 3 barriers, pure derivation, purity-checked |
 | Reflexive adversary (`python -m crashpoint.adversaries.reflexive`) | ledger out of reach (execute-only, opaque receipt) AND tamper-evident (edit -> VOID) |
-| Linux isolation adversary (`python -m crashpoint.adversaries.isolation`) | direct macOS command BLOCKED; Dockerized Linux `setpriv` proof PASS in `evidence/isolation_linux.json` |
+| UID isolation adversary (`python -m crashpoint.adversaries.isolation`) | Dockerized Linux `setpriv` proof PASS in `evidence/isolation_linux.json`; the native macOS path exists but needs root, so an unprivileged shell reports BLOCKED and no macOS receipt is committed |
 | Recomputability probe (`python -m crashpoint.harness.recomputability`) | deterministic/content-derived is RECOMPUTABLE, nondeterministic/content-derived is NOT_RECOMPUTABLE, two-phase prepared identity is RECOMPUTABLE |
 | Controls, k=100 (1,800 trials) | DUPLICATED / LOST / EXACTLY_ONCE / **DIVERGED** pinned; two-phase recovers; **0 disagreements** |
 | LangGraph #8039, k=50 (600 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | Temporal, k=30 (360 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | DBOS, k=30 (360 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | Restate, k=10 (120 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
+| Vercel Workflow, k=30 (360 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE** at 0.933 with 2 fail-closed **VOID**; **0 disagreements** |
 | Real model sampler, LangGraph k=5 (30 trials) | Anthropic Haiku 4.5: nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | LangGraph hidden barriers (`python -m crashpoint.harness.langgraph_hidden ...`) | `lg_pre_first_checkpoint` LOST at k=50; `lg_pending_writes_after_persist` EXACTLY_ONCE at k=50; **0 disagreements** |
-| Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | two LangGraph candidates measured; remaining internal candidates named and kept disjoint from b0/b1/b2 |
-| Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | Vercel Workflow fixture exists but remains unmeasured with a precise Local World blocker |
+| Temporal hidden barriers, k=30 each (60 trials) | durable activity schedule with no worker attempt **EXACTLY_ONCE**; workflow-task replay over a durable activity completion **EXACTLY_ONCE**; history agrees 30/30 both |
+| DBOS hidden barriers, k=30 each (120 trials) | uncommitted step output **DUPLICATED**; committed step output **EXACTLY_ONCE**; uncommitted terminal status **EXACTLY_ONCE**; duplicate workflow name **DIVERGED**; database agrees 30/30 all four |
+| Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | eight candidates measured with their own rules and receipts; one Vercel Workflow candidate named and still blocked; all kept disjoint from b0/b1/b2 |
+| Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | the managed Vercel World remains unmeasured: no faithful crash/recovery substrate from this sandbox |
 
-3,370 crash+recover trials in all: 3,240 in the default shared b0/b1/b2 matrices, 30 in the
-real-model LangGraph submatrix, and 100 in the separate LangGraph hidden-barrier runs. Every observed
-cell equals a prediction written before any runtime was crashed, and every cell sits at rate 1.0.
-The two-phase rows were modeled before the adapters were measured and do not change the earlier
-claim: content-derived idempotency only works when the effect is reproducible from durable inputs.
+3,910 crash+recover trials in all: 3,600 in the shared b0/b1/b2 matrices, 30 in the real-model
+LangGraph submatrix, and 280 in the separate hidden-barrier runs (100 LangGraph, 60 Temporal, 120
+DBOS). Every observed cell equals a prediction written before any runtime was crashed. Every cell
+sits at rate 1.0 except `vercel_workflow_twophase` at b1, which is 0.933 because two of its thirty
+trials could not be certified and were scored VOID rather than read favorably; the mechanism is
+named in `results/09`. The two-phase rows were modeled before the adapters were measured and do not
+change the earlier claim: content-derived idempotency only works when the effect is reproducible
+from durable inputs.
 
 ## The headline, stated once
 
@@ -96,9 +103,14 @@ Predicted (P) equals observed (O) in every cell:
     restate_idem               ONCE/ONCE         ONCE/ONCE         ONCE/ONCE     k=10
     restate_nondet             ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE     k=10
     restate_twophase           ONCE/ONCE         ONCE/ONCE         ONCE/ONCE     k=10
+    vercel_workflow_naive      ONCE/ONCE           DUP/DUP         ONCE/ONCE     k=30
+    vercel_workflow_idem       ONCE/ONCE         ONCE/ONCE         ONCE/ONCE     k=30
+    vercel_workflow_nondet     ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE     k=30
+    vercel_workflow_twophase   ONCE/ONCE         ONCE/ONCE         ONCE/ONCE     k=30, 0.933
 
-Every measured cell sits at rate 1.0. Wilson 95% lower bound: 0.963 at k=100, 0.929 at k=50,
-0.886 at k=30, 0.722 at k=10. The b1 column is the finding: naive durable units duplicate, content-derived
+Every measured cell sits at rate 1.0 except `vercel_workflow_twophase` at b1, which is 0.933
+(28 EXACTLY_ONCE, 2 VOID). Wilson 95% lower bound: 0.963 at k=100, 0.929 at k=50, 0.886 at k=30,
+0.722 at k=10. The b1 column is the finding: naive durable units duplicate, content-derived
 idempotency fixes only reproducible effects, nondeterministic content-derived effects diverge, and
 pre-call identity fixes that failure in the measured two-phase rows.
 
@@ -115,10 +127,18 @@ pre-call identity fixes that failure in the measured two-phase rows.
 | `evidence/isolation_linux.json` | `docker run --rm -v "$PWD:/work:ro" -v "$PWD/evidence:/evidence" -w /work -e PYTHONPATH=src python:3.12-slim python -m crashpoint.adversaries.isolation --require --evidence-path /evidence/isolation_linux.json` | `cp1_9d16e122023c860eafdf320ed69d8241a57f74c790975d883ffd7d77a6bd496d` |
 | `evidence/langgraph_hidden.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden` | `cp1_993c57f79dae43a92e42013a8403adf93c0f38088ad6b7864816e7885cc76ff8` |
 | `evidence/langgraph_hidden_pending.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist` | `cp1_d6c738d55b00a2cf4510bfb12e1b7497e7555de567e7b56e0406d366747d2553` |
+| `evidence/vercel.json` | `uv run python -m crashpoint.harness.vercel_matrix --k 30 --name vercel --timeout 60` | `cp1_afb5fba49175b98c6f2ac47181bca58674d8a84a64e85635c36bbf2630257139` |
+| `evidence/temporal_hidden_scheduled.json` | `uv run --extra temporal python -m crashpoint.harness.temporal_hidden --k 30 --barrier tmp_activity_scheduled_before_worker_poll --name temporal_hidden_scheduled` | `cp1_474a7d54882e905f53c8a40c2534e26b48442a02c58742a257a2dc22c4c36628` |
+| `evidence/temporal_hidden_replay.json` | `uv run --extra temporal python -m crashpoint.harness.temporal_hidden --k 30 --barrier tmp_workflow_task_replay --name temporal_hidden_replay` | `cp1_857a9ab3979a63291d6bac7edc0c92ff8cd4e0b61ab7a9550898ff8882aadc26` |
+| `evidence/dbos_hidden_uncommitted.json` | `uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_step_output_uncommitted --name dbos_hidden_uncommitted` | `cp1_be064c2d616ea1e3dfc8eda0ef4969f535900f528bbc4e4ddc4e9dc0faa5bfb1` |
+| `evidence/dbos_hidden_committed.json` | `uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_step_output_committed_before_resume --name dbos_hidden_committed` | `cp1_9558f926b0c7009241be375bf78243794e6cfb500ab12067d898b56cf6b60258` |
+| `evidence/dbos_hidden_outcome.json` | `uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_workflow_outcome_uncommitted --name dbos_hidden_outcome` | `cp1_d578aefe28182e80c58ed3ce62728abcdf0b820afc5391116a6c55c2bc9c240a` |
+| `evidence/dbos_hidden_dupname.json` | `uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_duplicate_workflow_name_recovery --name dbos_hidden_dupname` | `cp1_0c9bcb9bde825f1edaac9c20ec113cab15745938c02090b2600ece6095d07b18` |
 
 `tests/test_discrimination.py` re-derives each receipt from the JSON body and checks that no present
-evidence cell disagrees with the model. Dedicated tests re-derive the isolation and hidden-barrier
-receipts.
+evidence cell disagrees with the model. Dedicated tests re-derive the isolation, Vercel, and
+hidden-barrier receipts. Every check is skip-if-absent, so a fresh checkout without the optional
+substrates is still green.
 
 ## Packaging
 
@@ -163,6 +183,19 @@ container.
     docker run -d --name crashpoint-restate -p 8080:8080 -p 9070:9070 -p 9071:9071 --add-host=host.docker.internal:host-gateway docker.restate.dev/restatedev/restate:latest
     uv run --extra restate python -m crashpoint.harness.restate_matrix --k 10 --name restate --timeout 45
 
+    # Vercel Workflow: build the Nitro fixture once, then run the matrix (Node 22)
+    (cd runtime/vercel-workflow && npm ci && npm run build)
+    uv run python -m crashpoint.harness.vercel_matrix --k 30 --name vercel --timeout 60
+
+The hidden-barrier runs use the same Temporal and DBOS substrates as the matrices above:
+
+    uv run --extra temporal python -m crashpoint.harness.temporal_hidden --k 30 --barrier tmp_activity_scheduled_before_worker_poll --name temporal_hidden_scheduled
+    uv run --extra temporal python -m crashpoint.harness.temporal_hidden --k 30 --barrier tmp_workflow_task_replay --name temporal_hidden_replay
+    uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_step_output_uncommitted --name dbos_hidden_uncommitted
+    uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_step_output_committed_before_resume --name dbos_hidden_committed
+    uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_workflow_outcome_uncommitted --name dbos_hidden_outcome
+    uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_duplicate_workflow_name_recovery --name dbos_hidden_dupname
+
 ## Real-Model Arm
 
 The default nondeterministic source is `uuid`, because the property under test is irreproducibility
@@ -188,24 +221,32 @@ boolean, and a prompt hash.
 ## What this does not prove
 
 - **Strong isolation on macOS.** The default proof is the socket-privilege boundary. The Linux
-  `setpriv --reuid nobody` proof passed in Docker, but the direct macOS command still reports
-  BLOCKED. The PASS proves execute-only access for a UID-dropped subject in that Linux container; it
-  is not a full container escape audit.
-- **All hidden framework crash points.** The matrix measures b0/b1/b2. LangGraph
-  `lg_pre_first_checkpoint` and `lg_pending_writes_after_persist` are measured separately.
-  `barrier_inventory.py` still names additional candidates around Temporal activity
-  scheduling/replay and DBOS step/status commits, but those are not evidence until each receives a
-  model rule and a measured adapter barrier.
+  `setpriv --reuid nobody` proof passed in Docker. The adversary now also drops the subject natively
+  on macOS through Python's own uid drop, but that path needs root, so an unprivileged shell reports
+  BLOCKED and no macOS receipt is committed here. The Linux PASS proves execute-only access for a
+  UID-dropped subject in that container; it is not a full container escape audit.
+- **All hidden framework crash points.** The matrix measures b0/b1/b2. Eight framework-internal
+  edges are measured separately, each with its own predicted rule and receipt: two in LangGraph, two
+  in Temporal, four in DBOS. They are not folded into the shared matrix and are not a claim that a
+  runtime's persistence machinery has been enumerated. `barrier_inventory.py` names one candidate
+  that is still blocked, a Vercel Workflow crash between world-local's step-create claim and the
+  step entity, and it is not evidence until it has a deterministic injection point and a rule.
 - **A broad model-sampler claim.** `evidence/langgraph_model.json` measures one provider/model
   configuration on two LangGraph rows at k=5. It does not characterize provider caching,
   temperature/seed behavior, local samplers, or every model.
-- **Vercel Workflow.** An optional JS/TS Nitro fixture exists in `runtime/vercel-workflow/`, but it
-  remains unmeasured. On 2026-09-01, workflow@5.0.0-beta.47 compiled under Nitro, but the Local
-  World failed before any run with `Invalid version string: "bundled"`, so no faithful
-  worker/backend crash harness was validated and no rows were modeled.
+- **The managed Vercel World.** The measured Vercel Workflow rows run on the Local World, a
+  single-process filesystem backend, with `WORKFLOW_TARGET_WORLD` naming the unbundled package (the
+  built server's inlined copy cannot read its own version and throws
+  `Invalid version string: "bundled"`; see `results/09`). The managed world, Vercel Queues plus
+  Vercel Functions, cannot be SIGKILLed at a named barrier from this sandbox, so it stays deferred
+  and unmodeled.
+- **A Vercel Workflow claim at b1 without its VOID trials.** `vercel_workflow_twophase` at b1 is 28
+  EXACTLY_ONCE and 2 VOID over 30 trials, rate 0.933. The VOID trials are a world-local recovery
+  wedge, not a two-phase failure, but they are counted rather than discarded because the oracle
+  cannot certify a recovery that never finished.
 - **A runtime defect where the runtime documents at-least-once behavior.** Temporal, DBOS, and
   Restate are not defect reports. They demonstrate the gap between exactly-once workflow language and external
   side-effect behavior under the documented contracts.
-- **Large-k statistical claims on real servers.** Temporal and DBOS ran at k=30, and Restate ran at
-  k=10. The observed cells are deterministic here; larger k would tighten the interval, not change the
-  measured claim.
+- **Large-k statistical claims on real servers.** Temporal, DBOS, and Vercel Workflow ran at k=30,
+  and Restate ran at k=10. The observed cells are deterministic here; larger k would tighten the
+  interval, not change the measured claim.

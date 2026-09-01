@@ -5,14 +5,15 @@ particular @sajjadanwar0, who opened it; @vasilisnasopoulos, whose RS1-RS3 write
 receiver half of the property and asked for it to be made empirical; @safal207, who built and
 published the first executable recovery-safety benchmark for this issue; and @tamilov, who pushed
 the thread from discussing the property to running it); and, as shorter notes, the Temporal, DBOS,
-and Restate maintainers.
+Restate, and Vercel Workflow maintainers.
 
 **From:** Mathew Stevens. **Nature:** defensive reliability research on public MIT/Apache code, run
 in a local sandbox. The workflows crash processes the author controls; the only external side effect
 is a local ledger the fixture owns. No system the author does not control was touched.
 
 **Status:** the langgraph#8039 note was posted on 2026-08-28. This draft now includes the
-2026-09-01 nondeterministic/two-phase follow-up. Temporal, DBOS, and Restate notes remain unsent.
+2026-09-01 nondeterministic/two-phase follow-up and the same date's fifth-engine and hidden-barrier
+work. The Temporal, DBOS, Restate, and Vercel notes remain unsent.
 
 ## Summary
 
@@ -20,6 +21,8 @@ Durable-execution runtimes make the JOURNALED RESULT exactly-once, but the EXTER
 an activity / step / node is at-least-once unless that unit is made idempotent. crashpoint enumerates
 three crash barriers around one external effect, crashes the real runtime at each with an uncatchable
 SIGKILL, and reads the true side-effect count from an out-of-process ledger the runtime cannot forge.
+Five engines are measured, plus eight framework-internal crash points that each carry their own
+predicted rule and their own evidence.
 The result is a per-cell outcome matrix, calibrated by control/reference rows that pin
 DUPLICATED / LOST / EXACTLY_ONCE / DIVERGED on demand.
 
@@ -79,6 +82,7 @@ Current b1 table:
 | Temporal | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
 | DBOS | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
 | Restate | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
+| Vercel Workflow (Local World) | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
 
 The recomputability probe is the leading indicator:
 
@@ -89,7 +93,7 @@ uv run python -m crashpoint.harness.recomputability
 It reports RECOMPUTABLE for deterministic/content-derived identity, NOT_RECOMPUTABLE for
 nondeterministic/content-derived identity, and RECOMPUTABLE for the two-phase prepared identity.
 
-## For Temporal, DBOS, and Restate
+## For Temporal, DBOS, Restate, and Vercel Workflow
 
 The same fixture, unchanged except for the adapter, reproduces the same b1 contrast on three
 additional runtimes:
@@ -103,6 +107,24 @@ additional runtimes:
 - **Restate** - the Python adapter runs the effect inside `ctx.run_typed`. Killing the ASGI worker
   after the effect but before the durable operation result reaches Restate causes the operation to be
   retried. The measured k=10 row has the same naive/idempotent/nondeterministic/two-phase contrast.
+- **Vercel Workflow DevKit** - an inline step journals `step_completed` only after the body returns.
+  Killing the server in between leaves the step non-terminal, and the recovered run re-executes it
+  once the inline-ownership lease lapses. Measured at k=30 on the Local World with the same
+  contrast.
+
+Two findings in that set are worth separating from the general pattern, because neither is
+documented behavior a developer could have read and planned around:
+
+- **DBOS duplicate workflow names.** `workflow_status` stores only the function name, so when two
+  modules register the same workflow name, recovery dispatches a pending workflow to whichever
+  registration won in the recovering process. The crashed step is then re-run by a different
+  function body and the two external crossings are different actions: **DIVERGED** at k=30, with the
+  database state agreeing in 30/30 trials.
+- **Vercel world-local claim ordering.** A crash between world-local's step-create claim file and
+  the step entity it guards leaves a stale claim. The recovered run's lazy step start hits it, is
+  mapped to `skipped`, and the run never completes. crashpoint scores those trials VOID rather than
+  reading the ledger of an unfinished recovery; it is filed as a separate barrier and is not part of
+  the b1 claim.
 
 These are not defect reports where the runtimes document at-least-once/idempotency responsibilities.
 The note is that the gap between "exactly-once workflow" and "exactly-once external effect" is easy
@@ -110,18 +132,20 @@ to miss, and a crash-tested fixture makes it concrete.
 
 ## Limits
 
-- Strong UID isolation is Linux-only. The direct macOS command reports BLOCKED, while the Dockerized
-  Linux `setpriv --reuid nobody` adversary passed and is receipted in `evidence/isolation_linux.json`.
-  That proves execute-only access for the UID-dropped subject in that Linux container, not a full
-  container escape audit.
-- Hidden framework crash points beyond b0/b1/b2 are mostly inventoried, not measured. The current
-  exceptions are LangGraph `lg_pre_first_checkpoint`, measured separately at k=50 as LOST in
-  `evidence/langgraph_hidden.json`, and `lg_pending_writes_after_persist`, measured separately at
-  k=50 as EXACTLY_ONCE in `evidence/langgraph_hidden_pending.json`.
-- Vercel Workflow is not claimed. An optional JS/TS Nitro fixture was added, but on 2026-09-01
-  workflow@5.0.0-beta.47 failed before any local run because the bundled Local World raised
-  `Invalid version string: "bundled"` during data-dir initialization. No Vercel Workflow rows are
-  modeled or measured here.
+- Strong UID isolation is receipted on Linux only. The Dockerized `setpriv --reuid nobody` adversary
+  passed and is receipted in `evidence/isolation_linux.json`. The same proof now runs natively on
+  macOS through Python's own uid drop, but it needs root, so an unprivileged shell reports BLOCKED
+  and no macOS receipt is committed. The Linux PASS proves execute-only access for the UID-dropped
+  subject in that container, not a full container escape audit.
+- Hidden framework crash points beyond b0/b1/b2 are measured one at a time, never folded into the
+  shared matrix: two in LangGraph, two in Temporal, four in DBOS, each with its own predicted rule
+  and receipt. That is eight named edges, not an enumeration of any runtime's persistence
+  machinery. One candidate remains inventoried and unmeasured.
+- The Vercel Workflow rows are Local World rows. The managed world (Vercel Queues plus Vercel
+  Functions) cannot be crashed at a named barrier from this sandbox and stays deferred. Reaching a
+  running Local World required naming the package explicitly in `WORKFLOW_TARGET_WORLD`, because the
+  copy Nitro inlines into the server bundle cannot read its own version and throws
+  `Invalid version string: "bundled"`.
 - Real model-sampler evidence is narrow. `evidence/langgraph_model.json` covers Anthropic Haiku 4.5
   on the LangGraph nondeterministic/two-phase rows at k=5; it is not a broad model/provider claim.
 

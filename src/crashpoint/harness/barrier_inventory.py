@@ -46,32 +46,68 @@ CANDIDATES: tuple[BarrierCandidate, ...] = (
     BarrierCandidate(
         "temporal",
         "tmp_activity_scheduled_before_worker_poll",
-        "after activity scheduling is durable but before a worker starts the activity body",
-        "blocked",
-        "requires event-history instrumentation against a live Temporal dev server",
+        "after ActivityTaskScheduled is durable but before any worker attempt starts the body",
+        "measured",
+        "kept separate because it precedes the b0 in-body crash: the scheduled task is delivered "
+        "to the recovery worker's first attempt",
+        "evidence/temporal_hidden_scheduled.json",
     ),
     BarrierCandidate(
         "temporal",
         "tmp_workflow_task_replay",
-        "workflow-task replay around activity completion history",
-        "blocked",
-        "requires distinguishing workflow replay from activity retry without moving the external "
-        "effect boundary",
+        "after ActivityTaskCompleted is durable but before the workflow task consuming it "
+        "completes",
+        "measured",
+        "kept separate because the crash is in a workflow task, not an activity body; replay "
+        "reads the activity result from history",
+        "evidence/temporal_hidden_replay.json",
     ),
     BarrierCandidate(
         "dbos",
-        "dbos_step_output_commit_edge",
-        "inside DBOS step output commit and workflow-status update",
-        "blocked",
-        "requires DBOS internal schema/transaction instrumentation against a live system database",
+        "dbos_step_output_uncommitted",
+        "after the step output INSERT executes but before its transaction commits",
+        "measured",
+        "kept separate because it is inside the system-database transaction the b1 crash never "
+        "reaches; Postgres atomicity makes it read like b1",
+        "evidence/dbos_hidden_uncommitted.json",
+    ),
+    BarrierCandidate(
+        "dbos",
+        "dbos_step_output_committed_before_resume",
+        "after the step output commits but before the workflow function resumes",
+        "measured",
+        "kept separate because it sits between b1 and b2: the output is durable but no later "
+        "step has started",
+        "evidence/dbos_hidden_committed.json",
+    ),
+    BarrierCandidate(
+        "dbos",
+        "dbos_workflow_outcome_uncommitted",
+        "after the SUCCESS status UPDATE executes but before its transaction commits",
+        "measured",
+        "kept separate because it is after b2: every step output is durable and only the "
+        "terminal status is not",
+        "evidence/dbos_hidden_outcome.json",
     ),
     BarrierCandidate(
         "dbos",
         "dbos_duplicate_workflow_name_recovery",
         "recovery dispatch when two modules register the same workflow function name",
+        "measured",
+        "kept separate because the crash is the b1 point but the recovery process resolves the "
+        "stored name to a different function body",
+        "evidence/dbos_hidden_dupname.json",
+    ),
+    BarrierCandidate(
+        "vercel_workflow",
+        "vwf_step_create_claim_before_event",
+        "after world-local links the lazy step-create claim file but before the step entity and "
+        "step_created event are written",
         "blocked",
-        "has a root repro probe, but it is a separate recovery-dispatch question, not yet a "
-        "modeled external-effect barrier",
+        "observed as a recovery wedge in the shared-matrix crash trials (the re-enqueued run's "
+        "lazy step start hits the stale claim, is mapped to skipped, and the run never completes; "
+        "scored VOID there); needs a deterministic injection point inside world-local's event "
+        "storage before it can be measured on its own",
     ),
 )
 

@@ -1,0 +1,834 @@
+{
+  "agrees": true,
+  "barrier": "dbos_step_output_uncommitted",
+  "barrier_family": "hidden",
+  "counts": {
+    "duplicated": 30
+  },
+  "db_agrees_count": 30,
+  "db_rule": "before recovery: PENDING with no operation_outputs; after: SUCCESS with effect_step and sentinel_step recorded",
+  "k": 30,
+  "modal": "duplicated",
+  "modal_rate": 1.0,
+  "name": "dbos_hidden_uncommitted",
+  "predicted": "duplicated",
+  "prediction_rule": "the step output INSERT ran on an uncommitted transaction; Postgres discards it when the connection dies, so recovery finds no output for the step and re-runs it, and the naive effect crosses twice",
+  "receipt": "cp1_be064c2d616ea1e3dfc8eda0ef4969f535900f528bbc4e4ddc4e9dc0faa5bfb1",
+  "runtime": "dbos",
+  "trials": [
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    },
+    {
+      "after_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [
+          "effect_step",
+          "sentinel_step"
+        ],
+        "recovery_attempts": 2,
+        "status": "SUCCESS"
+      },
+      "barrier": "dbos_step_output_uncommitted",
+      "before_recovery": {
+        "name": "hidden_workflow",
+        "outputs": [],
+        "recovery_attempts": 1,
+        "status": "PENDING"
+      },
+      "db_agrees": true,
+      "distinct_digests": 1,
+      "effect_count": 2,
+      "observed": "duplicated",
+      "predicted": "duplicated",
+      "recovery_result": "done",
+      "recovery_returncode": 0,
+      "registry_winner": "",
+      "subject_returncode": -9
+    }
+  ],
+  "wilson95": [
+    0.8865,
+    1.0
+  ]
+}
