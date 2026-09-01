@@ -7,10 +7,11 @@ reading the out-of-process ledger.
 
 ## Substrate
 
-`brew install temporal` provides the CLI (server 1.31.2); `temporalio 1.32.0` via `uv --extra
-temporal`. The server is a local `temporal server start-dev --headless` (in-memory, no cloud). It is
-a separate process, so it survives the worker's self-SIGKILL - which is the whole mechanism: the
-worker is what crashes, the service is what redelivers.
+`brew install temporal` provides the CLI. This evidence used Temporal CLI 1.8.2 / server 1.31.2 and
+`temporalio 1.32.0` via `uv --extra temporal`. The server was local
+`temporal server start-dev --headless --ip 127.0.0.1 --port 7233 --db-filename /tmp/crashpoint-temporal.db`
+(no cloud). It is a separate process, so it survives the worker's self-SIGKILL - which is the whole
+mechanism: the worker is what crashes, the service is what redelivers.
 
 ## What was built
 
@@ -27,27 +28,35 @@ crashes at the barrier and the recovery worker (a fresh process, barrier "none")
 The workflow runs unsandboxed (`UnsandboxedWorkflowRunner`) - it is two sequential activities, so the
 sandbox added only a module re-import that fought this package's relative imports. Noted, not hidden.
 
-## What it measured (`uv run --extra temporal python -m crashpoint.harness.matrix --k 30 --runtimes r_tmp_naive,r_tmp_idem --name temporal`)
+For the two-phase row, the workflow computes the identity before scheduling the activity and passes
+that identity as an activity argument. A retry re-runs the activity and redraws the payload, but uses
+the same key at the ledger boundary.
+
+## What it measured (`uv run --extra temporal python -m crashpoint.harness.matrix --k 30 --runtimes r_tmp_naive,r_tmp_idem,r_tmp_nondet,r_tmp_twophase --name temporal`)
 
 ```
 runtime                before_effect           between     after_persist
 ------------------------------------------------------------------------
 temporal_naive             ONCE/ONCE           DUP/DUP         ONCE/ONCE
 temporal_idem              ONCE/ONCE         ONCE/ONCE         ONCE/ONCE
+temporal_nondet            ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE
+temporal_twophase          ONCE/ONCE         ONCE/ONCE         ONCE/ONCE
 
 disagreements (model wrong): []
 ```
 
-30 trials per cell, every cell at rate 1.0 (Wilson 95% [0.886, 1.000]), zero disagreements. The b1
-cell is the documented Temporal contract made concrete: "Activities may be executed more than once ...
-A non-idempotent Activity could adversely affect the state." The naive activity's external effect
-crosses twice; the idempotency-key boundary dedups the retry to exactly-once. Same finding as
-LangGraph, a different mechanism (a retry after a timeout, not a checkpoint race).
+30 trials per cell over four rows, every cell at rate 1.0 (Wilson 95% [0.886, 1.000]), zero
+disagreements. The b1 cell is the documented Temporal contract made concrete: activities are retried
+after the worker dies. The naive activity's external effect crosses twice; the idempotency-key
+boundary dedups the retry to exactly-once for a reproducible payload; the nondeterministic
+content-derived key diverges; the two-phase pre-call identity recovers exactly-once.
 
 ## Checks
 
-- `evidence/temporal.json` carries receipt `cp1_86b16976...`; `tests/test_discrimination.py`
+- `evidence/temporal.json` carries receipt
+  `cp1_6a057f0779fb2b98c60fe71c4b8e8111328a5385ff8069b1598f4d7fa50728a5`;
+  `tests/test_discrimination.py`
   re-derives it and asserts the naive/idem b1 contrast.
 - `uv run pytest` / `ruff` / `mypy` green.
 
-Next: DBOS (checkpoint-in-Postgres), then the discrimination meta-test over the full evidence.
+Current note: DBOS now has the same four-row family; see `results/05-dbos.md`.

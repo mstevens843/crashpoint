@@ -8,14 +8,19 @@ full because they are the point of building the model first: held fixed, it disc
 
 - `adapters/base.py` - the shared effect (`execute` on the ledger's invoke socket) and the crash
   (`os.kill(getpid, SIGKILL)`), so every adapter runs in its own subprocess and the ledger survives.
-- `adapters/controls.py` - the three controls plus the null baseline, each pinning one outcome.
+- `adapters/controls.py` - the original controls plus the null baseline, each pinning one outcome.
 - `adapters/langgraph_adapter.py` - a one-node durable graph whose node performs the effect, with a
   `RacingSaver(SqliteSaver)` that self-SIGKILLs at an enumerated barrier, run under
   `durability="sync"` (the #8039 mode).
 - `harness/trial.py`, `harness/matrix.py`, `harness/wilson.py` - one crash+recover trial, k trials
   per cell with a Wilson interval on the modal rate, the observed matrix beside the predicted one.
 
-## The controls (`uv run python -m crashpoint.harness.matrix --k 100 --runtimes r_null,r_dup,r_lost,r_idem --name controls`)
+## The controls (`uv run python -m crashpoint.harness.matrix --k 100 --runtimes r_null,r_dup,r_lost,r_idem,r_diverge,r_twophase --name controls`)
+
+Historical note: this entry originally predated the `r_diverge` and `r_twophase` controls and used
+older trial-count arithmetic. The current controls evidence is k=100 over 18 cells, 1,800 trials,
+and pins DUPLICATED / LOST / EXACTLY_ONCE / DIVERGED plus the two-phase recovery shape with zero
+disagreements; see `RESULTS.md`.
 
 ```
 runtime                before_effect           between     after_persist
@@ -24,28 +29,34 @@ null_baseline              ONCE/ONCE           DUP/DUP           DUP/DUP
 dup_control                ONCE/ONCE           DUP/DUP         ONCE/ONCE
 lost_control               ONCE/ONCE         LOST/LOST         ONCE/ONCE
 idem_reference             ONCE/ONCE         ONCE/ONCE         ONCE/ONCE
+diverge_control            ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE
+two_phase_reference        ONCE/ONCE         ONCE/ONCE         ONCE/ONCE
 
 disagreements (model wrong): []
 ```
 
-240 trials (the three barriers over four runtimes) at k=100, zero disagreements. The controls pin
-DUPLICATED, LOST, and EXACTLY_ONCE on demand, so the oracle is proven to have teeth: it is not
-reporting one outcome for everything.
+The current run covers the three barriers over six rows at k=100, with zero disagreements. The
+controls pin DUPLICATED, LOST, EXACTLY_ONCE, DIVERGED, and two-phase recovery on demand, so the
+oracle is proven to have teeth: it is not reporting one outcome for everything.
 
-## LangGraph (`uv run --extra langgraph python -m crashpoint.harness.matrix --k 50 --runtimes r_lg_naive,r_lg_idem --name langgraph`)
+## LangGraph (`uv run --extra langgraph python -m crashpoint.harness.matrix --k 50 --runtimes r_lg_naive,r_lg_idem,r_lg_nondet,r_lg_twophase --name langgraph`)
 
 ```
 runtime                before_effect           between     after_persist
 ------------------------------------------------------------------------
 langgraph_naive            ONCE/ONCE           DUP/DUP         ONCE/ONCE
 langgraph_idem             ONCE/ONCE         ONCE/ONCE         ONCE/ONCE
+langgraph_nondet           ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE
+langgraph_twophase         ONCE/ONCE         ONCE/ONCE         ONCE/ONCE
 ```
 
 The money cell is `langgraph_naive / between`: DUPLICATED, 50/50. This is `langchain-ai/langgraph#8039`
 reproduced against current behavior - a crash after the effect but before the completion is durable
 re-runs the node, and the naive external effect crosses twice. The `langgraph_idem` row is the fix:
 the same barrier, but the idempotent boundary dedups the re-run, so the effect is exactly-once at
-every barrier. Zero disagreements with the model.
+every barrier for a reproducible node. The `langgraph_nondet` row shows the content-derived key's
+limit at b1: DIVERGED. The `langgraph_twophase` row prepares the key in a durable predecessor node
+and recovers EXACTLY_ONCE at b1. Zero disagreements with the model.
 
 ## Correction 1 - the model caught a harness bug
 
@@ -75,5 +86,5 @@ docstring; the dropped-run behavior is noted here, not hidden in the calibration
 - `evidence/controls.json` and `evidence/langgraph.json` each carry a canonical-JSON SHA-256 receipt;
   `tests/test_discrimination.py` re-derives both.
 
-Next: the Temporal adapter (the at-least-once contrast) and the DBOS adapter (checkpoint-in-Postgres),
-graded against the same ledger and model.
+Current note: Temporal and DBOS now have the same naive/idempotent/nondeterministic/two-phase row
+family; see `RESULTS.md`, `results/04-temporal.md`, and `results/05-dbos.md`.

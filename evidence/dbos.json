@@ -148,15 +148,64 @@
         0.8865,
         1.0
       ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_dbos_twophase",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_dbos_twophase",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_dbos_twophase",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
     }
   ],
   "disagreements": [],
   "k": 30,
   "name": "dbos",
-  "receipt": "cp1_a48fe98eadfcfd9a8cf2480df00ed5c61e2439623c51578da9bc47c43fe3781c",
+  "receipt": "cp1_0793cb0b8ad9925a9ae547057b707355dc420ac763aec94ce1f7dd0f2334c220",
   "runtimes": [
     "r_dbos_naive",
     "r_dbos_idem",
-    "r_dbos_nondet"
+    "r_dbos_nondet",
+    "r_dbos_twophase"
   ]
 }

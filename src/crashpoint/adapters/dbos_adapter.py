@@ -15,10 +15,11 @@ reused Postgres only touches this trial's workflow. The Postgres URL comes from 
 (default: a local dev container on 5433).
 
 Run: `python -m crashpoint.adapters.dbos_adapter --ledger <sock> --intent <id>
---mode naive|idem|nondet --barrier b0|b1|b2|none --recovery 0|1 --checkpoint <path>`.
+--mode naive|idem|nondet|twophase --barrier b0|b1|b2|none --recovery 0|1 --checkpoint <path>`.
 
 `nondet` is `idem` plus a value drawn inside the step, so the recovery re-run of an uncommitted step
-re-runs the draw with it.
+re-runs the draw with it. `twophase` commits a prepared-identity step first, then uses that key
+inside the nondeterministic effect step.
 """
 
 from __future__ import annotations
@@ -30,7 +31,7 @@ import time
 
 from dbos import DBOS, DBOSConfig, SetWorkflowID
 
-from .base import crash, effect
+from .base import crash, effect, two_phase_key
 
 # Process-level state, set from the CLI before launch. The steps read these globals; only _BARRIER
 # differs between the crash process (real barrier) and the recovery process ("none").
@@ -39,15 +40,21 @@ _LEDGER = ""
 _INTENT = ""
 _IDEMPOTENT = False
 _NONDET = False
+_TWO_PHASE = False
 
 _DEFAULT_URL = "postgresql://cpuser:dbos@localhost:5433/cpdbos"
 
 
 @DBOS.step()
-def effect_step() -> str:
+def prepare_identity_step() -> str:
+    return two_phase_key(_INTENT)
+
+
+@DBOS.step()
+def effect_step(key_override: str | None = None) -> str:
     if _BARRIER == "b0":
         crash()  # before the effect: recovery re-runs the step, the effect crosses once
-    effect(_LEDGER, _INTENT, _IDEMPOTENT, _NONDET)
+    effect(_LEDGER, _INTENT, _IDEMPOTENT, _NONDET, key_override=key_override)
     if _BARRIER == "b1":
         crash()  # after the effect, before the step output commits: recovery re-runs the effect
     return "ok"
@@ -62,7 +69,8 @@ def sentinel_step() -> str:
 
 @DBOS.workflow()
 def charge_workflow() -> str:
-    effect_step()
+    key = prepare_identity_step() if _TWO_PHASE else None
+    effect_step(key)
     sentinel_step()
     return "done"
 
@@ -90,11 +98,11 @@ def _recovery_run(wfid: str) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    global _BARRIER, _LEDGER, _INTENT, _IDEMPOTENT, _NONDET
+    global _BARRIER, _LEDGER, _INTENT, _IDEMPOTENT, _NONDET, _TWO_PHASE
     ap = argparse.ArgumentParser()
     ap.add_argument("--ledger", required=True)
     ap.add_argument("--intent", required=True)
-    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet"])
+    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet", "twophase"])
     ap.add_argument("--barrier", required=True, choices=["b0", "b1", "b2", "none"])
     ap.add_argument("--recovery", type=int, default=0)
     ap.add_argument("--checkpoint", required=True)  # per-trial unique path -> workflow/executor id
@@ -103,8 +111,9 @@ def main(argv: list[str] | None = None) -> int:
     _BARRIER = args.barrier
     _LEDGER = args.ledger
     _INTENT = args.intent
-    _IDEMPOTENT = args.mode in ("idem", "nondet")
-    _NONDET = args.mode == "nondet"
+    _IDEMPOTENT = args.mode in ("idem", "nondet", "twophase")
+    _NONDET = args.mode in ("nondet", "twophase")
+    _TWO_PHASE = args.mode == "twophase"
     digest = hashlib.sha256(args.checkpoint.encode()).hexdigest()[:16]
     wfid = "cp-" + digest
     _configure(args.db_url, "cp-exec-" + digest)

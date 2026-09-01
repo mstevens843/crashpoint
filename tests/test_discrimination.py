@@ -5,7 +5,7 @@ file's receipt is re-derived from its body, so a hand-edited number fails here.
 
 What it pins:
   - the receipt re-derives (the numbers were not edited after the run);
-  - the three controls pin DUPLICATED / LOST / EXACTLY_ONCE (the oracle discriminates);
+  - the controls pin DUPLICATED / LOST / EXACTLY_ONCE / DIVERGED (the oracle discriminates);
   - both failure modes - a doubled effect and a lost one - appear in the evidence;
   - for every real runtime, the naive effect DUPLICATES at the lethal b1 barrier and the idempotent
     boundary recovers EXACTLY_ONCE (the fix works);
@@ -35,6 +35,12 @@ _NONDET = {
     "langgraph": ("r_lg_idem", "r_lg_nondet"),
     "temporal": ("r_tmp_idem", "r_tmp_nondet"),
     "dbos": ("r_dbos_idem", "r_dbos_nondet"),
+}
+_TWO_PHASE = {
+    "controls": "r_twophase",
+    "langgraph": "r_lg_twophase",
+    "temporal": "r_tmp_twophase",
+    "dbos": "r_dbos_twophase",
 }
 
 
@@ -164,3 +170,15 @@ def test_diverged_is_present_somewhere_in_the_evidence() -> None:
     if "diverged" not in outcomes:
         pytest.skip("evidence predates the nondeterministic rows")
     assert "diverged" in outcomes
+
+
+@pytest.mark.parametrize("name", list(_TWO_PHASE))
+def test_two_phase_rows_recover_if_present(name: str) -> None:
+    rec = _load("controls" if name == "controls" else name)
+    if rec is None:
+        pytest.skip(f"{name} evidence absent")
+    m = _modal(rec)
+    rid = _TWO_PHASE[name]
+    if (rid, "b1") not in m:
+        pytest.skip(f"{name} evidence predates the two-phase row")
+    assert m[(rid, "b1")] == "exactly_once"

@@ -2,10 +2,11 @@
 matrix derived from it.
 
 WHAT THIS IS. The model of the durable-execution lifecycle, written before any runtime is crashed.
-Given a runtime's declared (durability, persist order, effect mode) and a barrier phase, ``predict``
-returns EXACTLY_ONCE / DUPLICATED / LOST with the one-line reason that produced it. It reads
-nothing, spawns nothing, crashes nothing; it is a total function over the enums in ``layers.py`` and
-the data in ``runtimes.py`` and ``barriers.py``. That purity is enforced by the contract test.
+Given a runtime's declared (durability, persist order, effect mode, determinism) and a barrier
+phase, ``predict`` returns EXACTLY_ONCE / DUPLICATED / LOST / DIVERGED with the one-line reason. It
+reads nothing, spawns nothing, crashes nothing; it is a total function over the enums in
+``layers.py`` and the data in ``runtimes.py`` and ``barriers.py``. That purity is enforced by the
+contract test.
 
 WHY A DERIVATION AND NOT A TABLE. A hand-filled matrix is unfalsifiable. Here every cell is the
 output of the rule its (order, phase) selects, reading exactly the properties that matter, so a
@@ -23,10 +24,14 @@ which assumes replaying the step reproduces the same effect. For a NONDETERMINIS
 not: the payload carries a value that did not exist until the step ran, so the re-run derives a
 different key, the dedup misses, and the second crossing is a different action - DIVERGED, not
 DUPLICATED and certainly not EXACTLY_ONCE. This is why the idempotent branch is guarded by
-determinism and not by effect mode alone. Note where it does NOT bite: at BEFORE only the recovery
-run's effect ever crosses, and at AFTER only the crashed run's did, so a single crossing is a
-single crossing whether or not it was reproducible. Nondeterminism costs nothing except at the one
-barrier where the effect happens twice.
+determinism and not by effect mode alone.
+
+THE TWO-PHASE BRANCH. If the identity is prepared before the nondeterministic draw and replay can
+recover that identity, the b1 re-run may redraw the payload but still presents the same key at the
+external boundary. The second attempt is deduped before it crosses, so TWO_PHASE closes the DIVERGED
+case measured by the content-derived idempotent branch. Note where nondeterminism otherwise does
+NOT bite: at BEFORE only the recovery run's effect ever crosses, and at AFTER only the crashed run's
+did, so a single crossing is a single crossing whether or not it was reproducible.
 """
 
 from __future__ import annotations
@@ -78,6 +83,12 @@ def _predict(rt: Runtime, b: Barrier) -> tuple[Outcome, str]:
         )
     # effect_then_persist or the LangGraph race: the effect crossed, the completion did not persist.
     if rt.determinism is Determinism.NONDETERMINISTIC:
+        if rt.effect_mode is EffectMode.TWO_PHASE:
+            return (
+                Outcome.EXACTLY_ONCE,
+                "the step redraws, but the effect identity was prepared before the draw and "
+                "recovered on replay; the external boundary dedups the second attempt",
+            )
         # The re-run redraws, so it neither reproduces the first effect nor derives its key. An
         # idempotent boundary has nothing to match on; a naive one never had one. Either way the
         # two crossings differ, which is a worse failure than a duplicate and a distinct outcome.
@@ -87,7 +98,7 @@ def _predict(rt: Runtime, b: Barrier) -> tuple[Outcome, str]:
             "payload, so the derived key differs, the dedup misses, and the second crossing is a "
             "different action",
         )
-    if rt.effect_mode is EffectMode.IDEMPOTENT:
+    if rt.effect_mode in (EffectMode.IDEMPOTENT, EffectMode.TWO_PHASE):
         return (
             Outcome.EXACTLY_ONCE,
             "recovery re-runs the step, but the idempotent boundary dedups the second attempt",

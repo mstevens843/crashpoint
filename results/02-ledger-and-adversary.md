@@ -1,9 +1,13 @@
 # 02 - The out-of-process ledger, the oracle, and the reflexive adversary
 
 Working record. The ground-truth machinery was built before any real runtime was crashed: a separate
-process that records the true side-effect count, a fail-closed classifier over it, and the two
-adversaries that prove it cannot be read or forged from the subject's side. Every line below was
+process that records the true side-effect count, a fail-closed classifier over it, and adversaries
+that exercise whether it can be read or forged from the subject's side. Every line below was
 produced by running the command shown and reading its output.
+
+Current note (2026-09-01): a stronger Linux UID-drop adversary now exists in
+`src/crashpoint/adversaries/isolation.py`. It reports BLOCKED on the macOS host used for this run,
+so the current macOS claim remains the socket-privilege boundary, not OS-level UID isolation.
 
 ## What was built
 
@@ -49,8 +53,8 @@ Read directly:
 
 ## Checks
 
-- `uv run pytest` green, including `test_ledger` (record/attempt/dedup/chain), `test_oracle` (the four
-  outcomes + VOID on a broken chain), and the idempotency forbidden-field test (a key built over a
+- `uv run pytest` green, including `test_ledger` (record/attempt/dedup/chain), `test_oracle` (the
+  measured outcomes + VOID on a broken chain), and the idempotency forbidden-field test (a key built over a
   per-attempt field is rejected).
 - ruff clean, mypy --strict clean.
 

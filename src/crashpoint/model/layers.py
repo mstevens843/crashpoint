@@ -87,15 +87,19 @@ class PersistOrder(Enum):
 
 
 class EffectMode(Enum):
-    """Is the external effect made idempotent at the ledger boundary?
+    """How the external effect identifies itself at the ledger boundary.
 
     NAIVE      - the effect fires directly; a re-run crosses the boundary again.
     IDEMPOTENT - the effect is keyed by a content-derived idempotency key and deduped at the ledger,
-                 so a re-run records a second ATTEMPT but only one side effect.
+                 so a deterministic re-run records a second ATTEMPT but only one side effect.
+    TWO_PHASE  - the effect uses an identity prepared before the nondeterministic draw and carried
+                 through the external effect. A replay can redraw the payload, but it reuses the
+                 already-prepared identity, so the second attempt is deduped before it crosses.
     """
 
     NAIVE = "naive"
     IDEMPOTENT = "idempotent"
+    TWO_PHASE = "two_phase"
 
 
 class Determinism(Enum):

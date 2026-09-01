@@ -25,6 +25,22 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/crashpoint"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/evidence",
+    "/results",
+    "/README.md",
+    "/RESULTS.md",
+    "/DISCLOSURE.md",
+    "/LICENSE",
+    "/pyproject.toml",
+    "/uv.lock",
+    "/repro_pre_first_checkpoint_loss.py",
+    "/dbos_duplicate_workflow_recovery_probe.py",
+]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

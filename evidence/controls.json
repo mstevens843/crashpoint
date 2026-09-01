@@ -244,17 +244,66 @@
         0.963,
         1.0
       ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_twophase",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_twophase",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 100
+      },
+      "k": 100,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_twophase",
+      "wilson95": [
+        0.963,
+        1.0
+      ]
     }
   ],
   "disagreements": [],
   "k": 100,
   "name": "controls",
-  "receipt": "cp1_9cfdda4cbe54de5bf8f2889cdc49ee08ffd4e73106506f8834327ee776d1ac93",
+  "receipt": "cp1_667ba86d7791b962cbf291518d38c0339307e4ca6b0c81a50332f077fbd20edc",
   "runtimes": [
     "r_null",
     "r_dup",
     "r_lost",
     "r_idem",
-    "r_diverge"
+    "r_diverge",
+    "r_twophase"
   ]
 }

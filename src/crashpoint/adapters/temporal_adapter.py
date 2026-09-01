@@ -16,12 +16,13 @@ The workflow id is derived from the per-trial checkpoint path so trials never co
 server; the ledger intent is separate and drives the out-of-process side-effect count.
 
 Run: `python -m crashpoint.adapters.temporal_adapter --ledger <sock> --intent <id>
---mode naive|idem|nondet --barrier b0|b1|b2|none --recovery 0|1 --checkpoint <path>
+--mode naive|idem|nondet|twophase --barrier b0|b1|b2|none --recovery 0|1 --checkpoint <path>
 [--address host:port]`.
 
 `nondet` is `idem` plus a value drawn inside the activity. Temporal journals an activity's RESULT,
 which restores determinism for the WORKFLOW on replay; it does not restore it for a RETRY of the
-activity, and the retry is what re-runs the draw.
+activity, and the retry is what re-runs the draw. `twophase` computes a key before scheduling the
+activity and passes it as an activity argument, so retry redraws the memo but reuses the identity.
 """
 
 from __future__ import annotations
@@ -37,7 +38,7 @@ from temporalio.common import RetryPolicy
 from temporalio.worker import UnsandboxedWorkflowRunner, Worker
 
 with workflow.unsafe.imports_passed_through():
-    from .base import crash, effect
+    from .base import crash, effect, two_phase_key
 
 # Process-level barrier: set from the CLI. The crash worker carries the real barrier; the recovery
 # worker carries "none", so the re-run of an activity in recovery never crashes again.
@@ -48,11 +49,15 @@ _TASK_QUEUE_PREFIX = "cp-tq-"
 
 @activity.defn
 async def effect_activity(
-    ledger: str, intent: str, idempotent: bool, nondeterministic: bool = False
+    ledger: str,
+    intent: str,
+    idempotent: bool,
+    nondeterministic: bool = False,
+    key_override: str | None = None,
 ) -> str:
     if _BARRIER == "b0":
         crash()  # before the effect: the activity is retried, the effect crosses once
-    effect(ledger, intent, idempotent, nondeterministic)
+    effect(ledger, intent, idempotent, nondeterministic, key_override=key_override)
     if _BARRIER == "b1":
         crash()  # after the effect, before completion is reported: the retry re-runs the effect
     return "ok"
@@ -69,12 +74,17 @@ async def sentinel_activity() -> str:
 class CrashpointWorkflow:
     @workflow.run
     async def run(
-        self, ledger: str, intent: str, idempotent: bool, nondeterministic: bool = False
+        self,
+        ledger: str,
+        intent: str,
+        idempotent: bool,
+        nondeterministic: bool = False,
+        key_override: str | None = None,
     ) -> str:
         rp = RetryPolicy(maximum_attempts=100, initial_interval=timedelta(milliseconds=200))
         await workflow.execute_activity(
             effect_activity,
-            args=[ledger, intent, idempotent, nondeterministic],
+            args=[ledger, intent, idempotent, nondeterministic, key_override],
             start_to_close_timeout=timedelta(seconds=2),
             retry_policy=rp,
         )
@@ -100,11 +110,12 @@ def _worker(client: Client, task_queue: str) -> Worker:
 
 
 async def _crash_run(client: Client, tq: str, wfid: str, ledger: str, intent: str,
-                     idempotent: bool, nondeterministic: bool) -> None:
+                     idempotent: bool, nondeterministic: bool,
+                     key_override: str | None) -> None:
     async with _worker(client, tq):
         await client.start_workflow(
             CrashpointWorkflow.run,
-            args=[ledger, intent, idempotent, nondeterministic],
+            args=[ledger, intent, idempotent, nondeterministic, key_override],
             id=wfid,
             task_queue=tq,
         )
@@ -118,12 +129,13 @@ async def _recovery_run(client: Client, tq: str, wfid: str) -> None:
 
 
 async def _run(address: str, recovery: bool, tq: str, wfid: str, ledger: str, intent: str,
-               idempotent: bool, nondeterministic: bool) -> None:
+               idempotent: bool, nondeterministic: bool, key_override: str | None) -> None:
     client = await Client.connect(address)
     if recovery:
         await _recovery_run(client, tq, wfid)
     else:
-        await _crash_run(client, tq, wfid, ledger, intent, idempotent, nondeterministic)
+        await _crash_run(client, tq, wfid, ledger, intent, idempotent, nondeterministic,
+                         key_override)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -131,19 +143,20 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--ledger", required=True)
     ap.add_argument("--intent", required=True)
-    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet"])
+    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet", "twophase"])
     ap.add_argument("--barrier", required=True, choices=["b0", "b1", "b2", "none"])
     ap.add_argument("--recovery", type=int, default=0)
     ap.add_argument("--checkpoint", required=True)  # per-trial unique path -> workflow id
     ap.add_argument("--address", default="localhost:7233")
     args = ap.parse_args(argv)
     _BARRIER = args.barrier
-    idempotent = args.mode in ("idem", "nondet")
-    nondeterministic = args.mode == "nondet"
+    idempotent = args.mode in ("idem", "nondet", "twophase")
+    nondeterministic = args.mode in ("nondet", "twophase")
+    key_override = two_phase_key(args.intent) if args.mode == "twophase" else None
     wfid = "cp-" + hashlib.sha256(args.checkpoint.encode()).hexdigest()[:16]
     tq = _TASK_QUEUE_PREFIX + hashlib.sha256(args.checkpoint.encode()).hexdigest()[:16]
     asyncio.run(_run(args.address, bool(args.recovery), tq, wfid, args.ledger, args.intent,
-                     idempotent, nondeterministic))
+                     idempotent, nondeterministic, key_override))
     return 0
 
 

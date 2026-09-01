@@ -15,9 +15,11 @@ Recovery re-invokes with the same thread and checkpoint file, and LangGraph resu
 
 The `nondet` mode is `idem` plus a value drawn inside the node, so the b1 re-run derives a
 different key: the same idempotent boundary, on a node that is not reproducible from its inputs.
+The `twophase` mode inserts a durable prepare node before the draw; the charge node may redraw on
+re-run, but it reuses the prepared key from checkpointed state.
 
 Run: `python -m crashpoint.adapters.langgraph_adapter --ledger <sock> --checkpoint <db>
---intent <id> --mode naive|idem|nondet --barrier b0|b1|b2|none --recovery 0|1`.
+--intent <id> --mode naive|idem|nondet|twophase --barrier b0|b1|b2|none --recovery 0|1`.
 """
 
 from __future__ import annotations
@@ -26,20 +28,22 @@ import argparse
 import sqlite3
 from typing import Any, TypedDict
 
-from .base import crash, effect
+from .base import crash, effect, two_phase_key
 
 # Process-global flags shared between the node and the RacingSaver (one process per run).
 _STATE = {"effect_done": False, "writes_persisted": False, "crashed": False}
 
 
-class _S(TypedDict):
+class _S(TypedDict, total=False):
     started: bool
     done: bool
+    effect_key: str
 
 
 def _build(
     ledger: str, intent: str, mode: str, barrier: str, recovery: bool, checkpoint: str
 ) -> Any:
+    _STATE.update({"effect_done": False, "writes_persisted": False, "crashed": False})
     from langgraph.checkpoint.sqlite import SqliteSaver
     from langgraph.graph import END, START, StateGraph
 
@@ -67,14 +71,30 @@ def _build(
                 crash()  # the completion is durable; recovery will skip the node
             return r
 
-    def node(state: _S) -> _S:
-        effect(ledger, intent, mode in ("idem", "nondet"), mode == "nondet")
+    def charge_node(state: _S) -> _S:
+        key = state["effect_key"] if mode == "twophase" else None
+        effect(
+            ledger,
+            intent,
+            mode in ("idem", "nondet", "twophase"),
+            mode in ("nondet", "twophase"),
+            key_override=key,
+        )
         _STATE["effect_done"] = True
-        return {"started": True, "done": True}
+        return {"done": True}
+
+    def prepare_node(state: _S) -> _S:
+        return {"started": True, "effect_key": two_phase_key(intent)}
 
     g = StateGraph(_S)
-    g.add_node("charge", node)
-    g.add_edge(START, "charge")
+    if mode == "twophase":
+        g.add_node("prepare", prepare_node)
+        g.add_node("charge", charge_node)
+        g.add_edge(START, "prepare")
+        g.add_edge("prepare", "charge")
+    else:
+        g.add_node("charge", charge_node)
+        g.add_edge(START, "charge")
     g.add_edge("charge", END)
 
     conn = sqlite3.connect(checkpoint, check_same_thread=False)
@@ -88,7 +108,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--ledger", required=True)
     ap.add_argument("--checkpoint", required=True)
     ap.add_argument("--intent", required=True)
-    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet"])
+    ap.add_argument("--mode", required=True, choices=["naive", "idem", "nondet", "twophase"])
     ap.add_argument("--barrier", required=True, choices=["b0", "b1", "b2", "none"])
     ap.add_argument("--recovery", type=int, default=0)
     args = ap.parse_args(argv)

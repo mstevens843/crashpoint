@@ -19,6 +19,7 @@ from crashpoint.harness.recomputability import (
     NOT_RECOMPUTABLE,
     RECOMPUTABLE,
     recompute_from_durable_inputs,
+    recompute_prepared_identity,
     verdict,
 )
 from crashpoint.ledger.idempotency import (
@@ -31,10 +32,16 @@ from crashpoint.model.runtimes import RUNTIMES
 
 _NONDET_PAIRS = (("r_lg_idem", "r_lg_nondet"), ("r_tmp_idem", "r_tmp_nondet"),
                  ("r_dbos_idem", "r_dbos_nondet"), ("r_idem", "r_diverge"))
+_TWO_PHASE = ("r_twophase", "r_lg_twophase", "r_tmp_twophase", "r_dbos_twophase")
 
 
-def _nondeterministic() -> list[str]:
-    return [r.id for r in RUNTIMES if r.determinism is Determinism.NONDETERMINISTIC]
+def _content_derived_nondeterministic() -> list[str]:
+    return [
+        r.id
+        for r in RUNTIMES
+        if r.determinism is Determinism.NONDETERMINISTIC
+        and r.effect_mode is EffectMode.IDEMPOTENT
+    ]
 
 
 def test_the_diverge_control_pins_the_new_outcome() -> None:
@@ -43,18 +50,23 @@ def test_the_diverge_control_pins_the_new_outcome() -> None:
     assert PREDICTED["r_diverge"]["b1"].outcome is Outcome.DIVERGED
 
 
-def test_every_nondeterministic_runtime_diverges_at_the_lethal_barrier() -> None:
-    rows = _nondeterministic()
+def test_every_content_derived_nondeterministic_runtime_diverges_at_the_lethal_barrier() -> None:
+    rows = _content_derived_nondeterministic()
     assert rows
     for rid in rows:
         assert PREDICTED[rid]["b1"].outcome is Outcome.DIVERGED, rid
+
+
+def test_two_phase_identity_recovers_the_nondeterministic_lethal_barrier() -> None:
+    for rid in _TWO_PHASE:
+        assert PREDICTED[rid]["b1"].outcome is Outcome.EXACTLY_ONCE, rid
 
 
 def test_nondeterminism_costs_nothing_where_the_effect_crosses_once() -> None:
     # At b0 only the recovery run's effect crosses and at b2 only the crashed run's did. A single
     # crossing is a single crossing whether or not it was reproducible - so the axis must NOT bleed
     # into the calibration columns.
-    for rid in _nondeterministic():
+    for rid in _content_derived_nondeterministic() + list(_TWO_PHASE):
         assert PREDICTED[rid]["b0"].outcome is Outcome.EXACTLY_ONCE, rid
         assert PREDICTED[rid]["b2"].outcome is Outcome.EXACTLY_ONCE, rid
 
@@ -77,19 +89,22 @@ def test_determinism_is_the_only_difference_that_breaks_the_idempotent_boundary(
         assert PREDICTED[nondet_id]["b1"].outcome is Outcome.DIVERGED
 
 
-def test_the_second_floor_no_idempotent_boundary_closes_b1_for_a_nondeterministic_step() -> None:
+def test_the_second_floor_no_content_derived_boundary_closes_b1_for_nondeterminism() -> None:
     # The first floor was "no naive effect closes b1". This is the second, and it is the one that
     # matters for agent runtimes: the documented fix does not close b1 either, once the step stops
     # being reproducible. Named, not hidden.
-    for rid in _nondeterministic():
+    for rid in _content_derived_nondeterministic():
         assert PREDICTED[rid]["b1"].outcome is not Outcome.EXACTLY_ONCE, rid
 
 
 def test_recomputability_verdicts() -> None:
     expected = recompute_from_durable_inputs("order-1")
+    prepared = recompute_prepared_identity("order-1")
     assert verdict([expected], "order-1") == RECOMPUTABLE
     assert verdict([expected, expected], "order-1") == RECOMPUTABLE
     assert verdict([expected, "cp1key_drawn-at-step-time"], "order-1") == NOT_RECOMPUTABLE
+    assert verdict([prepared, prepared], "order-1", expected_key=prepared) == RECOMPUTABLE
+    assert verdict([prepared], "order-1") == NOT_RECOMPUTABLE
     assert verdict([None, None], "order-1") == NO_IDENTITY  # the naive arm has no identity at all
     assert verdict([], "order-1") == NO_IDENTITY
 

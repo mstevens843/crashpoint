@@ -148,15 +148,64 @@
         0.9286,
         1.0
       ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_twophase",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_twophase",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 50
+      },
+      "k": 50,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_twophase",
+      "wilson95": [
+        0.9286,
+        1.0
+      ]
     }
   ],
   "disagreements": [],
   "k": 50,
   "name": "langgraph",
-  "receipt": "cp1_596991b5fbf3246bbc9a1553e6a9265aee4c754640dcc2eddbbe3e04974ca82c",
+  "receipt": "cp1_bffad8a0407e66ad6f2dc5ad4a3f39a96d7528ce4e4388ec6be1f9059be13073",
   "runtimes": [
     "r_lg_naive",
     "r_lg_idem",
-    "r_lg_nondet"
+    "r_lg_nondet",
+    "r_lg_twophase"
   ]
 }

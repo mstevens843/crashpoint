@@ -2,11 +2,11 @@
 
 A conformance kit that reported every runtime clean, or every runtime broken, would be useless and
 look exactly like a green run. So this asserts, over the PREDICTION: the BEFORE and AFTER are
-exactly-once for every durable runtime (the calibration columns hold); the three controls pin the
-three non-VOID outcomes (the oracle has teeth); every NAIVE durable runtime duplicates at the lethal
-barrier and the idempotent boundary recovers it (the finding and its fix); and the honest floor -
-no naive durable runtime closes the lethal barrier - is named. The harness asserts the same shape
-over OBSERVED runs later.
+exactly-once for every durable runtime (the calibration columns hold); the controls pin the non-VOID
+outcomes (the oracle has teeth); every NAIVE durable runtime duplicates at the lethal barrier, the
+content-derived idempotent boundary recovers it only for reproducible steps, and the two-phase
+boundary recovers the nondeterministic case. The harness asserts the same shape over OBSERVED runs
+later.
 """
 
 from __future__ import annotations
@@ -26,11 +26,14 @@ def test_before_and_after_are_exactly_once_for_every_durable_runtime() -> None:
         assert PREDICTED[rid]["b2"].outcome is Outcome.EXACTLY_ONCE
 
 
-def test_the_three_controls_pin_the_three_outcomes() -> None:
-    # dup_control -> DUPLICATED, lost_control -> LOST, idem_reference -> EXACTLY_ONCE, all at b1.
+def test_the_controls_pin_the_non_void_outcomes() -> None:
+    # dup_control -> DUPLICATED, lost_control -> LOST, idem_reference -> EXACTLY_ONCE,
+    # diverge_control -> DIVERGED, all at b1.
     assert PREDICTED["r_dup"]["b1"].outcome is Outcome.DUPLICATED
     assert PREDICTED["r_lost"]["b1"].outcome is Outcome.LOST
     assert PREDICTED["r_idem"]["b1"].outcome is Outcome.EXACTLY_ONCE
+    assert PREDICTED["r_diverge"]["b1"].outcome is Outcome.DIVERGED
+    assert PREDICTED["r_twophase"]["b1"].outcome is Outcome.EXACTLY_ONCE
 
 
 def test_both_failure_modes_appear_somewhere() -> None:
@@ -58,6 +61,11 @@ def test_the_idempotent_boundary_recovers_the_lethal_barrier() -> None:
         idem = PREDICTED[f"r_{base}_idem"]["b1"].outcome
         assert naive is Outcome.DUPLICATED
         assert idem is Outcome.EXACTLY_ONCE
+
+
+def test_the_two_phase_boundary_recovers_nondeterministic_b1() -> None:
+    for rid in ("r_twophase", "r_lg_twophase", "r_tmp_twophase", "r_dbos_twophase"):
+        assert PREDICTED[rid]["b1"].outcome is Outcome.EXACTLY_ONCE
 
 
 def test_the_honest_floor_no_naive_durable_runtime_closes_the_lethal_barrier() -> None:

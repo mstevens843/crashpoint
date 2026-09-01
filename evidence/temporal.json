@@ -148,15 +148,64 @@
         0.8865,
         1.0
       ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_tmp_twophase",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_tmp_twophase",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 30
+      },
+      "k": 30,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_tmp_twophase",
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
     }
   ],
   "disagreements": [],
   "k": 30,
   "name": "temporal",
-  "receipt": "cp1_73f26127aeb6169ebc140ea5c48bfb447277e03061860b325a18887d0fadb50d",
+  "receipt": "cp1_6a057f0779fb2b98c60fe71c4b8e8111328a5385ff8069b1598f4d7fa50728a5",
   "runtimes": [
     "r_tmp_naive",
     "r_tmp_idem",
-    "r_tmp_nondet"
+    "r_tmp_nondet",
+    "r_tmp_twophase"
   ]
 }

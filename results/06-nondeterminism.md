@@ -1,7 +1,9 @@
 # 06 - the nondeterminism conditional, and a fifth outcome
 
 Working record. This entry exists because a reviewer named a limit the first five entries did not
-measure, and the limit turned out to be real.
+measure, and the limit turned out to be real. Current note: the two-phase candidate named at the end
+of the first version of this entry has now been implemented and crash-tested; see
+`results/07-two-phase-and-open-boundaries.md`.
 
 ## Where it came from
 
@@ -29,7 +31,7 @@ during the step has exactly the property he describes, whether a sampler or `uui
 a real model here would cost money, add latency and an API key to every trial, and diverge only when
 the sampler happened to - where a draw diverges on every trial, deterministically. So the
 nondeterministic arm is a drawn `memo` field, and the honest statement of what that is stands in
-`adapters/base.py::_draw`.
+`adapters/base.py::draw_memo`.
 
 The `memo` name matters. It is ordinary semantic content - the memo line an agent would have a model
 write - so it is legitimately part of what the action IS, and therefore legitimately part of a
@@ -49,9 +51,11 @@ Two additions, written and rendered before the adapters, the oracle change, and 
 - **A `Determinism` axis**, defined by his test: is the effect reproducible from the step's durable
   inputs alone?
 
-The rule, in `predict.py`: at the BETWEEN barrier, a nondeterministic step is `DIVERGED` regardless
-of effect mode - the re-run redraws, so it neither reproduces the first effect nor derives its key.
-An idempotent boundary has nothing to match on; a naive one never had one.
+The rule, in `predict.py`: at the BETWEEN barrier, a nondeterministic step with a content-derived key
+is `DIVERGED` - the re-run redraws, so it neither reproduces the first effect nor derives its key.
+An idempotent boundary has nothing to match on; a naive one never had one. The later `TWO_PHASE`
+effect mode is the exception: it prepares the key before the draw, so replay can recover the identity
+even though the content redraws.
 
 The prediction also says where nondeterminism costs **nothing**: at b0 only the recovery run's
 effect ever crosses, and at b2 only the crashed run's did. One crossing is one crossing whether or
@@ -77,6 +81,14 @@ GUARD - the existing forbidden-identity-field check:
    "guard_rejects_a_classic_per_attempt_payload": true}
 ```
 
+Current output also includes the two-phase predicate:
+
+```
+PROBE C - two-phase nondeterministic step (two_phase_reference):
+  {"distinct_effects_crossed": 1, "distinct_keys_used": 1, "outcome_at_b1": "exactly_once",
+   "recomputability": "RECOMPUTABLE", "runtime": "r_twophase"}
+```
+
 Two things worth stating separately:
 
 1. **The predicate is a LEADING indicator.** It decided both cases without a crash, a recovery, or k
@@ -93,13 +105,13 @@ Four runs, all re-run from scratch so the evidence is coherent with the new rows
 
 ```
 uv run python -m crashpoint.harness.matrix --k 100 \
-  --runtimes r_null,r_dup,r_lost,r_idem,r_diverge --name controls
+  --runtimes r_null,r_dup,r_lost,r_idem,r_diverge,r_twophase --name controls
 uv run --extra langgraph python -m crashpoint.harness.matrix --k 50 \
-  --runtimes r_lg_naive,r_lg_idem,r_lg_nondet --name langgraph
+  --runtimes r_lg_naive,r_lg_idem,r_lg_nondet,r_lg_twophase --name langgraph
 uv run --extra temporal python -m crashpoint.harness.matrix --k 30 \
-  --runtimes r_tmp_naive,r_tmp_idem,r_tmp_nondet --name temporal
+  --runtimes r_tmp_naive,r_tmp_idem,r_tmp_nondet,r_tmp_twophase --name temporal
 uv run --extra dbos python -m crashpoint.harness.matrix --k 30 \
-  --runtimes r_dbos_naive,r_dbos_idem,r_dbos_nondet --name dbos
+  --runtimes r_dbos_naive,r_dbos_idem,r_dbos_nondet,r_dbos_twophase --name dbos
 ```
 
 ```
@@ -110,20 +122,24 @@ dup_control                ONCE/ONCE           DUP/DUP         ONCE/ONCE    k=10
 lost_control               ONCE/ONCE         LOST/LOST         ONCE/ONCE    k=100
 idem_reference             ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=100
 diverge_control            ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE    k=100
+two_phase_reference        ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=100
 langgraph_naive            ONCE/ONCE           DUP/DUP         ONCE/ONCE    k=50
 langgraph_idem             ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=50
 langgraph_nondet           ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE    k=50
+langgraph_twophase         ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=50
 temporal_naive             ONCE/ONCE           DUP/DUP         ONCE/ONCE    k=30
 temporal_idem              ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=30
 temporal_nondet            ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE    k=30
+temporal_twophase          ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=30
 dbos_naive                 ONCE/ONCE           DUP/DUP         ONCE/ONCE    k=30
 dbos_idem                  ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=30
 dbos_nondet                ONCE/ONCE   DIVERGE/DIVERGE         ONCE/ONCE    k=30
+dbos_twophase              ONCE/ONCE         ONCE/ONCE         ONCE/ONCE    k=30
 
 disagreements (model wrong): []
 ```
 
-2,490 crash+recover trials, every cell at rate 1.0, zero disagreements on any runtime. The model was
+3,120 crash+recover trials, every cell at rate 1.0, zero disagreements on any runtime. The model was
 written and rendered before the adapters, the oracle change, and the probe existed, and it was not
 corrected once - the b1 rule it predicts is the rule every measured cell landed on.
 
@@ -132,7 +148,8 @@ corrected once - the b1 rule it predicts is the rule every measured cell landed 
 Read the three `*_idem` / `*_nondet` pairs as pairs. Same engine, same barrier, same idempotent
 boundary, same content-derived key. The one declared property that changes is whether the step is
 reproducible from its durable inputs, and the b1 cell goes from `EXACTLY_ONCE` to `DIVERGED` on all
-three runtimes.
+three runtimes. Read the `*_twophase` rows separately: they change the identity rule by recording the
+identity before the nondeterministic draw, and b1 returns to `EXACTLY_ONCE`.
 
 So the fix published in entries 03-05 - "an idempotent dedup-by-key boundary is the only thing that
 recovers EXACTLY_ONCE" - is now stated with its condition attached: **it recovers exactly-once for a
@@ -143,9 +160,8 @@ because the fixture never left the reproducible case.
 A second floor now sits under the first:
 
 - **Floor 1** (entries 03-05): no naive effect closes b1 on any runtime.
-- **Floor 2** (here): no idempotent boundary closes b1 either, once the step stops being
-  reproducible. Nothing in any of the three runtimes addresses it, which is what
-  @vasilisnasopoulos said, and it now has a number.
+- **Floor 2** (here): no content-derived idempotent boundary closes b1, once the step stops being
+  reproducible. A pre-call prepared identity does close it in the measured two-phase rows.
 
 ## What this still does not prove
 
@@ -154,11 +170,9 @@ A second floor now sits under the first:
   frontier model was in the loop, and nothing here measures how a real sampler behaves under
   temperature, seeding, or a provider's own caching. The claim is about irreproducibility, and it
   should be read as exactly that.
-- **This does not say the case is unsolvable.** It says none of the three runtimes solves it, and
-  that the standard mitigation does not. A two-phase shape - durably record an intent and its
-  identity BEFORE the nondeterministic call, then carry that identity through the effect - is the
-  obvious candidate, and it is not implemented or measured here. Calling it a fix without crashing
-  it would be exactly the thing this project exists to avoid.
+- **This does not say the runtimes solve the case automatically.** It says the two-phase application
+  pattern works in this fixture when the identity is durable before the draw. It does not claim a
+  runtime-provided guarantee beyond what the adapter actually measured.
 - **`DIVERGED` is an observation, not a severity ranking.** The ledger reports that two crossings
   differed in content. Whether that is worse than a duplicate in a given system is a judgment about
   that system; the argument for it being worse is in `layers.py`, and it is an argument, not a

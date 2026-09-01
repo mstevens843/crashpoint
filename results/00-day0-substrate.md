@@ -4,7 +4,12 @@ Working record. Every line below was produced by running the command shown on th
 reading its output. Nothing is remembered. Where a runtime cannot run it says so and says why.
 
 **Host:** macOS (Darwin arm64). **Python:** 3.12.13 (uv). **uv:** 0.11.26. **Docker:** 29.3.1, up.
-**No model API key needed:** the fixture has no frontier model in the loop; cost is wall-clock only.
+**Default path needs no model API key:** the checked-in nondeterministic evidence has no frontier
+model in the loop; cost is wall-clock only.
+
+Current note (2026-09-01): Temporal CLI 1.8.2 / server 1.31.2 and Docker Postgres were available
+and were used for fresh k=30 Temporal and DBOS evidence in `results/07`. The default
+nondeterministic evidence still uses a local draw, not a model API.
 
 ## Gate 1 - LangGraph (the guaranteed core, and the live defect)
 
@@ -16,19 +21,18 @@ uses to force the put/put_writes interleaving and self-SIGKILL. **LangGraph: RUN
 
 ## Gate 2 - Temporal (the at-least-once contrast)
 
-`temporal` CLI was not installed; `brew install temporal` (a local dev server, no cloud) and the
-`temporalio` SDK are being provisioned. The crash seam is `ActivityInboundCallsInterceptor.execute`
-(kill the worker post-effect) with `temporal server start-dev`. Status recorded in results/04; if the
-dev server will not run locally the Temporal columns are reported GATED, never faked.
+Historical note: the first Day-0 pass had to provision `temporal`. The current evidence uses a local
+`temporal server start-dev` server. The crash boundary is the worker process around
+`effect_activity`; status recorded in results/04 and results/07.
 
 ## Gate 3 - DBOS (checkpoint-in-Postgres reference)
 
-`dbos` via uv + a Docker Postgres for the system database. The crash seam is a wrapped `@DBOS.step`
-crashed between the effect and the Postgres checkpoint write. Status recorded in results/05; GATED if
-Postgres/DBOS will not come up locally.
+`dbos` via uv + a Docker Postgres for the system database. The crash boundary is a wrapped
+`@DBOS.step` crashed between the effect and the Postgres checkpoint write. Status recorded in
+results/05 and results/07; GATED if Postgres/DBOS will not come up locally.
 
 ## Gate outcome
 
 The guaranteed core clears on Gate 1 alone: the model, the out-of-process ledger, the LangGraph
-adapter, and the three control adapters need no external servers. Temporal and DBOS are best-effort
-real columns, gated on their smoke tests. Proceed: model first (done), then the ledger daemon.
+adapter, and the control/reference adapters need no external servers. Temporal and DBOS are
+real-service columns, gated on their smoke tests. Proceed: model first (done), then the ledger daemon.

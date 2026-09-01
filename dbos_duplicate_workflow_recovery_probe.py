@@ -8,7 +8,6 @@ import tempfile
 import textwrap
 from pathlib import Path
 
-
 BILLING = r"""
 from __future__ import annotations
 
@@ -209,7 +208,9 @@ def run_case(root: Path, db_url: str, run_id: str, import_order: str) -> bool:
     print((after.stdout or after.stderr).strip())
 
     marker_text = marker.read_text(encoding="utf-8") if marker.exists() else ""
-    expected = "shipping:recovery" if import_order == "billing_then_shipping" else "billing:recovery"
+    expected = (
+        "shipping:recovery" if import_order == "billing_then_shipping" else "billing:recovery"
+    )
     return crash.returncode == -9 and expected in marker_text and recovery.returncode == 0
 
 

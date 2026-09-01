@@ -2,12 +2,13 @@
 control adapters that pin each outcome, to the real durable-execution engines in naive and
 idempotent variants.
 
-WHAT THIS IS. Ten rows, each a bundle of the orthogonal properties ``predict`` reads: whether the
-runtime is durable, the order in which it does the effect and the persist write, and whether the
-effect is made idempotent at the ledger boundary. This file is data, not behavior - the actual
-crashing lives in ``adapters/``. The controls exist so the oracle is proven to discriminate: one
-must DUPLICATED, one must LOST, one must EXACTLY_ONCE. If the harness cannot make the oracle produce
-all three on demand, the oracle has no teeth.
+WHAT THIS IS. Eighteen rows, each a bundle of the orthogonal properties ``predict`` reads: whether
+the runtime is durable, the order in which it does the effect and the persist write, whether the
+effect is made idempotent at the ledger boundary, whether the identity was prepared before a
+nondeterministic draw, and whether the effect is reproducible from durable inputs. This file is
+data, not behavior - the actual crashing lives in ``adapters/``. The controls exist so the oracle is
+proven to discriminate: DUPLICATED, LOST, EXACTLY_ONCE, and DIVERGED must all be producible on
+demand. If the harness cannot make the oracle produce them, the oracle has no teeth.
 
 WHAT THIS IS NOT. It is not the real runtimes' documentation. Each real row carries an ``upstream``
 note tying it to the shipped semantics it models; the harness grades the real adapters against these
@@ -31,7 +32,7 @@ class Runtime:
     effect_mode: EffectMode
     is_real: bool          # a real durable-execution engine, vs a control adapter
     # Is the effect reproducible from the step's durable inputs? Defaults to DETERMINISTIC because
-    # the first ten rows all were; the nondeterministic rows declare it explicitly.
+    # the original runtime rows were; the nondeterministic rows declare it explicitly.
     determinism: Determinism = Determinism.DETERMINISTIC
     upstream: str = ""
     is_target: bool = False     # the live defect this project is built around (#8039)
@@ -39,7 +40,7 @@ class Runtime:
 
 
 RUNTIMES: tuple[Runtime, ...] = (
-    # -- controls: they pin the three non-VOID outcomes so the oracle is proven to have teeth -----
+    # -- controls: they pin the non-VOID outcomes so the oracle is proven to have teeth -----------
     Runtime(
         id="r_null",
         slug="null_baseline",
@@ -92,6 +93,19 @@ RUNTIMES: tuple[Runtime, ...] = (
         durability=Durability.DURABLE,
         persist_order=PersistOrder.EFFECT_THEN_PERSIST,
         effect_mode=EffectMode.IDEMPOTENT,
+        is_real=False,
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    Runtime(
+        id="r_twophase",
+        slug="two_phase_reference",
+        summary="Durable, effect-then-persist, NONDETERMINISTIC effect, but the identity is "
+        "prepared before the draw and carried through the effect. The b1 re-run redraws, but "
+        "reuses the same pre-call key, so the ledger dedups it. This is the measured candidate for "
+        "closing the DIVERGED floor, not a runtime-specific claim.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.TWO_PHASE,
         is_real=False,
         determinism=Determinism.NONDETERMINISTIC,
     ),
@@ -187,6 +201,19 @@ RUNTIMES: tuple[Runtime, ...] = (
         determinism=Determinism.NONDETERMINISTIC,
     ),
     Runtime(
+        id="r_lg_twophase",
+        slug="langgraph_twophase",
+        summary="LangGraph durability=sync, NONDETERMINISTIC effect, with the identity prepared in "
+        "a durable predecessor node before the draw. The charge node may re-run and redraw at b1, "
+        "but it recovers the pre-call identity from the checkpointed state.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.RACE,
+        effect_mode=EffectMode.TWO_PHASE,
+        is_real=True,
+        upstream="langchain-ai/langgraph#8039; two-phase identity-before-draw candidate",
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    Runtime(
         id="r_tmp_nondet",
         slug="temporal_nondet",
         summary="Temporal activity, idempotency-key boundary, NONDETERMINISTIC effect. The "
@@ -202,6 +229,19 @@ RUNTIMES: tuple[Runtime, ...] = (
         determinism=Determinism.NONDETERMINISTIC,
     ),
     Runtime(
+        id="r_tmp_twophase",
+        slug="temporal_twophase",
+        summary="Temporal activity, NONDETERMINISTIC effect, with a deterministic identity "
+        "computed by the workflow and passed as an activity argument before the draw. Activity "
+        "retry re-runs the draw but reuses the same identity.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.TWO_PHASE,
+        is_real=True,
+        upstream="Temporal activity arguments are recorded before activity retry",
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    Runtime(
         id="r_dbos_nondet",
         slug="dbos_nondet",
         summary="DBOS step, idempotency-key boundary, NONDETERMINISTIC effect. A step that has not "
@@ -212,6 +252,19 @@ RUNTIMES: tuple[Runtime, ...] = (
         effect_mode=EffectMode.IDEMPOTENT,
         is_real=True,
         upstream="DBOS: steps should be idempotent - which a nondeterministic step cannot be",
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    Runtime(
+        id="r_dbos_twophase",
+        slug="dbos_twophase",
+        summary="DBOS step, NONDETERMINISTIC effect, with a prepared-identity step before the "
+        "effect step. Recovery replays the uncommitted effect step with the same prepared key, "
+        "even though the effect payload redraws.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.TWO_PHASE,
+        is_real=True,
+        upstream="DBOS checkpointed predecessor step as two-phase identity carrier",
         determinism=Determinism.NONDETERMINISTIC,
     ),
 )
