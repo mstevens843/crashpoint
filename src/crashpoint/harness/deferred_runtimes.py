@@ -23,30 +23,19 @@ class DeferredRuntime:
 
 DEFERRED_RUNTIMES: tuple[DeferredRuntime, ...] = (
     DeferredRuntime(
-        name="Restate",
-        adapter_id_prefix="r_restate_",
-        blocker=(
-            "no local Restate server/CLI is installed in this workspace, and no faithful "
-            "crash/recovery adapter has been validated against Restate's service journal"
-        ),
-        next_step=(
-            "install a local Restate substrate, model durable-step replay rules, then add naive, "
-            "idempotent, nondeterministic, and two-phase rows before measuring"
-        ),
-        source="Restate Python durable steps docs: ctx.run journals operation results",
-    ),
-    DeferredRuntime(
         name="Vercel Workflow DevKit",
         adapter_id_prefix="r_vercel_workflow_",
         blocker=(
-            "the runtime is TypeScript/JavaScript-first and uses a Workflow Development Server; "
-            "this Python harness has no faithful Node worker crash/recovery adapter yet"
+            "current docs include JS/TS and Python Workflow support, but this repo has no faithful "
+            "worker/backend crash/recovery adapter yet"
         ),
         next_step=(
-            "add a minimal Node harness that exposes the same ledger boundary, validate local "
-            "development-server recovery semantics, then model and measure rows"
+            "choose the current JS/TS or Python substrate, expose the same ledger boundary, "
+            "validate local or managed-backend recovery semantics, then model and measure rows"
         ),
-        source="Vercel Workflow docs and local WDK docs: workflows and steps run in Node",
+        source=(
+            "Vercel Workflow docs: durable workflows/steps are available through JS/TS and Python"
+        ),
     ),
 )
 

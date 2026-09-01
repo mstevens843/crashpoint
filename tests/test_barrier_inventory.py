@@ -15,4 +15,8 @@ def test_hidden_barrier_candidates_have_blockers() -> None:
     for candidate in CANDIDATES:
         assert candidate.runtime
         assert candidate.where
-        assert len(candidate.blocker) > 20
+        if candidate.status == "blocked":
+            assert len(candidate.blocker) > 20
+            assert not candidate.evidence
+        else:
+            assert candidate.evidence

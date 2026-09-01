@@ -5,8 +5,8 @@ runtime running and nothing crashed: it is a pure prediction, and the harness ex
 it wrong.
 
 Current note: the model later added the nondeterminism conditional, the fifth outcome `DIVERGED`,
-and the two-phase prepared-identity rows. The current matrix is 18 runtime rows x 3 barriers; this
-entry is kept as the model-stage record, with the current vocabulary named below.
+the two-phase prepared-identity rows, and Restate rows. The current matrix is 22 runtime rows x 3
+barriers; this entry is kept as the model-stage record, with the current vocabulary named below.
 
 ## What was built
 
@@ -16,9 +16,9 @@ entry is kept as the model-stage record, with the current vocabulary named below
   `Durability`, `PersistOrder {EFFECT_THEN_PERSIST, PERSIST_THEN_EFFECT, RACE}`,
   `EffectMode {NAIVE, IDEMPOTENT, TWO_PHASE}`,
   `Determinism {DETERMINISTIC, NONDETERMINISTIC}`, and `Phase {BEFORE, BETWEEN, AFTER}`.
-- `runtimes.py` - 18 rows: a null baseline, controls/reference rows that pin the non-VOID outcomes
-  and the two-phase recovery shape, and the three real engines (LangGraph, Temporal, DBOS) in naive,
-  idempotent, nondeterministic, and two-phase variants where applicable, each with the shipped
+- `runtimes.py` - 22 rows: a null baseline, controls/reference rows that pin the non-VOID outcomes
+  and the two-phase recovery shape, and the four real engines (LangGraph, Temporal, DBOS, Restate)
+  in naive, idempotent, nondeterministic, and two-phase variants where applicable, each with the shipped
   semantics it models.
 - `barriers.py` - the three crash barriers named by phase so a column is comparable across runtimes.
 - `predict.py` - one pure total function from (runtime, barrier) to an outcome-with-rationale.
@@ -45,6 +45,10 @@ temporal_nondet                   ONCE        DIVERGED            ONCE
 temporal_twophase                 ONCE            ONCE            ONCE
 dbos_nondet                       ONCE        DIVERGED            ONCE
 dbos_twophase                     ONCE            ONCE            ONCE
+restate_naive                     ONCE            DUP             ONCE
+restate_idem                      ONCE            ONCE            ONCE
+restate_nondet                    ONCE        DIVERGED            ONCE
+restate_twophase                  ONCE            ONCE            ONCE
 ```
 
 The finding is the BETWEEN column: every naive durable runtime DUPLICATES the external effect at the

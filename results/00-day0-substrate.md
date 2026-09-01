@@ -7,9 +7,9 @@ reading its output. Nothing is remembered. Where a runtime cannot run it says so
 **Default path needs no model API key:** the checked-in nondeterministic evidence has no frontier
 model in the loop; cost is wall-clock only.
 
-Current note (2026-09-01): Temporal CLI 1.8.2 / server 1.31.2 and Docker Postgres were available
-and were used for fresh k=30 Temporal and DBOS evidence in `results/07`. The default
-nondeterministic evidence still uses a local draw, not a model API.
+Current note (2026-09-01): Temporal CLI 1.8.2 / server 1.31.2, Docker Postgres, and Restate
+server/CLI Docker images were available and were used for fresh evidence in `results/07`. The
+default nondeterministic evidence still uses a local draw, not a model API.
 
 ## Gate 1 - LangGraph (the guaranteed core, and the live defect)
 
@@ -31,8 +31,14 @@ Historical note: the first Day-0 pass had to provision `temporal`. The current e
 `@DBOS.step` crashed between the effect and the Postgres checkpoint write. Status recorded in
 results/05 and results/07; GATED if Postgres/DBOS will not come up locally.
 
+## Gate 4 - Restate (durable-operation retry contrast)
+
+Restate server/CLI Docker images were available locally. The later adapter serves a Python ASGI
+workflow and registers it with the Docker dev server; the harness kills and restarts the ASGI worker
+around `ctx.run_typed`. Status recorded in `results/07`.
+
 ## Gate outcome
 
 The guaranteed core clears on Gate 1 alone: the model, the out-of-process ledger, the LangGraph
-adapter, and the control/reference adapters need no external servers. Temporal and DBOS are
+adapter, and the control/reference adapters need no external servers. Temporal, DBOS, and Restate are
 real-service columns, gated on their smoke tests. Proceed: model first (done), then the ledger daemon.

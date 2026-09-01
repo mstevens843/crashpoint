@@ -69,5 +69,7 @@ older trial-count arithmetic. The current checked-in evidence is summarized in `
 | temporal | 30 | 360 | naive b1 DUPLICATED, idem b1 EXACTLY_ONCE, nondet b1 DIVERGED, two-phase b1 EXACTLY_ONCE; 0 disagreements |
 | dbos | 30 | 360 | naive b1 DUPLICATED, idem b1 EXACTLY_ONCE, nondet b1 DIVERGED, two-phase b1 EXACTLY_ONCE; 0 disagreements |
 
-3,120 crash+recover trials in the current checked-in evidence, every observed cell equal to a
-prediction written before any runtime was crashed. `uv run pytest` / `ruff` / `mypy --strict` green.
+3,120 crash+recover trials in the shared b0/b1/b2 matrix at this point in the notebook, every
+observed cell equal to a prediction written before any runtime was crashed. Later Restate and
+hidden-barrier evidence is summarized in `RESULTS.md`. `uv run pytest` / `ruff` / `mypy --strict`
+green.

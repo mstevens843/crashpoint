@@ -8,6 +8,7 @@ def test_deferred_runtimes_have_actionable_blockers() -> None:
         assert runtime.blocker
         assert runtime.next_step
         assert runtime.source
+        assert "validated" in runtime.blocker or "faithful" in runtime.blocker
 
 
 def test_deferred_runtimes_are_not_silent_model_rows() -> None:

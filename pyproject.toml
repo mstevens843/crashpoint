@@ -14,6 +14,7 @@ dependencies = []
 langgraph = ["langgraph>=0.2", "langgraph-checkpoint-sqlite>=2.0"]
 temporal = ["temporalio>=1.7"]
 dbos = ["dbos>=0.20"]
+restate = ["hypercorn>=0.18", "restate_sdk[serde]>=1.0"]
 
 [dependency-groups]
 dev = ["pytest>=8.3", "ruff>=0.6", "mypy>=1.11"]
@@ -37,6 +38,7 @@ include = [
     "/LICENSE",
     "/pyproject.toml",
     "/uv.lock",
+    "/scripts",
     "/repro_pre_first_checkpoint_loss.py",
     "/dbos_duplicate_workflow_recovery_probe.py",
 ]
@@ -62,5 +64,9 @@ files = ["src", "tests"]
 # The real runtimes are optional dependencies; the model core and its tests never import them.
 # mypy in the default (model-only) env cannot see their stubs, so their imports are ignored here.
 [[tool.mypy.overrides]]
-module = ["langgraph.*", "temporalio.*", "dbos.*"]
+module = ["langgraph.*", "temporalio.*", "dbos.*", "hypercorn.*", "restate.*"]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["crashpoint.adapters.restate_adapter"]
+disallow_untyped_decorators = false

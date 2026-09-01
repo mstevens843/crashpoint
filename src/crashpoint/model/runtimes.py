@@ -2,7 +2,7 @@
 control adapters that pin each outcome, to the real durable-execution engines in naive and
 idempotent variants.
 
-WHAT THIS IS. Eighteen rows, each a bundle of the orthogonal properties ``predict`` reads: whether
+WHAT THIS IS. Twenty-two rows, each a bundle of the orthogonal properties ``predict`` reads: whether
 the runtime is durable, the order in which it does the effect and the persist write, whether the
 effect is made idempotent at the ledger boundary, whether the identity was prepared before a
 nondeterministic draw, and whether the effect is reproducible from durable inputs. This file is
@@ -265,6 +265,57 @@ RUNTIMES: tuple[Runtime, ...] = (
         effect_mode=EffectMode.TWO_PHASE,
         is_real=True,
         upstream="DBOS checkpointed predecessor step as two-phase identity carrier",
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    # -- Restate: durable steps journal ctx.run_typed results after the action returns ------------
+    Runtime(
+        id="r_restate_naive",
+        slug="restate_naive",
+        summary="Restate workflow durable step, naive effect. The external effect runs inside "
+        "ctx.run_typed; if the worker dies after the effect but before the durable step result is "
+        "journaled, Restate retries the operation and the naive effect duplicates.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.NAIVE,
+        is_real=True,
+        upstream="Restate Python ctx.run_typed journals operation results",
+    ),
+    Runtime(
+        id="r_restate_idem",
+        slug="restate_idem",
+        summary="Restate workflow durable step, idempotent boundary. The retried ctx.run_typed "
+        "operation re-runs the effect, but the ledger dedups by the reproduced content-derived "
+        "key.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.IDEMPOTENT,
+        is_real=True,
+        upstream="Restate Python durable steps; idempotency remains at the external boundary",
+    ),
+    Runtime(
+        id="r_restate_nondet",
+        slug="restate_nondet",
+        summary="Restate workflow durable step, idempotent boundary, NONDETERMINISTIC effect. A "
+        "retry of an unjournaled ctx.run_typed action redraws the payload, so the content-derived "
+        "key differs and the ledger observes DIVERGED.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.IDEMPOTENT,
+        is_real=True,
+        upstream="Restate Python durable steps; unjournaled actions retry from the operation body",
+        determinism=Determinism.NONDETERMINISTIC,
+    ),
+    Runtime(
+        id="r_restate_twophase",
+        slug="restate_twophase",
+        summary="Restate workflow durable step, NONDETERMINISTIC effect, with a prepared identity "
+        "recorded in workflow state before the ctx.run_typed action. The action may redraw on "
+        "retry, but it reuses the prepared key.",
+        durability=Durability.DURABLE,
+        persist_order=PersistOrder.EFFECT_THEN_PERSIST,
+        effect_mode=EffectMode.TWO_PHASE,
+        is_real=True,
+        upstream="Restate workflow input/state as two-phase identity carrier before durable step",
         determinism=Determinism.NONDETERMINISTIC,
     ),
 )

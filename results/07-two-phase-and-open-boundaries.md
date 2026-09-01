@@ -16,6 +16,8 @@ Rows added:
 - `r_lg_twophase` - LangGraph predecessor-node prepared identity.
 - `r_tmp_twophase` - Temporal workflow argument prepared before activity retry.
 - `r_dbos_twophase` - DBOS committed prepared-identity step before the effect step.
+- `r_restate_naive`, `r_restate_idem`, `r_restate_nondet`, `r_restate_twophase` - Restate durable
+  operation rows measured through a Python ASGI worker and local Docker dev server.
 
 Recomputability:
 
@@ -37,6 +39,8 @@ uv run --extra temporal python -m crashpoint.harness.matrix --k 30 \
   --runtimes r_tmp_naive,r_tmp_idem,r_tmp_nondet,r_tmp_twophase --name temporal
 uv run --extra dbos python -m crashpoint.harness.matrix --k 30 \
   --runtimes r_dbos_naive,r_dbos_idem,r_dbos_nondet,r_dbos_twophase --name dbos
+uv run --extra restate python -m crashpoint.harness.restate_matrix --k 10 \
+  --name restate --timeout 45
 ```
 
 Temporal used:
@@ -51,7 +55,7 @@ DBOS used the existing local `cp-postgres` container:
 docker start cp-postgres
 ```
 
-The resulting evidence is 3,120 crash+recover trials, zero disagreements:
+The resulting shared b0/b1/b2 evidence is 3,240 crash+recover trials, zero disagreements:
 
 | evidence | k | trials | receipt |
 |---|---|---|---|
@@ -59,8 +63,16 @@ The resulting evidence is 3,120 crash+recover trials, zero disagreements:
 | langgraph | 50 | 600 | `cp1_bffad8a0407e66ad6f2dc5ad4a3f39a96d7528ce4e4388ec6be1f9059be13073` |
 | temporal | 30 | 360 | `cp1_6a057f0779fb2b98c60fe71c4b8e8111328a5385ff8069b1598f4d7fa50728a5` |
 | dbos | 30 | 360 | `cp1_0793cb0b8ad9925a9ae547057b707355dc420ac763aec94ce1f7dd0f2334c220` |
+| restate | 10 | 120 | `cp1_69b85c39d1257ac1307088ef5718b854ef5cfae490ffea9e4f9493870e85bfb7` |
 
-## What was implemented but not measured as evidence
+Restate used:
+
+```
+docker run -d --name crashpoint-restate -p 8080:8080 -p 9070:9070 -p 9071:9071 \
+  --add-host=host.docker.internal:host-gateway docker.restate.dev/restatedev/restate:latest
+```
+
+Restate's server and CLI images reported version 1.7.8; the Python SDK version was 1.0.4.
 
 ### Linux UID isolation
 
@@ -71,15 +83,26 @@ dropped to `nobody`. The subject is intentionally given the forbidden paths and 
 execute exactly one effect but cannot dump, reset, seal, connect to the control socket, or read/write
 the store.
 
-On this macOS host:
+The direct macOS command still reports BLOCKED:
 
 ```
 uv run python -m crashpoint.adversaries.isolation
 ISOLATION BLOCKED: requires Linux UID isolation; this host is not Linux
 ```
 
-So the current checked-in evidence does not claim Linux isolation passed. It claims only that the
-proof exists and is gated correctly on this host.
+A Dockerized Linux proof was run from this macOS host:
+
+```
+docker run --rm -v "$PWD:/work:ro" -v "$PWD/evidence:/evidence" -w /work \
+  -e PYTHONPATH=src python:3.12-slim \
+  python -m crashpoint.adversaries.isolation --require \
+  --evidence-path /evidence/isolation_linux.json
+```
+
+It passed with receipt
+`cp1_9d16e122023c860eafdf320ed69d8241a57f74c790975d883ffd7d77a6bd496d`. The proof is narrow:
+execute-only access for the UID-dropped subject in that Linux container, not a full container escape
+audit and not native macOS UID isolation.
 
 ### Real model sampler
 
@@ -91,9 +114,26 @@ export CRASHPOINT_MODEL_SAMPLER_CMD='your-sampler-command'
 ```
 
 The command receives the prompt on stdin and must print the sampled memo to stdout. This keeps
-secrets and provider choice outside the repo. No `ollama`, `llm`, or configured sampler command was
-available in this workspace, so no model-backed evidence was generated. The current nondeterministic
-evidence remains UUID/draw-backed and should be cited only as irreproducibility evidence.
+secrets and provider choice outside the repo. `scripts/anthropic_sampler.py` is available for an
+operator who sets `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL` in the shell. No safe provider/local
+model configuration was available in this workspace, and no pasted secret was used, so no
+model-backed evidence was generated. The current nondeterministic evidence remains UUID/draw-backed
+and should be cited only as irreproducibility evidence.
+
+### LangGraph pre-first-checkpoint hidden barrier
+
+`src/crashpoint/harness/langgraph_hidden.py` measures one hidden LangGraph edge that is intentionally
+outside the shared b0/b1/b2 matrix: death before any first checkpoint exists. The predicted rule is
+LOST because recovery has no resumable state and no external effect has crossed.
+
+Command:
+
+```
+uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden
+```
+
+Result: k=50, LOST at rate 1.0, zero disagreements, receipt
+`cp1_993c57f79dae43a92e42013a8403adf93c0f38088ad6b7864816e7885cc76ff8`.
 
 ## What remains explicitly unmodeled
 
@@ -104,10 +144,10 @@ from being silently treated as b0/b1/b2:
 uv run python -m crashpoint.harness.barrier_inventory
 ```
 
-Current blockers:
+Current status:
 
-- LangGraph pending-write and pre-first-checkpoint edges need distinct model rules before being added
-  to the matrix.
+- LangGraph `lg_pre_first_checkpoint` is measured separately and remains disjoint from b0/b1/b2.
+- LangGraph pending-write edges still need distinct model rules before being added to any matrix.
 - Temporal activity scheduling, workflow-task replay, and post-activity sentinels need event-history
   instrumentation against a live dev server before they are evidence.
 - DBOS step output commit, workflow status commit, and duplicate workflow-name recovery need
@@ -121,11 +161,10 @@ Current blockers:
 uv run python -m crashpoint.harness.deferred_runtimes
 ```
 
-- Restate is deferred because no local Restate server/CLI is installed here and no faithful
-  crash/recovery adapter has been validated against Restate's service journal.
-- Vercel Workflow DevKit is deferred because it is a TypeScript/JavaScript runtime with a local
-  Workflow Development Server; this Python harness needs a minimal Node worker crash/recovery harness
-  before any rows can be modeled or measured.
+- Vercel Workflow is deferred because no faithful worker/backend crash harness has been validated
+  here. Current Vercel docs include JS/TS and Python Workflow support; either substrate needs a
+  ledger boundary, crash injection, recovery path, predicted rows, and receipted evidence before it
+  enters the model.
 
-Neither runtime is a skipped failing row. They are not in `runtimes.py` until there is a predicted row
-family and receipted crash evidence.
+The deferred runtime is not a skipped failing row. It is not in `runtimes.py` until there is a
+predicted row family and receipted crash evidence.

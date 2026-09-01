@@ -86,5 +86,6 @@ docstring; the dropped-run behavior is noted here, not hidden in the calibration
 - `evidence/controls.json` and `evidence/langgraph.json` each carry a canonical-JSON SHA-256 receipt;
   `tests/test_discrimination.py` re-derives both.
 
-Current note: Temporal and DBOS now have the same naive/idempotent/nondeterministic/two-phase row
-family; see `RESULTS.md`, `results/04-temporal.md`, and `results/05-dbos.md`.
+Current note: Temporal, DBOS, and Restate now have the same
+naive/idempotent/nondeterministic/two-phase row family; see `RESULTS.md`,
+`results/04-temporal.md`, `results/05-dbos.md`, and `results/07-two-phase-and-open-boundaries.md`.

@@ -1,0 +1,211 @@
+{
+  "barriers": [
+    "b0",
+    "b1",
+    "b2"
+  ],
+  "cells": [
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_naive",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "duplicated": 10
+      },
+      "k": 10,
+      "modal": "duplicated",
+      "modal_rate": 1.0,
+      "predicted": "duplicated",
+      "runtime": "r_restate_naive",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_naive",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_idem",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_idem",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_idem",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_nondet",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "diverged": 10
+      },
+      "k": 10,
+      "modal": "diverged",
+      "modal_rate": 1.0,
+      "predicted": "diverged",
+      "runtime": "r_restate_nondet",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_nondet",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_twophase",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_twophase",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_restate_twophase",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    }
+  ],
+  "disagreements": [],
+  "k": 10,
+  "name": "restate",
+  "receipt": "cp1_69b85c39d1257ac1307088ef5718b854ef5cfae490ffea9e4f9493870e85bfb7",
+  "runtimes": [
+    "r_restate_naive",
+    "r_restate_idem",
+    "r_restate_nondet",
+    "r_restate_twophase"
+  ]
+}

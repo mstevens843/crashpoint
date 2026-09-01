@@ -4,15 +4,15 @@
 particular @sajjadanwar0, who opened it; @vasilisnasopoulos, whose RS1-RS3 write-up named the
 receiver half of the property and asked for it to be made empirical; @safal207, who built and
 published the first executable recovery-safety benchmark for this issue; and @tamilov, who pushed
-the thread from discussing the property to running it); and, as shorter notes, the Temporal and DBOS
-maintainers.
+the thread from discussing the property to running it); and, as shorter notes, the Temporal, DBOS,
+and Restate maintainers.
 
 **From:** Mathew Stevens. **Nature:** defensive reliability research on public MIT/Apache code, run
 in a local sandbox. The workflows crash processes the author controls; the only external side effect
 is a local ledger the fixture owns. No system the author does not control was touched.
 
 **Status:** the langgraph#8039 note was posted on 2026-08-28. This draft now includes the
-2026-09-01 nondeterministic/two-phase follow-up. Temporal and DBOS notes remain unsent.
+2026-09-01 nondeterministic/two-phase follow-up. Temporal, DBOS, and Restate notes remain unsent.
 
 ## Summary
 
@@ -37,7 +37,7 @@ replays the pending writes or re-executes the node depends on a race, and differ
 the narrow ordering fix, was closed unmerged on 2026-06-12, so this is still treated as current
 behavior here.
 
-crashpoint measures the same property from outside the runtime and across three engines, and adds
+crashpoint measures the same property from outside the runtime and across four engines, and adds
 four things rather than substituting for the existing thread work:
 
 - **The side-effect count is observed, not self-reported.** The ledger is a separate process behind
@@ -78,6 +78,7 @@ Current b1 table:
 | LangGraph 1.2.11 | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
 | Temporal | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
 | DBOS | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
+| Restate | EXACTLY_ONCE | **DIVERGED** | EXACTLY_ONCE |
 
 The recomputability probe is the leading indicator:
 
@@ -88,10 +89,10 @@ uv run python -m crashpoint.harness.recomputability
 It reports RECOMPUTABLE for deterministic/content-derived identity, NOT_RECOMPUTABLE for
 nondeterministic/content-derived identity, and RECOMPUTABLE for the two-phase prepared identity.
 
-## For Temporal and DBOS
+## For Temporal, DBOS, and Restate
 
-The same fixture, unchanged except for the adapter, reproduces the same b1 contrast on two more
-runtimes:
+The same fixture, unchanged except for the adapter, reproduces the same b1 contrast on three
+additional runtimes:
 
 - **Temporal** - activities are at-least-once by design. A worker SIGKILLed after the effect but
   before the activity reports completion is retried, and the naive effect DUPLICATES at b1; an
@@ -99,21 +100,28 @@ runtimes:
   nondeterministic effect DIVERGES; a prepared identity recovers EXACTLY_ONCE.
 - **DBOS** - steps checkpoint their output in Postgres. A step SIGKILLed after the effect but before
   its output commits is re-run on recovery, with the same observed outcomes.
+- **Restate** - the Python adapter runs the effect inside `ctx.run_typed`. Killing the ASGI worker
+  after the effect but before the durable operation result reaches Restate causes the operation to be
+  retried. The measured k=10 row has the same naive/idempotent/nondeterministic/two-phase contrast.
 
-Neither is a defect report: both runtimes document at-least-once/idempotency responsibilities. The
-note is that the gap between "exactly-once workflow" and "exactly-once external effect" is easy to
-miss, and a crash-tested fixture makes it concrete.
+These are not defect reports where the runtimes document at-least-once/idempotency responsibilities.
+The note is that the gap between "exactly-once workflow" and "exactly-once external effect" is easy
+to miss, and a crash-tested fixture makes it concrete.
 
 ## Limits
 
-- Strong UID isolation is implemented as a Linux `setpriv --reuid nobody` adversary, but this macOS
-  run reports BLOCKED. The macOS claim remains the socket-privilege boundary.
-- Hidden framework crash points beyond b0/b1/b2 are inventoried, not measured.
-- Restate and Vercel Workflow adapters are not implemented. Restate needs a validated local
-  service-journal adapter; Vercel Workflow needs a faithful Node worker/development-server crash
-  harness.
-- No real model sampler was measured. The optional hook is present, but no provider/local model was
-  configured for this evidence set.
+- Strong UID isolation is Linux-only. The direct macOS command reports BLOCKED, while the Dockerized
+  Linux `setpriv --reuid nobody` adversary passed and is receipted in `evidence/isolation_linux.json`.
+  That proves execute-only access for the UID-dropped subject in that Linux container, not a full
+  container escape audit.
+- Hidden framework crash points beyond b0/b1/b2 are mostly inventoried, not measured. The one current
+  exception is LangGraph `lg_pre_first_checkpoint`, measured separately at k=50 as LOST in
+  `evidence/langgraph_hidden.json`.
+- Vercel Workflow is not implemented. Current Vercel docs include JS/TS and Python Workflow support,
+  but this repo has not validated a faithful worker/backend crash harness before any row can be
+  modeled or measured.
+- No real model sampler was measured. The optional hook and Anthropic helper are present, but no safe
+  provider/local model configuration was available for this evidence set.
 
 ## What we are offering
 

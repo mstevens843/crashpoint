@@ -33,6 +33,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal, cast
 
+from ..canonical import receipt
 from ..ledger.daemon import control, execute
 
 Status = Literal["PASS", "FAIL", "BLOCKED"]
@@ -225,9 +226,23 @@ def render(report: IsolationReport) -> str:
     return "\n".join(lines)
 
 
+def evidence_record(report: IsolationReport) -> dict[str, object]:
+    record: dict[str, object] = {
+        "name": "isolation_linux_uid",
+        "proof": "uid_dropped_subject_execute_only",
+        "status": report.status,
+        "reason": report.reason,
+        "details": report.details,
+    }
+    record["receipt"] = receipt(record)
+    return record
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--require", action="store_true", help="exit nonzero if the proof is blocked")
+    ap.add_argument("--json", action="store_true", help="emit receipted evidence JSON")
+    ap.add_argument("--evidence-path", help="write receipted evidence JSON to this path")
     ap.add_argument("--subject", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--invoke", help=argparse.SUPPRESS)
     ap.add_argument("--control", help=argparse.SUPPRESS)
@@ -241,7 +256,13 @@ def main(argv: list[str] | None = None) -> int:
         return _subject(args.invoke, args.control, args.store, args.intent)
 
     report = prove_uid_isolation()
-    print(render(report))
+    if args.json or args.evidence_path:
+        out = json.dumps(evidence_record(report), indent=2, sort_keys=True)
+        if args.evidence_path:
+            Path(args.evidence_path).write_text(out)
+        print(out)
+    else:
+        print(render(report))
     if report.status == "PASS":
         return 0
     if report.status == "BLOCKED":

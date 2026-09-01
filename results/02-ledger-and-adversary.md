@@ -6,8 +6,10 @@ that exercise whether it can be read or forged from the subject's side. Every li
 produced by running the command shown and reading its output.
 
 Current note (2026-09-01): a stronger Linux UID-drop adversary now exists in
-`src/crashpoint/adversaries/isolation.py`. It reports BLOCKED on the macOS host used for this run,
-so the current macOS claim remains the socket-privilege boundary, not OS-level UID isolation.
+`src/crashpoint/adversaries/isolation.py`. The direct macOS command reports BLOCKED, so the macOS
+claim remains the socket-privilege boundary. A Dockerized Linux run passed and is receipted in
+`evidence/isolation_linux.json`; that proves execute-only access for the UID-dropped subject inside
+that Linux container, not OS-level isolation on macOS.
 
 ## What was built
 

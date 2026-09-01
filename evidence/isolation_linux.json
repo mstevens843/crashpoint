@@ -1,0 +1,27 @@
+{
+  "details": {
+    "dropped_gid": 65534,
+    "dropped_uid": 65534,
+    "harness_side_effect_count": 1,
+    "subject": {
+      "control_socket_denied": true,
+      "control_verbs_denied_on_invoke": {
+        "dump": true,
+        "reset": true,
+        "seal": true
+      },
+      "execute_error": "",
+      "execute_ok": true,
+      "gid": 65534,
+      "store_read_denied": true,
+      "store_write_denied": true,
+      "uid": 65534
+    },
+    "subject_returncode": 0
+  },
+  "name": "isolation_linux_uid",
+  "proof": "uid_dropped_subject_execute_only",
+  "reason": "uid-dropped subject had execute-only access",
+  "receipt": "cp1_9d16e122023c860eafdf320ed69d8241a57f74c790975d883ffd7d77a6bd496d",
+  "status": "PASS"
+}
