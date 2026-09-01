@@ -43,6 +43,12 @@ production system is touched.
 >   reproducible node; the nondeterministic twin DIVERGES at the same barrier; a two-phase
 >   identity-before-draw row recovers EXACTLY_ONCE. Zero disagreements:
 >   `uv run --extra langgraph python -m crashpoint.harness.matrix --k 50 --runtimes r_lg_naive,r_lg_idem,r_lg_nondet,r_lg_twophase --name langgraph`.
+> - **LangGraph hidden edges are measured separately.** `lg_pre_first_checkpoint` is LOST at k=50,
+>   and `lg_pending_writes_after_persist` is EXACTLY_ONCE at k=50. These are not folded into the
+>   shared b0/b1/b2 matrix:
+>   `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden`
+>   and
+>   `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist`.
 > - **Temporal, DBOS, and Restate, the same contrast on real engines.** Temporal (local
 >   `start-dev`), DBOS (Docker Postgres), and Restate (Docker dev server plus Python ASGI service)
 >   DUPLICATE the naive effect at the lethal barrier, recover EXACTLY_ONCE with the idempotent
@@ -90,8 +96,9 @@ src/crashpoint/adapters/  minimal durable workflows per runtime and two-phase va
 src/crashpoint/harness/   k crash+recover trials, Wilson intervals, inventories, recomputability
 src/crashpoint/adversaries/  reflexive adversary + Linux UID-drop isolation probe
 evidence/                 receipted observed matrices and adversary proofs
+runtime/                  optional runtime-specific probes that are not Python package code
 scripts/                  optional local helpers for non-baseline evidence runs
-results/                  numbered, append-only lab notebook (00 substrate .. 07 current phase)
+results/                  numbered, append-only lab notebook (00 substrate .. 08 current phase)
 DISCLOSURE.md             drafted upstream note, with conservative claims and limitations
 ```
 
@@ -115,9 +122,14 @@ write: **b0** before the effect, **b1** after the effect but before the completi
   `scripts/anthropic_sampler.py` reads secrets from the shell or a local ignored `.env`.
 - **No hidden-barrier overclaim.** The measured cross-runtime barriers are b0/b1/b2. LangGraph's
   pre-first-checkpoint edge is measured separately as `lg_pre_first_checkpoint` in
-  `evidence/langgraph_hidden.json`; the remaining framework-internal candidates stay inventoried by
+  `evidence/langgraph_hidden.json`, and the pending-writes-after-persist edge is measured separately
+  as `lg_pending_writes_after_persist` in `evidence/langgraph_hidden_pending.json`. Remaining
+  framework-internal candidates stay inventoried by
   `uv run python -m crashpoint.harness.barrier_inventory` until each has its own model rule and run.
-- **No Vercel Workflow adapter yet.** Restate now has optional model rows, a Python ASGI adapter, and
-  k=10 receipted evidence against a Docker dev server.
+- **No Vercel Workflow claim yet.** An optional JS/TS Nitro fixture exists under
+  `runtime/vercel-workflow/`, but it is not a modeled or measured adapter. On 2026-09-01, both the
+  built server and `nitro dev` failed before any workflow run because the bundled Local World raised
+  `Invalid version string: "bundled"` during data-dir initialization.
   `uv run python -m crashpoint.harness.deferred_runtimes` records the remaining Vercel blocker: it
-  needs a faithful Workflow worker/backend crash harness before any row can be modeled or measured.
+  still needs a faithful Workflow worker/backend crash harness before any row can be modeled or
+  measured.

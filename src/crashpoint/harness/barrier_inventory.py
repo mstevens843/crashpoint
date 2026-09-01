@@ -39,9 +39,9 @@ CANDIDATES: tuple[BarrierCandidate, ...] = (
         "langgraph",
         "lg_pending_writes_after_persist",
         "after pending writes persist but before the superseding checkpoint wins the race",
-        "blocked",
-        "needs a model rule for replaying pending writes vs re-executing the node on the active "
-        "LangGraph checkpointer version",
+        "measured",
+        "kept separate because it is after the main b1 crash-before-pending-writes boundary",
+        "evidence/langgraph_hidden_pending.json",
     ),
     BarrierCandidate(
         "temporal",

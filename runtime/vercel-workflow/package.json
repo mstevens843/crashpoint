@@ -1,0 +1,21 @@
+{
+  "name": "crashpoint-vercel-workflow-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nitro build",
+    "dev": "nitro dev",
+    "start": "node server-hold.mjs"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "nitro": "3.0.260610-beta",
+    "rollup": "4.63.1",
+    "workflow": "5.0.0-beta.47"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "22.19.0",
+    "typescript": "6.0.3"
+  }
+}

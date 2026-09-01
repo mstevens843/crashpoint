@@ -27,7 +27,7 @@ The fix that recovers exactly-once - an idempotency key derived from what the ac
 with its condition attached: it holds for a step that is reproducible from durable inputs. For a step
 that draws semantic content during the call, a content-derived key diverges. A two-phase shape that
 records the identity before the draw and carries it through the effect recovers EXACTLY_ONCE in the
-measured control, LangGraph, Temporal, and DBOS rows.
+measured control, LangGraph, Temporal, DBOS, and Restate rows.
 
 ## For langgraph#8039
 
@@ -114,12 +114,14 @@ to miss, and a crash-tested fixture makes it concrete.
   Linux `setpriv --reuid nobody` adversary passed and is receipted in `evidence/isolation_linux.json`.
   That proves execute-only access for the UID-dropped subject in that Linux container, not a full
   container escape audit.
-- Hidden framework crash points beyond b0/b1/b2 are mostly inventoried, not measured. The one current
-  exception is LangGraph `lg_pre_first_checkpoint`, measured separately at k=50 as LOST in
-  `evidence/langgraph_hidden.json`.
-- Vercel Workflow is not implemented. Current Vercel docs include JS/TS and Python Workflow support,
-  but this repo has not validated a faithful worker/backend crash harness before any row can be
-  modeled or measured.
+- Hidden framework crash points beyond b0/b1/b2 are mostly inventoried, not measured. The current
+  exceptions are LangGraph `lg_pre_first_checkpoint`, measured separately at k=50 as LOST in
+  `evidence/langgraph_hidden.json`, and `lg_pending_writes_after_persist`, measured separately at
+  k=50 as EXACTLY_ONCE in `evidence/langgraph_hidden_pending.json`.
+- Vercel Workflow is not claimed. An optional JS/TS Nitro fixture was added, but on 2026-09-01
+  workflow@5.0.0-beta.47 failed before any local run because the bundled Local World raised
+  `Invalid version string: "bundled"` during data-dir initialization. No Vercel Workflow rows are
+  modeled or measured here.
 - Real model-sampler evidence is narrow. `evidence/langgraph_model.json` covers Anthropic Haiku 4.5
   on the LangGraph nondeterministic/two-phase rows at k=5; it is not a broad model/provider claim.
 

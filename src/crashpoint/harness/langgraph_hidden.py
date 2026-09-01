@@ -1,15 +1,16 @@
 """LangGraph crash points outside the shared b0/b1/b2 matrix.
 
-The main matrix deliberately defines b0 after the entry checkpoint is durable. This module measures
-the separate pre-first-checkpoint case: process death before any checkpoint row exists. That is not
-a b0 replacement and not part of the cross-runtime matrix; it has its own predicted rule and
-evidence.
+The main matrix deliberately defines b0 after the entry checkpoint is durable and b1 before pending
+writes persist. This module measures named LangGraph-only edges around those shared barriers. They
+are not replacements for b0/b1/b2 and are not part of the cross-runtime matrix; each hidden barrier
+has its own predicted rule and evidence.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import signal
 import sqlite3
 import subprocess
@@ -18,7 +19,7 @@ import tempfile
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal, TypedDict
+from typing import Any, Literal, TypedDict, cast
 
 from ..canonical import receipt
 from ..ledger.daemon import execute
@@ -27,14 +28,35 @@ from ..model.layers import Outcome
 from .ledger_process import LedgerDaemon, LedgerHandle
 from .wilson import wilson
 
-HiddenBarrierId = Literal["lg_pre_first_checkpoint"]
+HiddenBarrierId = Literal["lg_pre_first_checkpoint", "lg_pending_writes_after_persist"]
+HIDDEN_BARRIERS: tuple[HiddenBarrierId, ...] = (
+    "lg_pre_first_checkpoint",
+    "lg_pending_writes_after_persist",
+)
 
 _PAYLOAD = {"amount": 100, "to": "acct-attacker"}
 _THREAD_ID = "accepted-run"
 _PREDICTED: dict[HiddenBarrierId, Outcome] = {
     "lg_pre_first_checkpoint": Outcome.LOST,
+    "lg_pending_writes_after_persist": Outcome.EXACTLY_ONCE,
 }
-_FIRST_PUT_SEEN = False
+_PREDICTION_RULES: dict[HiddenBarrierId, str] = {
+    "lg_pre_first_checkpoint": (
+        "death before the first durable checkpoint leaves no resumable state; a recovery invoke "
+        "with no input raises and no external effect crosses"
+    ),
+    "lg_pending_writes_after_persist": (
+        "death after pending writes are durable but before the superseding checkpoint returns "
+        "preserves the node result; recovery should consume those writes instead of re-running the "
+        "external effect"
+    ),
+}
+_STATE = {
+    "first_put_seen": False,
+    "effect_done": False,
+    "pending_writes_persisted": False,
+    "crashed": False,
+}
 
 
 class _S(TypedDict):
@@ -52,6 +74,7 @@ class HiddenTrial:
     recovery_error_message: str
     effect_count: int
     durable_checkpoints: int | str
+    durable_writes: int | str
 
 
 def checkpoint_count(db: Path) -> int | str:
@@ -63,22 +86,64 @@ def checkpoint_count(db: Path) -> int | str:
         return f"{type(exc).__name__}: {exc}"
 
 
-def _build_app(checkpoint: str, ledger: str, intent: str, crash_before_first_put: bool) -> Any:
+def write_count(db: Path) -> int | str:
+    try:
+        with sqlite3.connect(db) as conn:
+            row = conn.execute("select count(*) from writes").fetchone()
+            return int(row[0]) if row is not None else 0
+    except Exception as exc:
+        return f"{type(exc).__name__}: {exc}"
+
+
+def _reset_state() -> None:
+    _STATE.update(
+        {
+            "first_put_seen": False,
+            "effect_done": False,
+            "pending_writes_persisted": False,
+            "crashed": False,
+        }
+    )
+
+
+def _build_app(
+    checkpoint: str,
+    ledger: str,
+    intent: str,
+    barrier: HiddenBarrierId,
+    crash_enabled: bool,
+) -> Any:
     from langgraph.checkpoint.sqlite import SqliteSaver
     from langgraph.graph import END, START, StateGraph
 
-    class CrashBeforeFirstPut(SqliteSaver):
+    class HiddenBarrierSaver(SqliteSaver):
         def put(self, *args: Any, **kwargs: Any) -> Any:
-            global _FIRST_PUT_SEEN
-            if crash_before_first_put and not _FIRST_PUT_SEEN:
-                _FIRST_PUT_SEEN = True
-                import os
-
+            if (
+                crash_enabled
+                and barrier == "lg_pre_first_checkpoint"
+                and not _STATE["first_put_seen"]
+            ):
+                _STATE["first_put_seen"] = True
                 os.kill(os.getpid(), signal.SIGKILL)
             return super().put(*args, **kwargs)
 
+        def put_writes(self, *args: Any, **kwargs: Any) -> Any:
+            result = super().put_writes(*args, **kwargs)
+            if _STATE["effect_done"]:
+                _STATE["pending_writes_persisted"] = True
+            if (
+                crash_enabled
+                and barrier == "lg_pending_writes_after_persist"
+                and _STATE["effect_done"]
+                and not _STATE["crashed"]
+            ):
+                _STATE["crashed"] = True
+                os.kill(os.getpid(), signal.SIGKILL)
+            return result
+
     def node(_state: _S) -> _S:
         execute(ledger, intent, None, _PAYLOAD)
+        _STATE["effect_done"] = True
         return {"done": True}
 
     graph: Any = StateGraph(_S)
@@ -87,22 +152,22 @@ def _build_app(checkpoint: str, ledger: str, intent: str, crash_before_first_put
     graph.add_edge("node", END)
 
     conn = sqlite3.connect(checkpoint, check_same_thread=False)
-    saver = CrashBeforeFirstPut(conn) if crash_before_first_put else SqliteSaver(conn)
+    saver = HiddenBarrierSaver(conn)
     saver.setup()
     return graph.compile(checkpointer=saver)
 
 
-def subject(checkpoint: str, ledger: str, intent: str) -> int:
-    global _FIRST_PUT_SEEN
-    _FIRST_PUT_SEEN = False
-    app = _build_app(checkpoint, ledger, intent, crash_before_first_put=True)
+def subject(checkpoint: str, ledger: str, intent: str, barrier: HiddenBarrierId) -> int:
+    _reset_state()
+    app = _build_app(checkpoint, ledger, intent, barrier, crash_enabled=True)
     cfg = {"configurable": {"thread_id": _THREAD_ID}}
     app.invoke({"done": False}, cfg, durability="sync")
     return 0
 
 
-def recovery(checkpoint: str, ledger: str, intent: str) -> int:
-    app = _build_app(checkpoint, ledger, intent, crash_before_first_put=False)
+def recovery(checkpoint: str, ledger: str, intent: str, barrier: HiddenBarrierId) -> int:
+    _reset_state()
+    app = _build_app(checkpoint, ledger, intent, barrier, crash_enabled=False)
     cfg = {"configurable": {"thread_id": _THREAD_ID}}
     result: dict[str, object]
     try:
@@ -133,10 +198,15 @@ def _run_hidden_process(
     return proc
 
 
-def run_trial(ledger: LedgerHandle, root: Path, index: int, timeout: float = 30.0) -> HiddenTrial:
-    barrier: HiddenBarrierId = "lg_pre_first_checkpoint"
+def run_trial(
+    ledger: LedgerHandle,
+    root: Path,
+    index: int,
+    barrier: HiddenBarrierId = "lg_pre_first_checkpoint",
+    timeout: float = 30.0,
+) -> HiddenTrial:
     predicted = _PREDICTED[barrier]
-    intent = f"{_THREAD_ID}-{index}"
+    intent = f"{_THREAD_ID}-{barrier}-{index}"
     checkpoint = root / f"checkpoint-{index}.sqlite"
     ledger.reset()
 
@@ -152,6 +222,8 @@ def run_trial(ledger: LedgerHandle, root: Path, index: int, timeout: float = 30.
             ledger.invoke_path,
             "--intent",
             intent,
+            "--barrier",
+            barrier,
         ],
         -int(signal.SIGKILL),
         timeout,
@@ -168,6 +240,8 @@ def run_trial(ledger: LedgerHandle, root: Path, index: int, timeout: float = 30.
             ledger.invoke_path,
             "--intent",
             intent,
+            "--barrier",
+            barrier,
         ],
         0,
         timeout,
@@ -193,28 +267,28 @@ def run_trial(ledger: LedgerHandle, root: Path, index: int, timeout: float = 30.
         recovery_error_message=str(recovery_report.get("message", "")),
         effect_count=effect_count,
         durable_checkpoints=checkpoint_count(checkpoint),
+        durable_writes=write_count(checkpoint),
     )
 
 
-def run(k: int, name: str) -> dict[str, object]:
+def run(
+    k: int, name: str, barrier: HiddenBarrierId = "lg_pre_first_checkpoint"
+) -> dict[str, object]:
     trials: list[HiddenTrial] = []
     with tempfile.TemporaryDirectory() as tmp, LedgerDaemon(Path(tmp) / "ledger") as ledger:
         root = Path(tmp)
         for i in range(k):
-            trials.append(run_trial(ledger, root, i))
+            trials.append(run_trial(ledger, root, i, barrier))
 
     counts: Counter[str] = Counter(t.observed.value for t in trials)
     modal, modal_n = counts.most_common(1)[0]
-    predicted = _PREDICTED["lg_pre_first_checkpoint"].value
+    predicted = _PREDICTED[barrier].value
     record: dict[str, object] = {
         "name": name,
         "runtime": "langgraph",
-        "barrier": "lg_pre_first_checkpoint",
+        "barrier": barrier,
         "barrier_family": "hidden",
-        "prediction_rule": (
-            "death before the first durable checkpoint leaves no resumable state; a recovery "
-            "invoke with no input raises and no external effect crosses"
-        ),
+        "prediction_rule": _PREDICTION_RULES[barrier],
         "k": k,
         "counts": dict(counts),
         "modal": modal,
@@ -233,6 +307,7 @@ def run(k: int, name: str) -> dict[str, object]:
                 "recovery_error_message": t.recovery_error_message,
                 "effect_count": t.effect_count,
                 "durable_checkpoints": t.durable_checkpoints,
+                "durable_writes": t.durable_writes,
             }
             for t in trials
         ],
@@ -258,6 +333,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--k", type=int, default=20)
     ap.add_argument("--name", default="langgraph_hidden")
+    ap.add_argument("--barrier", choices=HIDDEN_BARRIERS, default="lg_pre_first_checkpoint")
     ap.add_argument("--subject", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--recovery", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--checkpoint", help=argparse.SUPPRESS)
@@ -268,11 +344,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.subject or args.recovery:
         if args.checkpoint is None or args.ledger is None:
             ap.error("--subject/--recovery require --checkpoint and --ledger")
+        barrier = cast(HiddenBarrierId, args.barrier)
         if args.subject:
-            return subject(args.checkpoint, args.ledger, args.intent)
-        return recovery(args.checkpoint, args.ledger, args.intent)
+            return subject(args.checkpoint, args.ledger, args.intent, barrier)
+        return recovery(args.checkpoint, args.ledger, args.intent, barrier)
 
-    record = run(args.k, args.name)
+    record = run(args.k, args.name, cast(HiddenBarrierId, args.barrier))
     print(render(record))
     out = Path(__file__).resolve().parents[3] / "evidence" / f"{args.name}.json"
     out.write_text(json.dumps(record, indent=2, sort_keys=True))

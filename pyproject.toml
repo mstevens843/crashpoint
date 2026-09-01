@@ -39,8 +39,16 @@ include = [
     "/pyproject.toml",
     "/uv.lock",
     "/scripts",
+    "/runtime",
     "/repro_pre_first_checkpoint_loss.py",
     "/dbos_duplicate_workflow_recovery_probe.py",
+]
+exclude = [
+    "/runtime/vercel-workflow/.nitro",
+    "/runtime/vercel-workflow/.output",
+    "/runtime/vercel-workflow/.swc",
+    "/runtime/vercel-workflow/.workflow-data",
+    "/runtime/vercel-workflow/node_modules",
 ]
 
 [tool.pytest.ini_options]

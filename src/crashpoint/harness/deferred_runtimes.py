@@ -26,15 +26,19 @@ DEFERRED_RUNTIMES: tuple[DeferredRuntime, ...] = (
         name="Vercel Workflow DevKit",
         adapter_id_prefix="r_vercel_workflow_",
         blocker=(
-            "current docs include JS/TS and Python Workflow support, but this repo has no faithful "
-            "worker/backend crash/recovery adapter yet"
+            "an optional JS/TS Nitro fixture was added against workflow@5.0.0-beta.47, but both "
+            "nitro build/start and nitro dev fail before any run because the bundled Local World "
+            'reports Invalid version string: "bundled" while initializing its data directory; '
+            "there is still no faithful local crash/recovery substrate to measure"
         ),
         next_step=(
-            "choose the current JS/TS or Python substrate, expose the same ledger boundary, "
-            "validate local or managed-backend recovery semantics, then model and measure rows"
+            "rerun the fixture when Vercel Workflow Local World exposes a valid package version in "
+            "Nitro bundles, or switch to a supported managed/backend substrate whose "
+            "crash/recovery semantics can be controlled and observed"
         ),
         source=(
-            "Vercel Workflow docs: durable workflows/steps are available through JS/TS and Python"
+            "Vercel Workflow docs: JS/TS and beta Python support; npm workflow@5.0.0-beta.47 "
+            "Local World/Nitro probe on 2026-09-01"
         ),
     ),
 )

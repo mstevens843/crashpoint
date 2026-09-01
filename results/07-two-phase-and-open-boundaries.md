@@ -48,6 +48,8 @@ ANTHROPIC_MODEL=claude-haiku-4-5-20251001 \
   CRASHPOINT_MODEL_PROMPT='Return only a fresh random-looking 12-character lowercase hexadecimal payment memo. Choose a different value each time.' \
   uv run --extra langgraph python -m crashpoint.harness.matrix --k 5 \
   --runtimes r_lg_nondet,r_lg_twophase --name langgraph_model
+uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 \
+  --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist
 ```
 
 Temporal used:
@@ -72,6 +74,7 @@ The resulting default shared b0/b1/b2 evidence is 3,240 crash+recover trials, ze
 | dbos | 30 | 360 | `cp1_0793cb0b8ad9925a9ae547057b707355dc420ac763aec94ce1f7dd0f2334c220` |
 | restate | 10 | 120 | `cp1_69b85c39d1257ac1307088ef5718b854ef5cfae490ffea9e4f9493870e85bfb7` |
 | langgraph_model | 5 | 30 | `cp1_9c99ccf1c57336a7c1ca84bc4b08dad1a7c3519b8e17976b5bf806ebda47cb9d` |
+| langgraph_hidden_pending | 50 | 50 | `cp1_d6c738d55b00a2cf4510bfb12e1b7497e7555de567e7b56e0406d366747d2553` |
 
 Restate used:
 
@@ -142,11 +145,11 @@ Result: k=5, `r_lg_nondet` b1 DIVERGED at rate 1.0, `r_lg_twophase` b1 EXACTLY_O
 zero disagreements, receipt `cp1_9c99ccf1c57336a7c1ca84bc4b08dad1a7c3519b8e17976b5bf806ebda47cb9d`.
 This is narrow real-model evidence, not a broad claim about all samplers/providers.
 
-### LangGraph pre-first-checkpoint hidden barrier
+### LangGraph hidden barriers
 
-`src/crashpoint/harness/langgraph_hidden.py` measures one hidden LangGraph edge that is intentionally
-outside the shared b0/b1/b2 matrix: death before any first checkpoint exists. The predicted rule is
-LOST because recovery has no resumable state and no external effect has crossed.
+`src/crashpoint/harness/langgraph_hidden.py` measures LangGraph edges that are intentionally outside
+the shared b0/b1/b2 matrix. The pre-first-checkpoint rule is LOST because recovery has no resumable
+state and no external effect has crossed.
 
 Command:
 
@@ -156,6 +159,20 @@ uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --
 
 Result: k=50, LOST at rate 1.0, zero disagreements, receipt
 `cp1_993c57f79dae43a92e42013a8403adf93c0f38088ad6b7864816e7885cc76ff8`.
+
+This phase also measured `lg_pending_writes_after_persist`: death after pending writes are durable but
+before the superseding checkpoint path returns. The predicted rule is EXACTLY_ONCE because recovery
+can consume the durable pending writes instead of re-running the external-effect node.
+
+Command:
+
+```
+uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 \
+  --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist
+```
+
+Result: k=50, EXACTLY_ONCE at rate 1.0, zero disagreements, receipt
+`cp1_d6c738d55b00a2cf4510bfb12e1b7497e7555de567e7b56e0406d366747d2553`.
 
 ## What remains explicitly unmodeled
 
@@ -168,8 +185,8 @@ uv run python -m crashpoint.harness.barrier_inventory
 
 Current status:
 
-- LangGraph `lg_pre_first_checkpoint` is measured separately and remains disjoint from b0/b1/b2.
-- LangGraph pending-write edges still need distinct model rules before being added to any matrix.
+- LangGraph `lg_pre_first_checkpoint` and `lg_pending_writes_after_persist` are measured separately
+  and remain disjoint from b0/b1/b2.
 - Temporal activity scheduling, workflow-task replay, and post-activity sentinels need event-history
   instrumentation against a live dev server before they are evidence.
 - DBOS step output commit, workflow status commit, and duplicate workflow-name recovery need
@@ -177,16 +194,17 @@ Current status:
 
 ## Deferred runtimes
 
-`src/crashpoint/harness/deferred_runtimes.py` records runtime adapters that are still not present:
+`src/crashpoint/harness/deferred_runtimes.py` records runtime adapters that are still not measured:
 
 ```
 uv run python -m crashpoint.harness.deferred_runtimes
 ```
 
-- Vercel Workflow is deferred because no faithful worker/backend crash harness has been validated
-  here. Current Vercel docs include JS/TS and Python Workflow support; either substrate needs a
-  ledger boundary, crash injection, recovery path, predicted rows, and receipted evidence before it
-  enters the model.
+- Vercel Workflow is deferred. An optional JS/TS Nitro fixture in `runtime/vercel-workflow/` follows
+  the documented Express/Nitro shape and exposes the ledger boundary, but workflow@5.0.0-beta.47
+  fails before any local run on this host because the bundled Local World raises
+  `Invalid version string: "bundled"` during data-dir initialization. It needs a faithful local or
+  managed backend recovery substrate before rows can enter the model.
 
 The deferred runtime is not a skipped failing row. It is not in `runtimes.py` until there is a
 predicted row family and receipted crash evidence.

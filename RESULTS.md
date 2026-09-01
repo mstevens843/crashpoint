@@ -15,7 +15,7 @@ their servers only for the explicit matrix runs below.
 **Runtimes:** LangGraph 1.2.11 (+ langgraph-checkpoint-sqlite 3.1.1); Temporal CLI 1.8.2 /
 server 1.31.2 with temporalio 1.32.0 (local `start-dev`); DBOS 2.31.0 with Postgres 16
 (Docker, on 5433); Restate server/CLI 1.7.8 with restate-sdk 1.0.4 (Docker dev server plus Python
-ASGI worker).
+ASGI worker). Vercel Workflow was probed with workflow@5.0.0-beta.47 but not measured.
 **Ground truth:** the distinct side-effect count recorded by a separate ledger process the runtime
 cannot read, reset, or forge - never the runtime's own report.
 
@@ -35,12 +35,12 @@ cannot read, reset, or forge - never the runtime's own report.
 | DBOS, k=30 (360 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | Restate, k=10 (120 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | Real model sampler, LangGraph k=5 (30 trials) | Anthropic Haiku 4.5: nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
-| LangGraph hidden barrier (`python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden`) | `lg_pre_first_checkpoint` measured separately: LOST at k=50, **0 disagreements** |
-| Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | one LangGraph candidate measured; remaining internal candidates named and kept disjoint from b0/b1/b2 |
-| Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | Vercel Workflow remains unimplemented with a precise blocker |
+| LangGraph hidden barriers (`python -m crashpoint.harness.langgraph_hidden ...`) | `lg_pre_first_checkpoint` LOST at k=50; `lg_pending_writes_after_persist` EXACTLY_ONCE at k=50; **0 disagreements** |
+| Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | two LangGraph candidates measured; remaining internal candidates named and kept disjoint from b0/b1/b2 |
+| Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | Vercel Workflow fixture exists but remains unmeasured with a precise Local World blocker |
 
-3,320 crash+recover trials in all: 3,240 in the default shared b0/b1/b2 matrices, 30 in the
-real-model LangGraph submatrix, and 50 in the separate LangGraph hidden-barrier run. Every observed
+3,370 crash+recover trials in all: 3,240 in the default shared b0/b1/b2 matrices, 30 in the
+real-model LangGraph submatrix, and 100 in the separate LangGraph hidden-barrier runs. Every observed
 cell equals a prediction written before any runtime was crashed, and every cell sits at rate 1.0.
 The two-phase rows were modeled before the adapters were measured and do not change the earlier
 claim: content-derived idempotency only works when the effect is reproducible from durable inputs.
@@ -114,6 +114,7 @@ pre-call identity fixes that failure in the measured two-phase rows.
 | `evidence/langgraph_model.json` | `ANTHROPIC_MODEL=claude-haiku-4-5-20251001 CRASHPOINT_NONDET_SOURCE=model CRASHPOINT_MODEL_SAMPLER_CMD='python scripts/anthropic_sampler.py' CRASHPOINT_MODEL_SAMPLER_TIMEOUT=90 CRASHPOINT_MODEL_PROMPT='Return only a fresh random-looking 12-character lowercase hexadecimal payment memo. Choose a different value each time.' uv run --extra langgraph python -m crashpoint.harness.matrix --k 5 --runtimes r_lg_nondet,r_lg_twophase --name langgraph_model` | `cp1_9c99ccf1c57336a7c1ca84bc4b08dad1a7c3519b8e17976b5bf806ebda47cb9d` |
 | `evidence/isolation_linux.json` | `docker run --rm -v "$PWD:/work:ro" -v "$PWD/evidence:/evidence" -w /work -e PYTHONPATH=src python:3.12-slim python -m crashpoint.adversaries.isolation --require --evidence-path /evidence/isolation_linux.json` | `cp1_9d16e122023c860eafdf320ed69d8241a57f74c790975d883ffd7d77a6bd496d` |
 | `evidence/langgraph_hidden.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden` | `cp1_993c57f79dae43a92e42013a8403adf93c0f38088ad6b7864816e7885cc76ff8` |
+| `evidence/langgraph_hidden_pending.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist` | `cp1_d6c738d55b00a2cf4510bfb12e1b7497e7555de567e7b56e0406d366747d2553` |
 
 `tests/test_discrimination.py` re-derives each receipt from the JSON body and checks that no present
 evidence cell disagrees with the model. Dedicated tests re-derive the isolation and hidden-barrier
@@ -122,8 +123,9 @@ receipts.
 ## Packaging
 
 `uv build` succeeds. The wheel is code-only (`src/crashpoint`), while the sdist explicitly includes
-`tests/`, `evidence/`, `results/`, top-level docs, repro scripts, and `uv.lock`. That keeps installed
-packages small while preserving the release artifact needed to reproduce the research evidence.
+`tests/`, `evidence/`, `results/`, top-level docs, repro scripts, `uv.lock`, and the optional
+`runtime/` probes. That keeps installed packages small while preserving the release artifact needed
+to reproduce the research evidence and the current Vercel blocker.
 
 ## Reproduce
 
@@ -141,6 +143,7 @@ packages small while preserving the release artifact needed to reproduce the res
     uv run python -m crashpoint.harness.matrix --k 100 --runtimes r_null,r_dup,r_lost,r_idem,r_diverge,r_twophase --name controls
     uv run --extra langgraph python -m crashpoint.harness.matrix --k 50 --runtimes r_lg_naive,r_lg_idem,r_lg_nondet,r_lg_twophase --name langgraph
     uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden
+    uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist
 
 The real-server columns need their substrate up first:
 
@@ -189,16 +192,17 @@ boolean, and a prompt hash.
   BLOCKED. The PASS proves execute-only access for a UID-dropped subject in that Linux container; it
   is not a full container escape audit.
 - **All hidden framework crash points.** The matrix measures b0/b1/b2. LangGraph
-  `lg_pre_first_checkpoint` is measured separately. `barrier_inventory.py` still names additional
-  candidates around LangGraph pending writes, Temporal activity scheduling/replay, and DBOS
-  step/status commits, but those are not evidence until each receives a model rule and a measured
-  adapter barrier.
+  `lg_pre_first_checkpoint` and `lg_pending_writes_after_persist` are measured separately.
+  `barrier_inventory.py` still names additional candidates around Temporal activity
+  scheduling/replay and DBOS step/status commits, but those are not evidence until each receives a
+  model rule and a measured adapter barrier.
 - **A broad model-sampler claim.** `evidence/langgraph_model.json` measures one provider/model
   configuration on two LangGraph rows at k=5. It does not characterize provider caching,
   temperature/seed behavior, local samplers, or every model.
-- **Vercel Workflow.** It remains unimplemented. Vercel's current docs include JS/TS and Python
-  Workflow support, but this repo has not validated a faithful worker/backend crash harness before
-  any rows can be modeled or measured.
+- **Vercel Workflow.** An optional JS/TS Nitro fixture exists in `runtime/vercel-workflow/`, but it
+  remains unmeasured. On 2026-09-01, workflow@5.0.0-beta.47 compiled under Nitro, but the Local
+  World failed before any run with `Invalid version string: "bundled"`, so no faithful
+  worker/backend crash harness was validated and no rows were modeled.
 - **A runtime defect where the runtime documents at-least-once behavior.** Temporal, DBOS, and
   Restate are not defect reports. They demonstrate the gap between exactly-once workflow language and external
   side-effect behavior under the documented contracts.
