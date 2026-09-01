@@ -41,6 +41,13 @@ uv run --extra dbos python -m crashpoint.harness.matrix --k 30 \
   --runtimes r_dbos_naive,r_dbos_idem,r_dbos_nondet,r_dbos_twophase --name dbos
 uv run --extra restate python -m crashpoint.harness.restate_matrix --k 10 \
   --name restate --timeout 45
+ANTHROPIC_MODEL=claude-haiku-4-5-20251001 \
+  CRASHPOINT_NONDET_SOURCE=model \
+  CRASHPOINT_MODEL_SAMPLER_CMD='python scripts/anthropic_sampler.py' \
+  CRASHPOINT_MODEL_SAMPLER_TIMEOUT=90 \
+  CRASHPOINT_MODEL_PROMPT='Return only a fresh random-looking 12-character lowercase hexadecimal payment memo. Choose a different value each time.' \
+  uv run --extra langgraph python -m crashpoint.harness.matrix --k 5 \
+  --runtimes r_lg_nondet,r_lg_twophase --name langgraph_model
 ```
 
 Temporal used:
@@ -55,7 +62,7 @@ DBOS used the existing local `cp-postgres` container:
 docker start cp-postgres
 ```
 
-The resulting shared b0/b1/b2 evidence is 3,240 crash+recover trials, zero disagreements:
+The resulting default shared b0/b1/b2 evidence is 3,240 crash+recover trials, zero disagreements:
 
 | evidence | k | trials | receipt |
 |---|---|---|---|
@@ -64,6 +71,7 @@ The resulting shared b0/b1/b2 evidence is 3,240 crash+recover trials, zero disag
 | temporal | 30 | 360 | `cp1_6a057f0779fb2b98c60fe71c4b8e8111328a5385ff8069b1598f4d7fa50728a5` |
 | dbos | 30 | 360 | `cp1_0793cb0b8ad9925a9ae547057b707355dc420ac763aec94ce1f7dd0f2334c220` |
 | restate | 10 | 120 | `cp1_69b85c39d1257ac1307088ef5718b854ef5cfae490ffea9e4f9493870e85bfb7` |
+| langgraph_model | 5 | 30 | `cp1_9c99ccf1c57336a7c1ca84bc4b08dad1a7c3519b8e17976b5bf806ebda47cb9d` |
 
 Restate used:
 
@@ -115,10 +123,24 @@ export CRASHPOINT_MODEL_SAMPLER_CMD='your-sampler-command'
 
 The command receives the prompt on stdin and must print the sampled memo to stdout. This keeps
 secrets and provider choice outside the repo. `scripts/anthropic_sampler.py` is available for an
-operator who sets `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL` in the shell. No safe provider/local
-model configuration was available in this workspace, and no pasted secret was used, so no
-model-backed evidence was generated. The current nondeterministic evidence remains UUID/draw-backed
-and should be cited only as irreproducibility evidence.
+operator who sets `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL` in the shell or in a local ignored
+`.env`.
+
+Measured run:
+
+```
+ANTHROPIC_MODEL=claude-haiku-4-5-20251001 \
+  CRASHPOINT_NONDET_SOURCE=model \
+  CRASHPOINT_MODEL_SAMPLER_CMD='python scripts/anthropic_sampler.py' \
+  CRASHPOINT_MODEL_SAMPLER_TIMEOUT=90 \
+  CRASHPOINT_MODEL_PROMPT='Return only a fresh random-looking 12-character lowercase hexadecimal payment memo. Choose a different value each time.' \
+  uv run --extra langgraph python -m crashpoint.harness.matrix --k 5 \
+  --runtimes r_lg_nondet,r_lg_twophase --name langgraph_model
+```
+
+Result: k=5, `r_lg_nondet` b1 DIVERGED at rate 1.0, `r_lg_twophase` b1 EXACTLY_ONCE at rate 1.0,
+zero disagreements, receipt `cp1_9c99ccf1c57336a7c1ca84bc4b08dad1a7c3519b8e17976b5bf806ebda47cb9d`.
+This is narrow real-model evidence, not a broad claim about all samplers/providers.
 
 ### LangGraph pre-first-checkpoint hidden barrier
 

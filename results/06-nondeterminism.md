@@ -140,7 +140,7 @@ disagreements (model wrong): []
 ```
 
 3,120 crash+recover trials in the shared b0/b1/b2 matrix at this point in the notebook, every cell
-at rate 1.0, zero disagreements on any runtime. Later Restate and hidden-barrier evidence is
+at rate 1.0, zero disagreements on any runtime. Later Restate, real-model, and hidden-barrier evidence is
 summarized in `RESULTS.md`. The model was written and rendered before the adapters, the oracle
 change, and the probe existed, and it was not corrected once - the b1 rule it predicts is the rule
 every measured cell landed on.

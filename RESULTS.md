@@ -34,15 +34,16 @@ cannot read, reset, or forge - never the runtime's own report.
 | Temporal, k=30 (360 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | DBOS, k=30 (360 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | Restate, k=10 (120 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
+| Real model sampler, LangGraph k=5 (30 trials) | Anthropic Haiku 4.5: nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | LangGraph hidden barrier (`python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden`) | `lg_pre_first_checkpoint` measured separately: LOST at k=50, **0 disagreements** |
 | Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | one LangGraph candidate measured; remaining internal candidates named and kept disjoint from b0/b1/b2 |
 | Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | Vercel Workflow remains unimplemented with a precise blocker |
 
-3,290 crash+recover trials in all: 3,240 in the shared b0/b1/b2 matrices plus 50 in the separate
-LangGraph hidden-barrier run. Every observed cell equals a prediction written before any runtime was
-crashed, and every cell sits at rate 1.0. The two-phase rows were modeled before the adapters were
-measured and do not change the earlier claim: content-derived idempotency only works when the effect
-is reproducible from durable inputs.
+3,320 crash+recover trials in all: 3,240 in the default shared b0/b1/b2 matrices, 30 in the
+real-model LangGraph submatrix, and 50 in the separate LangGraph hidden-barrier run. Every observed
+cell equals a prediction written before any runtime was crashed, and every cell sits at rate 1.0.
+The two-phase rows were modeled before the adapters were measured and do not change the earlier
+claim: content-derived idempotency only works when the effect is reproducible from durable inputs.
 
 ## The headline, stated once
 
@@ -62,6 +63,10 @@ DIVERGED. If the identity is durably prepared before the nondeterministic draw a
 the effect, the measured two-phase rows recover EXACTLY_ONCE at b1 in the control, LangGraph,
 Temporal, DBOS, and Restate adapters. That is a measured pattern in this fixture, not a claim that the
 runtimes provide it automatically.
+
+The real-model arm is measured narrowly: Anthropic Haiku 4.5 produced the same b1 shape on LangGraph
+as the UUID/draw control at k=5. That closes the "no real sampler at all" gap for this fixture, but it
+does not generalize to every model/provider/cache setting.
 
 ## The matrix
 
@@ -106,6 +111,7 @@ pre-call identity fixes that failure in the measured two-phase rows.
 | `evidence/temporal.json` | `uv run --extra temporal python -m crashpoint.harness.matrix --k 30 --runtimes r_tmp_naive,r_tmp_idem,r_tmp_nondet,r_tmp_twophase --name temporal` | `cp1_6a057f0779fb2b98c60fe71c4b8e8111328a5385ff8069b1598f4d7fa50728a5` |
 | `evidence/dbos.json` | `uv run --extra dbos python -m crashpoint.harness.matrix --k 30 --runtimes r_dbos_naive,r_dbos_idem,r_dbos_nondet,r_dbos_twophase --name dbos` | `cp1_0793cb0b8ad9925a9ae547057b707355dc420ac763aec94ce1f7dd0f2334c220` |
 | `evidence/restate.json` | `uv run --extra restate python -m crashpoint.harness.restate_matrix --k 10 --name restate --timeout 45` | `cp1_69b85c39d1257ac1307088ef5718b854ef5cfae490ffea9e4f9493870e85bfb7` |
+| `evidence/langgraph_model.json` | `ANTHROPIC_MODEL=claude-haiku-4-5-20251001 CRASHPOINT_NONDET_SOURCE=model CRASHPOINT_MODEL_SAMPLER_CMD='python scripts/anthropic_sampler.py' CRASHPOINT_MODEL_SAMPLER_TIMEOUT=90 CRASHPOINT_MODEL_PROMPT='Return only a fresh random-looking 12-character lowercase hexadecimal payment memo. Choose a different value each time.' uv run --extra langgraph python -m crashpoint.harness.matrix --k 5 --runtimes r_lg_nondet,r_lg_twophase --name langgraph_model` | `cp1_9c99ccf1c57336a7c1ca84bc4b08dad1a7c3519b8e17976b5bf806ebda47cb9d` |
 | `evidence/isolation_linux.json` | `docker run --rm -v "$PWD:/work:ro" -v "$PWD/evidence:/evidence" -w /work -e PYTHONPATH=src python:3.12-slim python -m crashpoint.adversaries.isolation --require --evidence-path /evidence/isolation_linux.json` | `cp1_9d16e122023c860eafdf320ed69d8241a57f74c790975d883ffd7d77a6bd496d` |
 | `evidence/langgraph_hidden.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden` | `cp1_993c57f79dae43a92e42013a8403adf93c0f38088ad6b7864816e7885cc76ff8` |
 
@@ -154,7 +160,7 @@ container.
     docker run -d --name crashpoint-restate -p 8080:8080 -p 9070:9070 -p 9071:9071 --add-host=host.docker.internal:host-gateway docker.restate.dev/restatedev/restate:latest
     uv run --extra restate python -m crashpoint.harness.restate_matrix --k 10 --name restate --timeout 45
 
-## Optional Real-Model Arm
+## Real-Model Arm
 
 The default nondeterministic source is `uuid`, because the property under test is irreproducibility
 from durable inputs. A real sampler can be injected without hardcoding secrets:
@@ -163,16 +169,18 @@ from durable inputs. A real sampler can be injected without hardcoding secrets:
     export CRASHPOINT_MODEL_SAMPLER_CMD='your-sampler-command'
     export CRASHPOINT_MODEL_SAMPLER_TIMEOUT=30
 
-The command receives the prompt on stdin and must write the sampled memo on stdout. Evidence should
-only be checked in after a real configured sampler run. This repository currently contains no
-model-backed evidence. For Anthropic's Messages API, the repo includes a stdlib-only helper:
+The command receives the prompt on stdin and must write the sampled memo on stdout. For Anthropic's
+Messages API, the repo includes a stdlib-only helper:
 
     export ANTHROPIC_API_KEY=...
-    export ANTHROPIC_MODEL=...
+    export ANTHROPIC_MODEL=claude-haiku-4-5-20251001
     export CRASHPOINT_NONDET_SOURCE=model
     export CRASHPOINT_MODEL_SAMPLER_CMD='python scripts/anthropic_sampler.py'
 
-No pasted or logged secret was used to produce the checked-in evidence.
+The helper also loads a local `.env` file, which is ignored by git; `.env.example` lists the expected
+variable names. The checked-in `evidence/langgraph_model.json` was produced with Anthropic Haiku 4.5
+and records only non-secret sampler metadata: model name, sampler command, workspace-id presence as a
+boolean, and a prompt hash.
 
 ## What this does not prove
 
@@ -185,9 +193,9 @@ No pasted or logged secret was used to produce the checked-in evidence.
   candidates around LangGraph pending writes, Temporal activity scheduling/replay, and DBOS
   step/status commits, but those are not evidence until each receives a model rule and a measured
   adapter barrier.
-- **A real model sampler.** The optional command interface exists, but no real sampler was configured
-  for this evidence set. Do not cite these UUID-backed nondeterministic rows as model-provider
-  measurements.
+- **A broad model-sampler claim.** `evidence/langgraph_model.json` measures one provider/model
+  configuration on two LangGraph rows at k=5. It does not characterize provider caching,
+  temperature/seed behavior, local samplers, or every model.
 - **Vercel Workflow.** It remains unimplemented. Vercel's current docs include JS/TS and Python
   Workflow support, but this repo has not validated a faithful worker/backend crash harness before
   any rows can be modeled or measured.

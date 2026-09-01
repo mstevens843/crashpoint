@@ -67,9 +67,9 @@ The current receipt is
 
 The model-call concern is not that a UUID is a model. The measured property is that the value used to
 form the action is not reproducible from durable inputs. A UUID draw is the cheap deterministic
-property control; an optional real-sampler arm exists through `CRASHPOINT_NONDET_SOURCE=model` and
-`CRASHPOINT_MODEL_SAMPLER_CMD`, but no model-backed evidence is checked in because no real sampler was
-configured for this run.
+property control. A narrow real-sampler arm was also measured through
+`CRASHPOINT_NONDET_SOURCE=model` and `CRASHPOINT_MODEL_SAMPLER_CMD`: Anthropic Haiku 4.5 on the
+LangGraph nondeterministic/two-phase rows at k=5.
 
 Current b1 table:
 
@@ -120,8 +120,8 @@ to miss, and a crash-tested fixture makes it concrete.
 - Vercel Workflow is not implemented. Current Vercel docs include JS/TS and Python Workflow support,
   but this repo has not validated a faithful worker/backend crash harness before any row can be
   modeled or measured.
-- No real model sampler was measured. The optional hook and Anthropic helper are present, but no safe
-  provider/local model configuration was available for this evidence set.
+- Real model-sampler evidence is narrow. `evidence/langgraph_model.json` covers Anthropic Haiku 4.5
+  on the LangGraph nondeterministic/two-phase rows at k=5; it is not a broad model/provider claim.
 
 ## What we are offering
 

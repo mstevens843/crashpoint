@@ -11,7 +11,9 @@ predicted-vs-observed diff, and evidence/<name>.json with a canonical-JSON SHA-2
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
 import tempfile
 from collections import Counter
 from pathlib import Path
@@ -27,6 +29,37 @@ from .wilson import wilson
 
 _SYM = {Outcome.EXACTLY_ONCE: "ONCE", Outcome.DUPLICATED: "DUP", Outcome.LOST: "LOST",
         Outcome.DIVERGED: "DIVERGE", Outcome.VOID: "VOID"}
+
+
+def _dotenv_value_present(name: str) -> bool:
+    env_path = Path(__file__).resolve().parents[3] / ".env"
+    if not env_path.exists():
+        return False
+    for raw_line in env_path.read_text().splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("export "):
+            line = line.removeprefix("export ").strip()
+        key, sep, value = line.partition("=")
+        if sep and key.strip() == name and value.strip().strip("'\""):
+            return True
+    return False
+
+
+def _sampler_metadata() -> dict[str, object] | None:
+    source = os.environ.get("CRASHPOINT_NONDET_SOURCE", "uuid").strip().lower()
+    if source != "model":
+        return None
+    prompt = os.environ.get("CRASHPOINT_MODEL_PROMPT", "")
+    return {
+        "nondeterministic_source": "model",
+        "sampler_cmd": os.environ.get("CRASHPOINT_MODEL_SAMPLER_CMD", ""),
+        "model": os.environ.get("ANTHROPIC_MODEL", ""),
+        "workspace_id_present": bool(os.environ.get("ANTHROPIC_WORKSPACE_ID"))
+        or _dotenv_value_present("ANTHROPIC_WORKSPACE_ID"),
+        "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest() if prompt else "",
+    }
 
 
 def run_cell(
@@ -59,6 +92,9 @@ def run(runtime_ids: tuple[str, ...], barrier_ids: tuple[str, ...], k: int,
         "name": name, "k": k, "runtimes": list(runtime_ids), "barriers": list(barrier_ids),
         "cells": cells, "disagreements": disagreements,
     }
+    sampler = _sampler_metadata()
+    if sampler is not None:
+        record["sampler"] = sampler
     record["receipt"] = receipt(record)
     return record
 

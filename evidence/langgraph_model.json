@@ -1,0 +1,120 @@
+{
+  "barriers": [
+    "b0",
+    "b1",
+    "b2"
+  ],
+  "cells": [
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 5
+      },
+      "k": 5,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_nondet",
+      "wilson95": [
+        0.5655,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "diverged": 5
+      },
+      "k": 5,
+      "modal": "diverged",
+      "modal_rate": 1.0,
+      "predicted": "diverged",
+      "runtime": "r_lg_nondet",
+      "wilson95": [
+        0.5655,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 5
+      },
+      "k": 5,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_nondet",
+      "wilson95": [
+        0.5655,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 5
+      },
+      "k": 5,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_twophase",
+      "wilson95": [
+        0.5655,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "exactly_once": 5
+      },
+      "k": 5,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_twophase",
+      "wilson95": [
+        0.5655,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 5
+      },
+      "k": 5,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_twophase",
+      "wilson95": [
+        0.5655,
+        1.0
+      ]
+    }
+  ],
+  "disagreements": [],
+  "k": 5,
+  "name": "langgraph_model",
+  "receipt": "cp1_9c99ccf1c57336a7c1ca84bc4b08dad1a7c3519b8e17976b5bf806ebda47cb9d",
+  "runtimes": [
+    "r_lg_nondet",
+    "r_lg_twophase"
+  ],
+  "sampler": {
+    "model": "claude-haiku-4-5-20251001",
+    "nondeterministic_source": "model",
+    "prompt_sha256": "7f51f3f9a6fd32848e9da351db4a3f6443dbd3c7c075bc29dd4b90eef313a380",
+    "sampler_cmd": "python scripts/anthropic_sampler.py",
+    "workspace_id_present": true
+  }
+}

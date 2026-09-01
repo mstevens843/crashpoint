@@ -26,11 +26,32 @@ import os
 import sys
 import urllib.error
 import urllib.request
+from pathlib import Path
 
 _DEFAULT_API_URL = "https://api.anthropic.com/v1/messages"
 _DEFAULT_VERSION = "2023-06-01"
 _DEFAULT_MAX_TOKENS = "32"
 _MAX_ERROR_CHARS = 600
+
+
+def _load_dotenv() -> None:
+    """Load a local .env file without overriding already-exported variables."""
+    env_path = Path(__file__).resolve().parents[1] / ".env"
+    if not env_path.exists():
+        return
+    for raw_line in env_path.read_text().splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("export "):
+            line = line.removeprefix("export ").strip()
+        key, sep, value = line.partition("=")
+        if not sep:
+            continue
+        key = key.strip()
+        value = value.strip().strip("'\"")
+        if key and key not in os.environ:
+            os.environ[key] = value
 
 
 def _required_env(name: str) -> str:
@@ -98,6 +119,7 @@ def sample(prompt: str) -> str:
 
 
 def main() -> int:
+    _load_dotenv()
     prompt = sys.stdin.read().strip()
     if not prompt:
         print("prompt on stdin is required", file=sys.stderr)

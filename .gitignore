@@ -7,3 +7,6 @@ __pycache__/
 work/
 *.sock
 *.ledger
+.env
+.env.*
+!.env.example

@@ -57,6 +57,10 @@ production system is touched.
 >   model-call shape - replay derives a different key and the cell reads DIVERGED. If the identity is
 >   durably prepared before that draw and carried through the effect, the measured two-phase rows read
 >   EXACTLY_ONCE. The recomputability probe is `uv run python -m crashpoint.harness.recomputability`.
+> - **A real model sampler is measured narrowly.** The UUID/draw arm remains the default
+>   irreproducibility control, and an Anthropic Haiku 4.5 run measures the real model-backed shape on
+>   the LangGraph nondeterministic/two-phase rows at k=5:
+>   `CRASHPOINT_NONDET_SOURCE=model CRASHPOINT_MODEL_SAMPLER_CMD='python scripts/anthropic_sampler.py' uv run --extra langgraph python -m crashpoint.harness.matrix --k 5 --runtimes r_lg_nondet,r_lg_twophase --name langgraph_model`.
 >
 > **Do not cite a number from this repo that does not name the command that produced it.**
 
@@ -105,11 +109,10 @@ write: **b0** before the effect, **b1** after the effect but before the completi
   the subject has only execute/invoke capability. The stronger Linux UID-drop proof is Linux-only;
   the direct macOS command reports BLOCKED, while the Dockerized Linux run passed and is receipted in
   `evidence/isolation_linux.json`.
-- **No real-model evidence yet.** `CRASHPOINT_NONDET_SOURCE=model` and
-  `CRASHPOINT_MODEL_SAMPLER_CMD` provide an optional real-sampler arm, but this repo has no checked-in
-  model-backed evidence because no safe sampler/provider credentials were configured for this run.
-  `scripts/anthropic_sampler.py` is a helper for operators who set `ANTHROPIC_API_KEY` and
-  `ANTHROPIC_MODEL` in their shell. The UUID/draw arm remains the cheap irreproducibility control.
+- **No broad real-model provider claim.** `evidence/langgraph_model.json` measures Anthropic Haiku
+  4.5 on the LangGraph nondeterministic/two-phase rows at k=5. It is real model-sampler evidence,
+  not a claim about every model, provider cache, temperature, or seeded/local sampler.
+  `scripts/anthropic_sampler.py` reads secrets from the shell or a local ignored `.env`.
 - **No hidden-barrier overclaim.** The measured cross-runtime barriers are b0/b1/b2. LangGraph's
   pre-first-checkpoint edge is measured separately as `lg_pre_first_checkpoint` in
   `evidence/langgraph_hidden.json`; the remaining framework-internal candidates stay inventoried by
