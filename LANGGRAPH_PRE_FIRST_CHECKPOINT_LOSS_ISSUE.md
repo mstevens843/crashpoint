@@ -222,6 +222,24 @@ This is a different shape from duplicate external effects. The duplicate case te
 something happened twice. This case can teach nothing happened at all: a background run disappears
 before the runtime has a durable record for it.
 
+### Follow-up Scope
+
+Subsequent write-order measurement narrowed the runtime behavior. Under `durability="sync"`, the
+input and step-0 checkpoints are committed before the first user node runs; this reproducer kills
+the process inside the first checkpoint write itself. No ordering change inside the graph can make
+an interrupted write durable.
+
+The bounded upstream question is therefore to regression-test and document the `sync` / `async` /
+`exit` pre-node guarantees and state the admission limitation explicitly. A runtime-written failure
+record on every missing-checkpoint recovery would be unsound: without external admission evidence,
+LangGraph cannot distinguish `NOT_ADMITTED` from `ADMITTED_BUT_RUNTIME_EVIDENCE_MISSING`.
+
+Crashpoint now measures the application-level containment arm separately in
+[`results/10-langgraph-admission-ledger.md`](./results/10-langgraph-admission-ledger.md): commit a
+caller-owned accepted-run record and original input before dispatch, then use that authority for
+explicit replay. That is not a LangGraph source fix and does not by itself make external effects
+exactly-once.
+
 ### System Info
 
 Observed locally with:

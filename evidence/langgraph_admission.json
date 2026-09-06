@@ -1,0 +1,2019 @@
+{
+  "all_agree": true,
+  "arms": {
+    "external_admission_ledger": {
+      "decisions": {
+        "admitted_runtime_evidence_missing": 30
+      },
+      "k": 30,
+      "pass_rate": 1.0,
+      "passing": 30,
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    },
+    "runtime_only": {
+      "decisions": {
+        "unverified": 30
+      },
+      "k": 30,
+      "pass_rate": 1.0,
+      "passing": 30,
+      "wilson95": [
+        0.8865,
+        1.0
+      ]
+    }
+  },
+  "claim": "a caller-owned acceptance record committed before dispatch distinguishes an admitted run from an unknown thread and supplies the original input for explicit replay",
+  "experiment_family": "application_admission_containment",
+  "framework_fix": false,
+  "k_per_arm": 30,
+  "limitation": "this does not make arbitrary external effects exactly-once; safe replay still needs authorization, stable idempotency, attempt records, and destination reconciliation",
+  "name": "langgraph_admission",
+  "receipt": "cp1_4b68607837c28046ad86e1ba6bbeb2090f8326e971d423724af940b37f0b5776",
+  "runtime": "langgraph",
+  "trials": [
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "admission_before_recovery": {
+        "accepted": false,
+        "events": [],
+        "original_input": null,
+        "status": "missing"
+      },
+      "agrees": true,
+      "arm": "runtime_only",
+      "checkpoints_after_recovery": 0,
+      "checkpoints_before_recovery": 0,
+      "decision": "unverified",
+      "effects_after_recovery": 0,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": null,
+      "replayed": false,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    },
+    {
+      "admission_after_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted",
+          "recovery_required",
+          "completed"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "completed"
+      },
+      "admission_before_recovery": {
+        "accepted": true,
+        "events": [
+          "accepted"
+        ],
+        "original_input": {
+          "done": false
+        },
+        "status": "accepted"
+      },
+      "agrees": true,
+      "arm": "external_admission_ledger",
+      "checkpoints_after_recovery": 3,
+      "checkpoints_before_recovery": 0,
+      "decision": "admitted_runtime_evidence_missing",
+      "effects_after_recovery": 1,
+      "effects_before_recovery": 0,
+      "recovery_error_message": "Received no input for __start__",
+      "recovery_error_type": "EmptyInputError",
+      "recovery_returncode": 0,
+      "replay_result": {
+        "done": true
+      },
+      "replayed": true,
+      "subject_returncode": -9
+    }
+  ]
+}

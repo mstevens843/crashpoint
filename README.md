@@ -56,6 +56,13 @@ production system is touched.
 >   `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden`
 >   and
 >   `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist`.
+> - **The pre-first-checkpoint admission gap has a measured containment arm.** In 30 paired
+>   runtime-only and caller-ledger trials, both arms died with zero checkpoints, zero effects, and
+>   `EmptyInputError`. The runtime-only arm correctly remained `UNVERIFIED`; an external acceptance
+>   event committed with the original input before dispatch let recovery identify the admitted run,
+>   replay it explicitly, and finish with one effect and three checkpoints in all 30 trials. This is
+>   an application pattern, not a LangGraph fix:
+>   `uv run --extra langgraph python -m crashpoint.harness.langgraph_admission --k 30 --name langgraph_admission`.
 > - **Vercel Workflow, the fifth engine.** The JS/TS Workflow DevKit fixture in
 >   `runtime/vercel-workflow/` runs on the Local World and shows the same b1 contrast: naive
 >   DUPLICATES, the idempotent boundary recovers EXACTLY_ONCE, the nondeterministic twin DIVERGES,
@@ -113,7 +120,7 @@ src/crashpoint/adversaries/  reflexive adversary + Linux UID-drop isolation prob
 evidence/                 receipted observed matrices and adversary proofs
 runtime/                  optional runtime-specific probes that are not Python package code
 scripts/                  optional local helpers for non-baseline evidence runs
-results/                  numbered, append-only lab notebook (00 substrate .. 08 current phase)
+results/                  numbered, append-only lab notebook (00 substrate .. 10 current phase)
 DISCLOSURE.md             drafted upstream note, with conservative claims and limitations
 ```
 
@@ -142,6 +149,10 @@ write: **b0** before the effect, **b1** after the effect but before the completi
   inventoried and unmeasured: a Vercel Workflow crash between world-local's step-create claim and
   the step entity, seen as a recovery wedge in the shared matrix and scored VOID there. The full
   list is `uv run python -m crashpoint.harness.barrier_inventory`.
+- **No admission-ledger overclaim.** `evidence/langgraph_admission.json` shows a caller-owned
+  acceptance record preserving enough authority and input to replay the pre-first-checkpoint loss.
+  It is not a LangGraph guarantee and does not make external effects safe to replay without stable
+  idempotency, attempt records, authorization, and destination reconciliation.
 - **No managed Vercel World claim.** The measured Vercel Workflow rows run on the Local World, a
   single-process filesystem backend. The managed world (Vercel Queues plus Vercel Functions) cannot
   be SIGKILLed at a named barrier from this sandbox, so it stays deferred and unmodeled:

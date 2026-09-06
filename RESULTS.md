@@ -10,7 +10,7 @@ reproducing these checks so the dependency graph matches the recorded evidence. 
 installs optional runtime packages for type checking; Temporal, DBOS, Restate, and the Vercel
 Workflow fixture are needed only for the explicit runs below.
 
-**Frozen:** 2026-09-01
+**Frozen:** 2026-09-06
 **Toolchain:** Python 3.12.13, uv 0.11.26, pytest, ruff, mypy (strict) via `uv run`.
 **Runtimes:** LangGraph 1.2.11 (+ langgraph-checkpoint-sqlite 3.1.1); Temporal CLI 1.8.2 /
 server 1.31.2 with temporalio 1.32.0 (local `start-dev`); DBOS 2.31.0 with Postgres 16
@@ -38,19 +38,21 @@ cannot read, reset, or forge - never the runtime's own report.
 | Vercel Workflow, k=30 (360 trials) | naive b1 **DUPLICATED**, idem b1 **EXACTLY_ONCE**, nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE** at 0.933 with 2 fail-closed **VOID**; **0 disagreements** |
 | Real model sampler, LangGraph k=5 (30 trials) | Anthropic Haiku 4.5: nondet b1 **DIVERGED**, two-phase b1 **EXACTLY_ONCE**; **0 disagreements** |
 | LangGraph hidden barriers (`python -m crashpoint.harness.langgraph_hidden ...`) | `lg_pre_first_checkpoint` LOST at k=50; `lg_pending_writes_after_persist` EXACTLY_ONCE at k=50; **0 disagreements** |
+| LangGraph admission containment, k=30 per arm (60 trials) | both arms reach 0 checkpoints / 0 effects / `EmptyInputError`; runtime-only remains **UNVERIFIED**, while a caller-owned accepted-run record supplies authority and input for explicit replay and completion 30/30 |
 | Temporal hidden barriers, k=30 each (60 trials) | durable activity schedule with no worker attempt **EXACTLY_ONCE**; workflow-task replay over a durable activity completion **EXACTLY_ONCE**; history agrees 30/30 both |
 | DBOS hidden barriers, k=30 each (120 trials) | uncommitted step output **DUPLICATED**; committed step output **EXACTLY_ONCE**; uncommitted terminal status **EXACTLY_ONCE**; duplicate workflow name **DIVERGED**; database agrees 30/30 all four |
 | Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | eight candidates measured with their own rules and receipts; one Vercel Workflow candidate named and still blocked; all kept disjoint from b0/b1/b2 |
 | Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | the managed Vercel World remains unmeasured: no faithful crash/recovery substrate from this sandbox |
 
-3,910 crash+recover trials in all: 3,600 in the shared b0/b1/b2 matrices, 30 in the real-model
-LangGraph submatrix, and 280 in the separate hidden-barrier runs (100 LangGraph, 60 Temporal, 120
-DBOS). Every observed cell equals a prediction written before any runtime was crashed. Every cell
-sits at rate 1.0 except `vercel_workflow_twophase` at b1, which is 0.933 because two of its thirty
-trials could not be certified and were scored VOID rather than read favorably; the mechanism is
-named in `results/09`. The two-phase rows were modeled before the adapters were measured and do not
-change the earlier claim: content-derived idempotency only works when the effect is reproducible
-from durable inputs.
+3,970 crash+recover trials in all: 3,600 in the shared b0/b1/b2 matrices, 30 in the real-model
+LangGraph submatrix, 280 in the separate hidden-barrier runs (100 LangGraph, 60 Temporal, 120 DBOS),
+and 60 in the paired LangGraph admission-containment experiment. Every modeled cell equals a
+prediction written before any runtime was crashed, and every admission trial matches its prewritten
+arm rule. Every modeled cell sits at rate 1.0 except `vercel_workflow_twophase` at b1, which is 0.933
+because two of its thirty trials could not be certified and were scored VOID rather than read
+favorably; the mechanism is named in `results/09`. The two-phase rows were modeled before the
+adapters were measured and do not change the earlier claim: content-derived idempotency only works
+when the effect is reproducible from durable inputs.
 
 ## The headline, stated once
 
@@ -127,6 +129,7 @@ pre-call identity fixes that failure in the measured two-phase rows.
 | `evidence/isolation_linux.json` | `docker run --rm -v "$PWD:/work:ro" -v "$PWD/evidence:/evidence" -w /work -e PYTHONPATH=src python:3.12-slim python -m crashpoint.adversaries.isolation --require --evidence-path /evidence/isolation_linux.json` | `cp1_9d16e122023c860eafdf320ed69d8241a57f74c790975d883ffd7d77a6bd496d` |
 | `evidence/langgraph_hidden.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden` | `cp1_993c57f79dae43a92e42013a8403adf93c0f38088ad6b7864816e7885cc76ff8` |
 | `evidence/langgraph_hidden_pending.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist` | `cp1_d6c738d55b00a2cf4510bfb12e1b7497e7555de567e7b56e0406d366747d2553` |
+| `evidence/langgraph_admission.json` | `uv run --extra langgraph python -m crashpoint.harness.langgraph_admission --k 30 --name langgraph_admission` | `cp1_4b68607837c28046ad86e1ba6bbeb2090f8326e971d423724af940b37f0b5776` |
 | `evidence/vercel.json` | `uv run python -m crashpoint.harness.vercel_matrix --k 30 --name vercel --timeout 60` | `cp1_afb5fba49175b98c6f2ac47181bca58674d8a84a64e85635c36bbf2630257139` |
 | `evidence/temporal_hidden_scheduled.json` | `uv run --extra temporal python -m crashpoint.harness.temporal_hidden --k 30 --barrier tmp_activity_scheduled_before_worker_poll --name temporal_hidden_scheduled` | `cp1_474a7d54882e905f53c8a40c2534e26b48442a02c58742a257a2dc22c4c36628` |
 | `evidence/temporal_hidden_replay.json` | `uv run --extra temporal python -m crashpoint.harness.temporal_hidden --k 30 --barrier tmp_workflow_task_replay --name temporal_hidden_replay` | `cp1_857a9ab3979a63291d6bac7edc0c92ff8cd4e0b61ab7a9550898ff8882aadc26` |
@@ -164,6 +167,7 @@ to reproduce the research evidence and the current Vercel blocker.
     uv run --extra langgraph python -m crashpoint.harness.matrix --k 50 --runtimes r_lg_naive,r_lg_idem,r_lg_nondet,r_lg_twophase --name langgraph
     uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden
     uv run --extra langgraph python -m crashpoint.harness.langgraph_hidden --k 50 --name langgraph_hidden_pending --barrier lg_pending_writes_after_persist
+    uv run --extra langgraph python -m crashpoint.harness.langgraph_admission --k 30 --name langgraph_admission
 
 The real-server columns need their substrate up first:
 
@@ -231,6 +235,10 @@ boolean, and a prompt hash.
   runtime's persistence machinery has been enumerated. `barrier_inventory.py` names one candidate
   that is still blocked, a Vercel Workflow crash between world-local's step-create claim and the
   step entity, and it is not evidence until it has a deterministic injection point and a rule.
+- **Exactly-once effects from an admission record.** The admission experiment proves only that a
+  caller-owned accepted-run record can authorize explicit replay and preserve the original input.
+  Replaying a real external effect also requires stable idempotency, durable attempt state,
+  authorization, and destination reconciliation. The containment arm is not a LangGraph source fix.
 - **A broad model-sampler claim.** `evidence/langgraph_model.json` measures one provider/model
   configuration on two LangGraph rows at k=5. It does not characterize provider caching,
   temperature/seed behavior, local samplers, or every model.
