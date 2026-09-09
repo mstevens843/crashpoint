@@ -6,10 +6,11 @@ the admission/visibility boundary separately from the external-effect ordering r
 
 ## Question
 
-A process can die during LangGraph's first checkpoint write. At that point the checkpoint store has
-no row, the user node has not run, and fresh-process `invoke(None, config)` raises
-`EmptyInputError`. Checkpoint absence cannot distinguish a run that was never admitted from one a
-caller accepted immediately before the process died.
+This fixture kills the process as LangGraph enters its first checkpoint write, before that
+checkpoint becomes durable. At that point the checkpoint store has no row, the user node has not
+run, and fresh-process `invoke(None, config)` raises `EmptyInputError`. Checkpoint absence cannot
+distinguish a run that was never admitted from one a caller accepted immediately before the process
+died.
 
 Can a caller-owned acceptance record, committed before dispatch and carrying the original input,
 make that distinction and authorize explicit recovery?

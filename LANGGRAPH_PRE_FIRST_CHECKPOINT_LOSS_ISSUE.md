@@ -226,8 +226,8 @@ before the runtime has a durable record for it.
 
 Subsequent write-order measurement narrowed the runtime behavior. Under `durability="sync"`, the
 input and step-0 checkpoints are committed before the first user node runs; this reproducer kills
-the process inside the first checkpoint write itself. No ordering change inside the graph can make
-an interrupted write durable.
+the process at entry to the first checkpointer `put`, before its storage write becomes durable. No
+ordering change inside the graph can make that interrupted first write durable.
 
 The bounded upstream question is therefore to regression-test and document the `sync` / `async` /
 `exit` pre-node guarantees and state the admission limitation explicitly. A runtime-written failure
