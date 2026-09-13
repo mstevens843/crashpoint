@@ -49,6 +49,8 @@ exclude = [
     "/runtime/vercel-workflow/.swc",
     "/runtime/vercel-workflow/.workflow-data",
     "/runtime/vercel-workflow/node_modules",
+    "/runtime/trueforge/node_modules",
+    "/runtime/trueforge/work",
 ]
 
 [tool.pytest.ini_options]

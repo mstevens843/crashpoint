@@ -1,0 +1,17 @@
+{
+  "name": "crashpoint-trueforge-fixture",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "start:trueforge": "trueforge",
+    "start:sidecar": "node sidecar.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@truefoundry/trueforge": "0.2.0-rc.5",
+    "zod": "4.4.3"
+  }
+}
