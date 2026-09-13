@@ -89,6 +89,14 @@ production system is touched.
 >   irreproducibility control, and an Anthropic Haiku 4.5 run measures the real model-backed shape on
 >   the LangGraph nondeterministic/two-phase rows at k=5:
 >   `CRASHPOINT_NONDET_SOURCE=model CRASHPOINT_MODEL_SAMPLER_CMD='python scripts/anthropic_sampler.py' uv run --extra langgraph python -m crashpoint.harness.matrix --k 5 --runtimes r_lg_nondet,r_lg_twophase --name langgraph_model`.
+> - **CrewAI's own tool retry can duplicate a committed effect - no crash involved.**
+>   [crewAIInc/crewAI#5802](https://github.com/crewAIInc/crewAI/issues/5802), reproduced narrowly: a
+>   same-process `ToolUsage._use` retry (confirmed as a tool retry, not a task retry, an agent retry,
+>   or an external re-trigger) re-invokes a tool after an injected failure, and when the first
+>   invocation's effect had already committed, the retry performs it again. 90/90 trials (k=30 per
+>   case) match the pre-registered prediction - `clean`/`pre_effect` EXACTLY_ONCE, `post_effect`
+>   DUPLICATED:
+>   `uv run --extra crewai python -m crashpoint.harness.crewai_retry --k 30 --name crewai_retry`.
 >
 > **Do not cite a number from this repo that does not name the command that produced it.**
 
@@ -157,3 +165,8 @@ write: **b0** before the effect, **b1** after the effect but before the completi
   single-process filesystem backend. The managed world (Vercel Queues plus Vercel Functions) cannot
   be SIGKILLed at a named barrier from this sandbox, so it stays deferred and unmodeled:
   `uv run python -m crashpoint.harness.deferred_runtimes`.
+- **No CrewAI idempotency-guard, crash, or fresh-process recovery claim.** `evidence/crewai_retry.json`
+  measures only CrewAI's existing, same-process `ToolUsage` retry with no crash involved; it does not
+  evaluate the opt-in idempotency guard proposed in the open, unmerged
+  [crewAIInc/crewAI#5822](https://github.com/crewAIInc/crewAI/pull/5822), and it says nothing about
+  process-crash or durable recovery for CrewAI.

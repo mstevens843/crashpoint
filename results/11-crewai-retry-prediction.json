@@ -1,0 +1,22 @@
+{
+  "schema": "crashpoint.crewai_retry.prediction.v1",
+  "registered_before_execution": true,
+  "date": "2026-09-13",
+  "baseline": "UNGUARDED_RETRY",
+  "crewai_version": "1.15.21",
+  "crewai_source_commit": "a8d330de00812e52356f32d32c715b86392bfd41",
+  "entry_point": "crewai.tools.tool_usage.ToolUsage._use -> ToolUsage.use -> ToolUsage._use",
+  "mechanism": "built-in retry",
+  "scope": "same-process synchronous ReAct tool retry through the default AgentExecutor and Crew.kickoff; no task retry, worker replacement, checkpoint restore, or external re-trigger",
+  "failure": "One injected RuntimeError inside an argument-free tool, on its first invocation only. The pre-effect arm raises before execute; the post-effect arm raises after the execute-only ledger acknowledges its append but before the tool returns to CrewAI.",
+  "identity": "Harness assigns logical_action_id before creating the worker, LLM, agent, or tool. A distinct attempt_id is allocated at every actual tool entry. The ledger receives key=null and identical harmless payloads, so duplicate action IDs remain admissible.",
+  "cases": {
+    "clean": {"effect_count": 1, "tool_attempts": 1, "llm_calls": 2, "oracle_classification": "EXACTLY_ONCE", "runtime_result": "local action complete"},
+    "pre_effect": {"effect_count": 1, "tool_attempts": 2, "llm_calls": 2, "oracle_classification": "EXACTLY_ONCE", "runtime_result": "local action complete"},
+    "post_effect": {"effect_count": 2, "tool_attempts": 2, "llm_calls": 2, "oracle_classification": "DUPLICATED", "runtime_result": "local action complete"}
+  },
+  "pre_effect_interpretation": "The failed attempt commits zero effects. CrewAI's tool retry performs the first valid effect; final count is therefore predicted to be one, not zero.",
+  "plan": "One diagnostic invocation with one trial per case. After verifying injection and oracle, one bounded sample of 30 trials per case. Preserve distributions and any failed diagnostic; never revise this prediction after a run.",
+  "missing_evidence_rule": "An unavailable oracle or incomplete evidence has effect_count=null, no PASS, and VOID or UNVERIFIED classification.",
+  "limits": "No real LLM or provider; no idempotency guard; no fresh-process recovery measurement; local ledger survives worker errors, but host power-loss durability is not tested. Current CrewAI separately supports optional checkpoint restore; this experiment does not measure it."
+}

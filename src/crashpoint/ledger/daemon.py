@@ -41,7 +41,11 @@ class _Daemon:
                 key_s = str(key) if key else None
                 pl = req.get("payload")
                 payload: dict[str, object] = pl if isinstance(pl, dict) else {}
-                receipt = self.state.execute(intent, key_s, payload)
+                attempt = req.get("attempt_id")
+                receipt = self.state.execute(
+                    intent, key_s, payload,
+                    attempt_id=str(attempt) if attempt is not None else None,
+                )
                 return {"ok": True, "receipt": receipt, "outcome": "OK"}
             if not privileged:
                 return {"ok": False, "error": "verb requires the control socket"}
@@ -115,11 +119,12 @@ def _request(sock_path: str, req: dict[str, object]) -> dict[str, object]:
 
 
 def execute(
-    invoke_path: str, intent_id: str, key: str | None, payload: dict[str, object]
+    invoke_path: str, intent_id: str, key: str | None, payload: dict[str, object],
+    *, attempt_id: str | None = None,
 ) -> dict[str, object]:
     """SUT-side client: record one external effect over the invoke socket."""
     return _request(invoke_path, {"op": "execute", "intent_id": intent_id, "key": key,
-                                  "payload": payload})
+                                  "payload": payload, "attempt_id": attempt_id})
 
 
 def control(control_path: str, op: str) -> dict[str, object]:
