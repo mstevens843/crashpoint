@@ -10,13 +10,14 @@ reproducing these checks so the dependency graph matches the recorded evidence. 
 installs optional runtime packages for type checking; Temporal, DBOS, Restate, and the Vercel
 Workflow fixture are needed only for the explicit runs below.
 
-**Frozen:** 2026-09-06
+**Frozen:** 2026-09-13
 **Toolchain:** Python 3.12.13, uv 0.11.26, pytest, ruff, mypy (strict) via `uv run`.
 **Runtimes:** LangGraph 1.2.11 (+ langgraph-checkpoint-sqlite 3.1.1); Temporal CLI 1.8.2 /
 server 1.31.2 with temporalio 1.32.0 (local `start-dev`); DBOS 2.31.0 with Postgres 16
 (Docker, on 5433); Restate server/CLI 1.7.8 with restate-sdk 1.0.4 (Docker dev server plus Python
 ASGI worker); Vercel Workflow DevKit workflow@5.0.0-beta.47 with @workflow/world-local
-5.0.0-beta.41 on nitro 3.0.260610-beta and Node 22.22.1 (Local World).
+5.0.0-beta.41 on nitro 3.0.260610-beta and Node 22.22.1 (Local World); CrewAI 1.15.21 (scripted
+local `BaseLLM`, no network/credentials).
 **Ground truth:** the distinct side-effect count recorded by a separate ledger process the runtime
 cannot read, reset, or forge - never the runtime's own report.
 
@@ -43,14 +44,17 @@ cannot read, reset, or forge - never the runtime's own report.
 | DBOS hidden barriers, k=30 each (120 trials) | uncommitted step output **DUPLICATED**; committed step output **EXACTLY_ONCE**; uncommitted terminal status **EXACTLY_ONCE**; duplicate workflow name **DIVERGED**; database agrees 30/30 all four |
 | Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | eight candidates measured with their own rules and receipts; one Vercel Workflow candidate named and still blocked; all kept disjoint from b0/b1/b2 |
 | Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | the managed Vercel World remains unmeasured: no faithful crash/recovery substrate from this sandbox |
+| CrewAI tool-retry duplication, k=30 per case (90 trials, no crash involved) | `clean`/`pre_effect` b1 **EXACTLY_ONCE**, `post_effect` b1 **DUPLICATED**; same-process `ToolUsage` retry confirmed as the mechanism (agent-level retries stayed 0); 90/90 agree with the pre-registered prediction |
 
 3,970 crash+recover trials in all: 3,600 in the shared b0/b1/b2 matrices, 30 in the real-model
 LangGraph submatrix, 280 in the separate hidden-barrier runs (100 LangGraph, 60 Temporal, 120 DBOS),
-and 60 in the paired LangGraph admission-containment experiment. Every modeled cell equals a
-prediction written before any runtime was crashed, and every admission trial matches its prewritten
-arm rule. Every modeled cell sits at rate 1.0 except `vercel_workflow_twophase` at b1, which is 0.933
-because two of its thirty trials could not be certified and were scored VOID rather than read
-favorably; the mechanism is named in `results/09`. The two-phase rows were modeled before the
+and 60 in the paired LangGraph admission-containment experiment. A separate, non-crash 90-trial
+experiment (k=30 per case) reproduces crewAIInc/crewAI#5802: CrewAI's own same-process tool retry,
+with no SIGKILL involved, so it is kept out of the crash+recover count above. Every modeled cell
+equals a prediction written before any runtime was crashed, and every admission trial matches its
+prewritten arm rule. Every modeled cell sits at rate 1.0 except `vercel_workflow_twophase` at b1,
+which is 0.933 because two of its thirty trials could not be certified and were scored VOID rather
+than read favorably; the mechanism is named in `results/09`. The two-phase rows were modeled before the
 adapters were measured and do not change the earlier claim: content-derived idempotency only works
 when the effect is reproducible from durable inputs.
 

@@ -42,7 +42,10 @@ class LedgerState:
     effect_keys: dict[str, list[str | None]] = field(default_factory=dict)
     _seen_keys: dict[str, set[str]] = field(default_factory=dict)
 
-    def execute(self, intent_id: str, key: str | None, payload: dict[str, object]) -> str:
+    def execute(
+        self, intent_id: str, key: str | None, payload: dict[str, object],
+        *, attempt_id: str | None = None,
+    ) -> str:
         """Record one external-effect attempt. Returns an IMPOVERISHED receipt - identical for a
         first call and a deduped repeat, so the caller cannot read exactly-once off the wire."""
         self.attempts[intent_id] = self.attempts.get(intent_id, 0) + 1
@@ -58,7 +61,7 @@ class LedgerState:
         else:
             # A keyless (naive) call is always a distinct side effect.
             self._crossed(intent_id, None, digest)
-        record = {
+        record: dict[str, object] = {
             "op": "execute",
             "intent_id": intent_id,
             "keyed": bool(key),
@@ -67,6 +70,9 @@ class LedgerState:
             # Chained too, so a redraw between attempts is itself tamper-evident.
             "payload_digest": digest,
         }
+        if attempt_id is not None:
+            # Audit metadata, deliberately outside the semantic payload and deduplication key.
+            record["attempt_id"] = attempt_id
         self._append(record)
         return "receipt-ok"  # deliberately opaque and constant
 

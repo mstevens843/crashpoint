@@ -15,6 +15,7 @@ langgraph = ["langgraph>=0.2", "langgraph-checkpoint-sqlite>=2.0"]
 temporal = ["temporalio>=1.7"]
 dbos = ["dbos>=0.20"]
 restate = ["hypercorn>=0.18", "restate_sdk[serde]>=1.0"]
+crewai = ["crewai==1.15.21"]
 
 [dependency-groups]
 dev = ["pytest>=8.3", "ruff>=0.6", "mypy>=1.11"]
@@ -72,7 +73,7 @@ files = ["src", "tests"]
 # The real runtimes are optional dependencies; the model core and its tests never import them.
 # mypy in the default (model-only) env cannot see their stubs, so their imports are ignored here.
 [[tool.mypy.overrides]]
-module = ["langgraph.*", "temporalio.*", "dbos.*", "hypercorn.*", "restate.*"]
+module = ["langgraph.*", "temporalio.*", "dbos.*", "hypercorn.*", "restate.*", "crewai.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
