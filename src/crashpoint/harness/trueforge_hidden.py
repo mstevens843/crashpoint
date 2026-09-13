@@ -505,13 +505,16 @@ def run(k: int, name: str, fixture: Path = DEFAULT_FIXTURE_DIR) -> dict[str, obj
         "experiment_family": "mcp_effect_before_tool_response_persist",
         "barrier": "after_receiver_effect_before_mcp_response",
         "claim": (
-            "a hard kill after the MCP receiver commits but before tool.response persistence leaves "
-            "the durable turn running with an unresolved tool call; an explicit successor turn "
-            "retries the action, duplicating a naive receiver while a stable receiver key deduplicates"
+            "a hard kill after the MCP receiver commits but before tool.response persistence "
+            "leaves the durable turn running with an unresolved tool call; an explicit successor "
+            "turn "
+            "retries the action, duplicating a naive receiver while a stable receiver key "
+            "deduplicates"
         ),
         "limitation": (
-            "the successor turn is an explicit application retry, not automatic TrueForge recovery; "
-            "standalone SQLite is measured, while hosted Postgres/Redis remains unmeasured"
+            "the successor turn is an explicit application retry, not automatic TrueForge "
+            "recovery; standalone SQLite is measured, while hosted Postgres/Redis remains "
+            "unmeasured"
         ),
         "k_per_receiver": k,
         "arms": arms,

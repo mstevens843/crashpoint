@@ -3,7 +3,8 @@
 WHAT THIS MEASURES. Whether CrewAI's actual retry path (``ToolUsage._use``, same process, same
 ``ToolUsage`` instance - see ``crewai_retry_receipt.ENTRY_POINT``) can execute a logical tool action
 twice when the first attempt's harmless external effect already committed and the tool then fails
-before returning success to CrewAI. This follows crewAIInc/crewAI#5802 and its proposed fix, PR #5822.
+before returning success to CrewAI. This follows crewAIInc/crewAI#5802 and its proposed fix,
+PR #5822.
 
 THE SUBJECT IS UNTRUSTED, THE LEDGER IS NOT. The CrewAI subject (``crewai_retry_runtime.py``) is
 launched in a fresh subprocess with only the ledger's execute (invoke) socket - never the control

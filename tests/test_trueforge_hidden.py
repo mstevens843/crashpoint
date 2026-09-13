@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any, cast
 
 import pytest
 
@@ -27,7 +28,8 @@ def test_turn_state_is_fail_closed() -> None:
         "running",
         None,
     )
-    assert trueforge_hidden._turn_state({"data": {"state": {"status": "cancelled", "reason": "abandoned"}}}) == (
+    cancelled = {"data": {"state": {"status": "cancelled", "reason": "abandoned"}}}
+    assert trueforge_hidden._turn_state(cancelled) == (
         "cancelled",
         "abandoned",
     )
@@ -41,9 +43,10 @@ def test_trueforge_single_trial() -> None:
     if not executable.exists():
         pytest.skip("TrueForge fixture dependencies are not installed")
     record = trueforge_hidden.run(1, "test_trueforge_hidden")
+    arms = cast(dict[str, dict[str, Any]], record["arms"])
     assert record["all_agree"] is True
-    assert record["arms"]["naive"]["outcomes"] == {"duplicated": 1}
-    assert record["arms"]["idempotent"]["outcomes"] == {"exactly_once": 1}
+    assert arms["naive"]["outcomes"] == {"duplicated": 1}
+    assert arms["idempotent"]["outcomes"] == {"exactly_once": 1}
 
 
 def test_checked_in_trueforge_evidence_receipt() -> None:
