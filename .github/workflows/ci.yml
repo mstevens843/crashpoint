@@ -3,6 +3,10 @@ name: CI
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -34,3 +38,35 @@ jobs:
 
       - name: Run mypy
         run: uv run mypy
+
+      - name: Package recorded CrewAI evidence
+        run: >-
+          uv run python -m crashpoint.harness.crewai_retry_artifact
+          --output "$RUNNER_TEMP/crewai-retry-recorded-evidence"
+
+      - name: Upload recorded CrewAI evidence
+        id: crewai_evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: crewai-retry-recorded-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/crewai-retry-recorded-evidence/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Summarize evidence publication
+        env:
+          ARTIFACT_ID: ${{ steps.crewai_evidence.outputs.artifact-id }}
+          ARTIFACT_URL: ${{ steps.crewai_evidence.outputs.artifact-url }}
+          ARTIFACT_DIGEST: ${{ steps.crewai_evidence.outputs.artifact-digest }}
+        run: |
+          {
+            printf '## Recorded CrewAI evidence\n\n'
+            printf 'This job validates and publishes the checked-in 90-trial experiment. '
+            printf 'The uploaded trials were recorded previously; this is not their execution run.\n\n'
+            printf -- '- Commit: `%s`\n' "$GITHUB_SHA"
+            printf -- '- Run attempt: `%s`; job key: `%s`\n' "$GITHUB_RUN_ATTEMPT" "$GITHUB_JOB"
+            printf -- '- Artifact: [%s](%s)\n' "$ARTIFACT_ID" "$ARTIFACT_URL"
+            printf -- '- Uploaded archive SHA-256: `%s`\n\n' "$ARTIFACT_DIGEST"
+            printf 'Per-file SHA-256 values and original reported revisions are in `manifest.json`.\n'
+            printf 'The artifact retention is 90 days; the original files remain available in Git.\n'
+          } >> "$GITHUB_STEP_SUMMARY"
