@@ -1,0 +1,18 @@
+{
+  "crash_injected": false,
+  "description": "Pre-declared expected outcome for the LangGraph non-crash positive control, written and hashed before the worker is invoked. Not adjusted after execution.",
+  "durability_setting": "sync",
+  "expected_admission_status_after": "completed",
+  "expected_chain_valid": true,
+  "expected_effect_count": 1,
+  "expected_observation_method": "fresh_process_read_of_on_disk_ledger_bytes",
+  "expected_observation_status": "OBSERVED",
+  "expected_runtime_completion": "success",
+  "expected_terminal_state": {
+    "done": true
+  },
+  "expected_worker_exit_status": 0,
+  "intended_effect_count": 1,
+  "invoke_count": 1,
+  "schema": "crashpoint.langgraph_control.contract.v1"
+}

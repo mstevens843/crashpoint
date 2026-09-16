@@ -1,0 +1,52 @@
+[
+  {
+    "case": "positive",
+    "verifier_pass": true,
+    "problems": []
+  },
+  {
+    "case": "not-accepted",
+    "verifier_pass": true,
+    "problems": []
+  },
+  {
+    "case": "worker-exit-77",
+    "verifier_pass": true,
+    "problems": []
+  },
+  {
+    "case": "invoke-count-2",
+    "verifier_pass": true,
+    "problems": []
+  },
+  {
+    "case": "contract-disagrees",
+    "verifier_pass": true,
+    "problems": []
+  },
+  {
+    "case": "missing-observer-report",
+    "verifier_pass": true,
+    "problems": []
+  },
+  {
+    "case": "missing-source",
+    "verifier_pass": true,
+    "problems": []
+  },
+  {
+    "case": "bad-expected-type",
+    "raised": "AttributeError: 'list' object has no attribute 'get'"
+  },
+  {
+    "case": "invalid-utf8",
+    "raised": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+  },
+  {
+    "case": "observer-timeout",
+    "raised": "OperationalError: no such table: checkpoints",
+    "receipt_retained": false,
+    "ledger_readback_retained": false,
+    "worker_report": ""
+  }
+]

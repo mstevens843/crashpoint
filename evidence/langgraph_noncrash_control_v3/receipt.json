@@ -1,0 +1,162 @@
+{
+  "admission": {
+    "accepted_at_utc": "2026-09-16T19:49:24.148067+00:00",
+    "accepted_before_invoke": true,
+    "admission_db_path": "admission.sqlite",
+    "admission_db_sha256": "251dbdfca733888be4d8c7b886b6bffe07feeee3362b9c9d38f32a3904785882",
+    "events_after_run": [
+      "accepted",
+      "completed"
+    ],
+    "original_input": {
+      "done": false
+    },
+    "original_input_source": "read back by the worker from the admission ledger row itself before invoking LangGraph, not passed to the worker as a separate argument",
+    "status_after_run": "completed"
+  },
+  "case": "langgraph_noncrash_control_v3",
+  "checkpoint": {
+    "checkpoint_db_path": "checkpoint.sqlite",
+    "checkpoint_db_sha256": "2cda2a201cfc48bae1061b3b3c1b27dbf8833ac4289fd278bee24c282645ded9",
+    "checkpoint_error": null,
+    "checkpoint_query": "select count(*) from checkpoints where thread_id = ?",
+    "thread_scoped_checkpoint_count": 3
+  },
+  "contract": {
+    "path": "contract.json",
+    "sha256": "eda29b04cbf827251f540234c3b4b2c8152f0a7a72e2ace033479855ab43930b"
+  },
+  "effect": {
+    "effect_attempt_ids": [
+      "lgnc-f49bcca655164d55bdc0afbf56fd353b:attempt-1"
+    ],
+    "effect_digests": [
+      "8468d8677fb6e2676785fab68f344e7d37e727c3f9f76de998a24d0e91f51077"
+    ],
+    "observed_count": 1
+  },
+  "experiment_family": "application_noncrash_effect_binding",
+  "framework_fix": false,
+  "identity": {
+    "admission_id": "lgnc-f49bcca655164d55bdc0afbf56fd353b",
+    "identity_binding_note": "admission_id, thread_id, and the ledger intent_id are the same value in this control: one uuid4-derived identity generated once, never reused across runs",
+    "intent_id": "lgnc-f49bcca655164d55bdc0afbf56fd353b",
+    "thread_id": "lgnc-f49bcca655164d55bdc0afbf56fd353b"
+  },
+  "limitations": "Local host only, one benign local-ledger fixture effect, not a real provider or network call. No crash, restart, or retry is exercised by this control - see langchain-ai/langgraph#8764 and results/10-langgraph-admission-ledger.md for the separate crash/recovery experiment this one deliberately does not repeat. n=1 by design: one recorded primary control, not a statistical rate, and no Wilson interval is reported because none is claimed. Does not certify a general exactly-once guarantee, admission/dispatch fencing, or SABLE admission. A process ID is diagnostic metadata, not cryptographic proof the observer was truly isolated from the worker; both run as the same OS user with no additional sandboxing. A parent-process fallback archive of the ledger bytes, when present, is raw-byte preservation only - it does not prove the fresh observer succeeded and never substitutes for observer.status. Offline verification establishes internal consistency of the retained evidence and what it supports, not an independent re-execution or authenticated real-world effect.",
+  "manifest": {
+    "path": "manifest.json",
+    "sha256": "18dfc9aafd1252945ba6d02b32b67c368c8116244d393f8de6d6dbaf123d681f"
+  },
+  "observer": {
+    "archive_matches_original": true,
+    "archived_ledger_readback_path": "ledger-readback.jsonl",
+    "archived_ledger_readback_sha256": "42037236a62b663c09a309ef5cfc40756ddb2cf8adc07fea6d3845a41eac0f02",
+    "chain_valid": true,
+    "error": null,
+    "exit_status": 0,
+    "first_broken_index": -1,
+    "original_readback_sha256": "42037236a62b663c09a309ef5cfc40756ddb2cf8adc07fea6d3845a41eac0f02",
+    "parent_fallback_archive_path": null,
+    "parent_fallback_archive_sha256": null,
+    "pid": 8530,
+    "pid_note": "diagnostic metadata only, not cryptographic proof of independence",
+    "record_count": 1,
+    "report_path": "observer-report.json",
+    "report_sha256": "fc2d2d0752da3e7783150af1d7168b3dfb20002b185b7bf5fe3c80f6c5bf744a",
+    "representation_note": "each JSONL record stores intent_id directly in plaintext and the effect payload only as a SHA-256 payload_digest; the raw payload bytes are not persisted by the ledger and are not recoverable from this readback",
+    "status": "OBSERVED",
+    "stderr_path": "observer-stderr.log",
+    "stdout_path": "observer-stdout.log"
+  },
+  "receipt": "cp1_1c9c8383ee69c112a5df5be75eb41e4a84dcbc841ecc136dc5a6e6562afad26d",
+  "result": {
+    "agreement": true,
+    "expected": {
+      "crash_injected": false,
+      "description": "Pre-declared expected outcome for the LangGraph non-crash positive control, written and hashed before the worker is invoked. Not adjusted after execution.",
+      "durability_setting": "sync",
+      "expected_admission_status_after": "completed",
+      "expected_chain_valid": true,
+      "expected_effect_count": 1,
+      "expected_observation_method": "fresh_process_read_of_on_disk_ledger_bytes",
+      "expected_observation_status": "OBSERVED",
+      "expected_runtime_completion": "success",
+      "expected_terminal_state": {
+        "done": true
+      },
+      "expected_worker_exit_status": 0,
+      "intended_effect_count": 1,
+      "invoke_count": 1,
+      "schema": "crashpoint.langgraph_control.contract.v1"
+    },
+    "measured": {
+      "admission_status_after": "completed",
+      "effect_count": 1,
+      "observation_status": "OBSERVED",
+      "runtime_completion": "success",
+      "terminal_state": {
+        "done": true
+      }
+    },
+    "oracle_classification": "EXACTLY_ONCE",
+    "passed": true
+  },
+  "runtime": {
+    "crash_injected": false,
+    "durability_setting": "sync",
+    "invoke_count": 1,
+    "langgraph_checkpoint_sqlite_version": "3.1.1",
+    "langgraph_checkpoint_version": "4.2.0",
+    "langgraph_version": "1.2.11",
+    "platform": "darwin",
+    "python_version": "3.12.13",
+    "worker_error_message": null,
+    "worker_error_type": null,
+    "worker_exit_status": 0,
+    "worker_ok": true,
+    "worker_returned_state": {
+      "done": true
+    }
+  },
+  "sable_facing_mapping": {
+    "DIVERGED": "FAIL",
+    "DUPLICATED": "FAIL",
+    "EXACTLY_ONCE": "PASS",
+    "LOST": "FAIL",
+    "UNVERIFIED": "UNKNOWN",
+    "VOID": "UNKNOWN",
+    "admission_independent_of_effect_count": "admission.status_after_run is reported on its own axis and is never coerced into, or read as a substitute for, the effect observation's UNKNOWN status or null count.",
+    "note": "Descriptive only. This mapping does not alter, gate, or get folded into the native evidence above it; it exists so socksninja's mapping work has something concrete to read this record against. No SABLE schema or verifier is invoked by this repository."
+  },
+  "schema": "crashpoint.langgraph_control.receipt.v2",
+  "scope": "One real, non-crashed LangGraph execution with a harmless external ledger effect, verified by a freshly spawned observer process reading the on-disk effect store independently of the worker and the daemon. This is a positive control and evidence-portability test. It does not demonstrate a LangGraph fix, crash recovery, a global exactly-once guarantee, provider idempotency, admission/dispatch fencing, SABLE certification, or an independent rerun.",
+  "source": {
+    "base_commit": "606893ebb353df5dab3ac68738051eb5fbb7286e",
+    "dirty": true,
+    "executing_source_files": [
+      {
+        "path": "src/crashpoint/harness/langgraph_control.py",
+        "sha256": "d7be6a781e1f0c94b7485ead6ec6c07dd28c2e8567f63355aad163b48f174e82"
+      },
+      {
+        "path": "src/crashpoint/harness/langgraph_control_observer.py",
+        "sha256": "d6eede411d78d4dd2f1ac157d8d9b12b77b8e20ccd93cfdb3440f5d53f24ebab"
+      },
+      {
+        "path": "src/crashpoint/harness/langgraph_control_receipt.py",
+        "sha256": "212457100d5a0ecd9877212479b82923bba1acab6ffb60380d011b4a8086afc0"
+      },
+      {
+        "path": "src/crashpoint/harness/langgraph_control_verify.py",
+        "sha256": "1bb5b736bc542443325945520566578d62f18a890c9f09500eab0ad1e3ba5c80"
+      },
+      {
+        "path": "src/crashpoint/harness/ledger_readback.py",
+        "sha256": "35e6569b1d6f94a1b2c0e00d3b9a0839bf4bdb1a92f30bf4badd18f6fb75c8d8"
+      }
+    ],
+    "uv_lock_sha256": "4f2004ef7f23b8d6d5db4d53569a389d2bd27a95fd344e522fecfde421c30baf",
+    "worktree_branch": "experiment/langgraph-noncrash-control"
+  }
+}

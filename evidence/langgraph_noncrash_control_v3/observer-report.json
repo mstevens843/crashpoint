@@ -1,0 +1,25 @@
+{
+  "archive_matches_original": true,
+  "archived_ledger_readback_path": "evidence/langgraph_noncrash_control_v3/ledger-readback.jsonl",
+  "archived_ledger_readback_sha256": "42037236a62b663c09a309ef5cfc40756ddb2cf8adc07fea6d3845a41eac0f02",
+  "byte_length": 408,
+  "chain_valid": true,
+  "diagnostic_only": {},
+  "effect_attempt_ids": [
+    "lgnc-f49bcca655164d55bdc0afbf56fd353b:attempt-1"
+  ],
+  "effect_digests": [
+    "8468d8677fb6e2676785fab68f344e7d37e727c3f9f76de998a24d0e91f51077"
+  ],
+  "error": null,
+  "first_broken_index": -1,
+  "intent_id": "lgnc-f49bcca655164d55bdc0afbf56fd353b",
+  "ledger_store_path_read": "/var/folders/8b/blch34j914xbz9lc1wv387f80000gn/T/tmpgg2tm4vi/effect-ledger/ledger.jsonl",
+  "observed_count": 1,
+  "original_readback_sha256": "42037236a62b663c09a309ef5cfc40756ddb2cf8adc07fea6d3845a41eac0f02",
+  "pid": 8530,
+  "pid_note": "diagnostic metadata only, not cryptographic proof of independence",
+  "record_count": 1,
+  "representation_note": "each JSONL record stores intent_id directly in plaintext and the effect payload only as a SHA-256 payload_digest; the raw payload bytes are not persisted by the ledger and are not recoverable from this readback",
+  "status": "OBSERVED"
+}

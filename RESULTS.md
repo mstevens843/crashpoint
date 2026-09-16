@@ -45,12 +45,16 @@ cannot read, reset, or forge - never the runtime's own report.
 | Hidden-barrier inventory (`python -m crashpoint.harness.barrier_inventory`) | eight candidates measured with their own rules and receipts; one Vercel Workflow candidate named and still blocked; all kept disjoint from b0/b1/b2 |
 | Deferred runtime inventory (`python -m crashpoint.harness.deferred_runtimes`) | the managed Vercel World remains unmeasured: no faithful crash/recovery substrate from this sandbox |
 | CrewAI tool-retry duplication, k=30 per case (90 trials, no crash involved) | `clean`/`pre_effect` b1 **EXACTLY_ONCE**, `post_effect` b1 **DUPLICATED**; same-process `ToolUsage` retry confirmed as the mechanism (agent-level retries stayed 0); 90/90 agree with the pre-registered prediction |
+| LangGraph non-crash positive control (`python -m crashpoint.harness.langgraph_control`, 1 recorded run, no crash involved) | admission accepted before invoke, worker completes normally, freshly spawned observer independently reads the on-disk ledger: **EXACTLY_ONCE**, offline verifier PASS from retained bytes alone, no LangGraph import required to check it |
 
 3,970 crash+recover trials in all: 3,600 in the shared b0/b1/b2 matrices, 30 in the real-model
 LangGraph submatrix, 280 in the separate hidden-barrier runs (100 LangGraph, 60 Temporal, 120 DBOS),
 and 60 in the paired LangGraph admission-containment experiment. A separate, non-crash 90-trial
 experiment (k=30 per case) reproduces crewAIInc/crewAI#5802: CrewAI's own same-process tool retry,
-with no SIGKILL involved, so it is kept out of the crash+recover count above. Every modeled cell
+with no SIGKILL involved, so it is kept out of the crash+recover count above. A further separate,
+non-crash, single recorded run (`results/12-langgraph-noncrash-control.md`) is a positive control
+for the admission/effect evidence chain itself, not a duplication measurement, and is also kept out
+of the crash+recover count above. Every modeled cell
 equals a prediction written before any runtime was crashed, and every admission trial matches its
 prewritten arm rule. Every modeled cell sits at rate 1.0 except `vercel_workflow_twophase` at b1,
 which is 0.933 because two of its thirty trials could not be certified and were scored VOID rather
@@ -141,6 +145,7 @@ pre-call identity fixes that failure in the measured two-phase rows.
 | `evidence/dbos_hidden_committed.json` | `uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_step_output_committed_before_resume --name dbos_hidden_committed` | `cp1_9558f926b0c7009241be375bf78243794e6cfb500ab12067d898b56cf6b60258` |
 | `evidence/dbos_hidden_outcome.json` | `uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_workflow_outcome_uncommitted --name dbos_hidden_outcome` | `cp1_d578aefe28182e80c58ed3ce62728abcdf0b820afc5391116a6c55c2bc9c240a` |
 | `evidence/dbos_hidden_dupname.json` | `uv run --extra dbos python -m crashpoint.harness.dbos_hidden --k 30 --barrier dbos_duplicate_workflow_name_recovery --name dbos_hidden_dupname` | `cp1_0c9bcb9bde825f1edaac9c20ec113cab15745938c02090b2600ece6095d07b18` |
+| `evidence/langgraph_noncrash_control_v4/receipt.json` (bundle, not a single JSON file; raw SQLite/JSONL artifacts alongside it; schema v3, supersedes the v1/v2/v3 bundles kept byte-for-byte at `evidence/langgraph_noncrash_control/`, `evidence/langgraph_noncrash_control_v2/`, and `evidence/langgraph_noncrash_control_v3/`) | `uv run --extra langgraph python -m crashpoint.harness.langgraph_control --output evidence/langgraph_noncrash_control_v4 --name langgraph_noncrash_control_v4`, checked offline with `uv run python -m crashpoint.harness.langgraph_control_verify evidence/langgraph_noncrash_control_v4` | `cp1_f644c93d28cebc7ab00eae2b8f24cb9df6de009f5004687d3eebbaa2773248a9` |
 
 `tests/test_discrimination.py` re-derives each receipt from the JSON body and checks that no present
 evidence cell disagrees with the model. Dedicated tests re-derive the isolation, Vercel, and
@@ -243,6 +248,12 @@ boolean, and a prompt hash.
   caller-owned accepted-run record can authorize explicit replay and preserve the original input.
   Replaying a real external effect also requires stable idempotency, durable attempt state,
   authorization, and destination reconciliation. The containment arm is not a LangGraph source fix.
+- **A rerun or a rate from the non-crash control.** `evidence/langgraph_noncrash_control_v4/` is one
+  recorded run (n=1), not a statistical claim. Its offline verifier re-derives the ledger, checkpoint,
+  and admission facts from raw retained bytes, but runtime metadata (versions, timestamps, PIDs, the
+  outer receipt hash) is checked for checksum consistency only, not independently re-authenticated -
+  and none of it is an independent rerun, live authentication of the effect, or a SABLE-facing
+  certification. See `results/12-langgraph-noncrash-control.md`.
 - **A broad model-sampler claim.** `evidence/langgraph_model.json` measures one provider/model
   configuration on two LangGraph rows at k=5. It does not characterize provider caching,
   temperature/seed behavior, local samplers, or every model.

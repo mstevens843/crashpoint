@@ -63,6 +63,14 @@ production system is touched.
 >   replay it explicitly, and finish with one effect and three checkpoints in all 30 trials. This is
 >   an application pattern, not a LangGraph fix:
 >   `uv run --extra langgraph python -m crashpoint.harness.langgraph_admission --k 30 --name langgraph_admission`.
+> - **A non-crash positive control binds admission to an independently observed effect.** Separate
+>   from the admission gap above and from any crash: one ordinary, uncrashed LangGraph execution is
+>   bound end to end (admission_id -> thread_id -> execution result -> external effect reference ->
+>   independently rereadable state hash -> receipt), and a freshly spawned observer process - never
+>   the worker, never `ledger.dump()` - independently reads the on-disk ledger and confirms one
+>   matching effect. An offline verifier rechecks the whole chain from retained bytes without
+>   installing or importing LangGraph. Recorded once, `results/12-langgraph-noncrash-control.md`:
+>   `uv run --extra langgraph python -m crashpoint.harness.langgraph_control --output evidence/langgraph_noncrash_control_v4 --name langgraph_noncrash_control_v4`.
 > - **Vercel Workflow, the fifth engine.** The JS/TS Workflow DevKit fixture in
 >   `runtime/vercel-workflow/` runs on the Local World and shows the same b1 contrast: naive
 >   DUPLICATES, the idempotent boundary recovers EXACTLY_ONCE, the nondeterministic twin DIVERGES,
@@ -161,6 +169,14 @@ write: **b0** before the effect, **b1** after the effect but before the completi
   acceptance record preserving enough authority and input to replay the pre-first-checkpoint loss.
   It is not a LangGraph guarantee and does not make external effects safe to replay without stable
   idempotency, attempt records, authorization, and destination reconciliation.
+- **No non-crash-control overclaim.** `evidence/langgraph_noncrash_control_v4/` is one recorded,
+  non-crashed run (n=1), not a statistical rate, a LangGraph fix, a global exactly-once guarantee,
+  admission/dispatch fencing, or SABLE certification. Its offline verifier checks internal
+  consistency of retained evidence, not an independent rerun or an authenticated real-world effect.
+  `evidence/langgraph_noncrash_control/` (v1), `evidence/langgraph_noncrash_control_v2/`, and
+  `evidence/langgraph_noncrash_control_v3/` are earlier, superseded recordings kept byte-for-byte
+  for the record (schema mismatch is rejected by the current verifier, not silently reinterpreted);
+  see `results/12-langgraph-noncrash-control.md`.
 - **No managed Vercel World claim.** The measured Vercel Workflow rows run on the Local World, a
   single-process filesystem backend. The managed world (Vercel Queues plus Vercel Functions) cannot
   be SIGKILLed at a named barrier from this sandbox, so it stays deferred and unmodeled:

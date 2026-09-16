@@ -1,0 +1,35 @@
+{
+  "base_commit": "606893ebb353df5dab3ac68738051eb5fbb7286e",
+  "contract_path": "contract.json",
+  "contract_sha256": "eda29b04cbf827251f540234c3b4b2c8152f0a7a72e2ace033479855ab43930b",
+  "created_at_utc": "2026-09-16T19:53:04.594865+00:00",
+  "dirty": true,
+  "executing_source_files": [
+    {
+      "path": "src/crashpoint/harness/langgraph_control.py",
+      "sha256": "d7be6a781e1f0c94b7485ead6ec6c07dd28c2e8567f63355aad163b48f174e82"
+    },
+    {
+      "path": "src/crashpoint/harness/langgraph_control_observer.py",
+      "sha256": "d6eede411d78d4dd2f1ac157d8d9b12b77b8e20ccd93cfdb3440f5d53f24ebab"
+    },
+    {
+      "path": "src/crashpoint/harness/langgraph_control_receipt.py",
+      "sha256": "d7afead9ca475d8f8fd46b583749af273fb52f2fd06b5a5f14ba74a58bbd9a18"
+    },
+    {
+      "path": "src/crashpoint/harness/langgraph_control_verify.py",
+      "sha256": "1bb5b736bc542443325945520566578d62f18a890c9f09500eab0ad1e3ba5c80"
+    },
+    {
+      "path": "src/crashpoint/harness/ledger_readback.py",
+      "sha256": "35e6569b1d6f94a1b2c0e00d3b9a0839bf4bdb1a92f30bf4badd18f6fb75c8d8"
+    }
+  ],
+  "platform": "darwin",
+  "python_version": "3.12.13",
+  "schema": "crashpoint.langgraph_control.manifest.v2",
+  "uv_lock_note": "hash recorded from the repository's tracked uv.lock at run time; this bundle does not retain a full copy, so cross-checking it requires the original repository checkout",
+  "uv_lock_sha256": "4f2004ef7f23b8d6d5db4d53569a389d2bd27a95fd344e522fecfde421c30baf",
+  "worktree_branch": "experiment/langgraph-noncrash-control"
+}

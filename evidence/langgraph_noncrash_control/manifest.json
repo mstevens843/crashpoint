@@ -1,0 +1,51 @@
+{
+  "base_commit": "606893ebb353df5dab3ac68738051eb5fbb7286e",
+  "contract_path": "contract.json",
+  "contract_sha256": "eda29b04cbf827251f540234c3b4b2c8152f0a7a72e2ace033479855ab43930b",
+  "created_at_utc": "2026-09-16T18:12:07.670611+00:00",
+  "dirty": true,
+  "new_source_files": [
+    {
+      "path": "src/crashpoint/harness/langgraph_control.py",
+      "sha256": "a7984a70144c273c4266ee333780a0be7d117d9ad9b2c161c07524a494fc40b9"
+    },
+    {
+      "path": "src/crashpoint/harness/langgraph_control_observer.py",
+      "sha256": "d6eede411d78d4dd2f1ac157d8d9b12b77b8e20ccd93cfdb3440f5d53f24ebab"
+    },
+    {
+      "path": "src/crashpoint/harness/langgraph_control_receipt.py",
+      "sha256": "b2c85262cfa6868b2dbf8464f75560e201c0ad87d69a2a1481df6170dcff7b21"
+    },
+    {
+      "path": "src/crashpoint/harness/langgraph_control_verify.py",
+      "sha256": "87260595ae0fd9f7bdaef022356ec6d5ce00bf95caf9e064147c5e250d1c9c56"
+    },
+    {
+      "path": "src/crashpoint/harness/ledger_readback.py",
+      "sha256": "35e6569b1d6f94a1b2c0e00d3b9a0839bf4bdb1a92f30bf4badd18f6fb75c8d8"
+    },
+    {
+      "path": "tests/test_langgraph_control.py",
+      "sha256": "5c536a64ec878f5bbdf420cf2269ecda48ca7334db5748339627c63f273c75d7"
+    },
+    {
+      "path": "tests/test_langgraph_control_receipt.py",
+      "sha256": "cadf78fd5d9a23056eab5f01b1629503e85776fea4ca88ae6662bf78c22758cf"
+    },
+    {
+      "path": "tests/test_langgraph_control_verify.py",
+      "sha256": "c1a14afcba7eb86ae37528c02ae66bbbac7e105def07ab6bd866357056ef3b1e"
+    },
+    {
+      "path": "tests/test_ledger_readback.py",
+      "sha256": "2be85eccd42b710b418629ab707099d83d0c209b8e5583c86635a4a7e84e9b72"
+    }
+  ],
+  "platform": "darwin",
+  "python_version": "3.12.13",
+  "schema": "crashpoint.langgraph_control.manifest.v1",
+  "uv_lock_note": "hash recorded from the repository's tracked uv.lock at run time; this bundle does not retain a full copy, so cross-checking it requires the original repository checkout",
+  "uv_lock_sha256": "4f2004ef7f23b8d6d5db4d53569a389d2bd27a95fd344e522fecfde421c30baf",
+  "worktree_branch": "experiment/langgraph-noncrash-control"
+}
