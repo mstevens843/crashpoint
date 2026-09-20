@@ -1,0 +1,29 @@
+{
+  "_observer_exit_status": 0,
+  "_observer_pid": 64733,
+  "action_id": "b1985b90-51a3-42a1-a7d9-a8a2b2e3e7bc",
+  "attempt_ids_by_intent": {
+    "b1985b90-51a3-42a1-a7d9-a8a2b2e3e7bc": [
+      "b1985b90-51a3-42a1-a7d9-a8a2b2e3e7bc:worker-a",
+      "b1985b90-51a3-42a1-a7d9-a8a2b2e3e7bc:worker-b-retry"
+    ]
+  },
+  "attempts": {
+    "b1985b90-51a3-42a1-a7d9-a8a2b2e3e7bc": 2
+  },
+  "broken_at_index": null,
+  "byte_length": 851,
+  "chain_valid": true,
+  "effect_digests": {
+    "b1985b90-51a3-42a1-a7d9-a8a2b2e3e7bc": [
+      "4653f917ccb1857ce9c00bcf8fcbab45fa048201335e4f2ed1173ff516ac5a31",
+      "4653f917ccb1857ce9c00bcf8fcbab45fa048201335e4f2ed1173ff516ac5a31"
+    ]
+  },
+  "event": "readback_result",
+  "raw_sha256": "31841fdcf0d870d61262f5a614a36e38153e1f2c9a479b2ca53f83df632a7e5f",
+  "raw_state": "READ_OK",
+  "side_effects": {
+    "b1985b90-51a3-42a1-a7d9-a8a2b2e3e7bc": 2
+  }
+}

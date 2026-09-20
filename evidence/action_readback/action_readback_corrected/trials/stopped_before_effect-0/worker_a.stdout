@@ -1,0 +1,3 @@
+CRASHPOINT_ACTION_READBACK {"action_id": "4711d2f6-ec9c-49f4-8363-b515dfa8bbea", "attempt_id": "4711d2f6-ec9c-49f4-8363-b515dfa8bbea:worker-a", "case": "stopped_before_effect", "event": "worker_started", "pid": 53367}
+CRASHPOINT_ACTION_READBACK {"action_id": "4711d2f6-ec9c-49f4-8363-b515dfa8bbea", "admission_payload_digest": "4653f917ccb1857ce9c00bcf8fcbab45fa048201335e4f2ed1173ff516ac5a31", "event": "admission_read", "receiver_ref": "/var/folders/8b/blch34j914xbz9lc1wv387f80000gn/T/cp-ar-ledger-em4frbnh/ledger/inv.sock"}
+CRASHPOINT_ACTION_READBACK {"action_id": "4711d2f6-ec9c-49f4-8363-b515dfa8bbea", "event": "barrier", "pid": 53367, "point": "pre_dispatch"}

@@ -1,0 +1,27 @@
+{
+  "_observer_exit_status": 0,
+  "_observer_pid": 53344,
+  "action_id": "f3bfbe35-72e2-4883-8ee3-706ec631dc94",
+  "attempt_ids_by_intent": {
+    "f3bfbe35-72e2-4883-8ee3-706ec631dc94": [
+      "f3bfbe35-72e2-4883-8ee3-706ec631dc94:worker-a"
+    ]
+  },
+  "attempts": {
+    "f3bfbe35-72e2-4883-8ee3-706ec631dc94": 1
+  },
+  "broken_at_index": null,
+  "byte_length": 405,
+  "chain_valid": true,
+  "effect_digests": {
+    "f3bfbe35-72e2-4883-8ee3-706ec631dc94": [
+      "4653f917ccb1857ce9c00bcf8fcbab45fa048201335e4f2ed1173ff516ac5a31"
+    ]
+  },
+  "event": "readback_result",
+  "raw_sha256": "25b4db595aa3a0c7bad342ba1b2be56ee2fd71de2b46846587e143ef95076174",
+  "raw_state": "READ_OK",
+  "side_effects": {
+    "f3bfbe35-72e2-4883-8ee3-706ec631dc94": 1
+  }
+}

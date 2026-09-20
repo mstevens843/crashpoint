@@ -1,0 +1,15 @@
+{
+  "_observer_exit_status": 0,
+  "_observer_pid": 64725,
+  "action_id": "31c60401-b8a9-4889-9643-44d3e58ecd9b",
+  "attempt_ids_by_intent": {},
+  "attempts": {},
+  "broken_at_index": null,
+  "byte_length": 0,
+  "chain_valid": true,
+  "effect_digests": {},
+  "event": "readback_result",
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "raw_state": "READ_EMPTY_CONFIRMED",
+  "side_effects": {}
+}

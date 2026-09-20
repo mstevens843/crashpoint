@@ -1,0 +1,10 @@
+{
+  "_observer_exit_status": 0,
+  "_observer_pid": 56094,
+  "action_id": "9bf1830f-06cd-4633-9b9a-01bd771a386e",
+  "byte_length": null,
+  "error": "ledger file does not exist",
+  "event": "readback_result",
+  "raw_sha256": null,
+  "raw_state": "READ_FAILED"
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "crashpoint.action_readback.prediction.v1",
+  "frozen_before": "the 18-trial confirmatory batch (3 trials x 6 cases)",
+  "cases": {
+    "clean": {
+      "protocol_valid": true,
+      "observation_availability": "FULL",
+      "client_claim": "SUCCESS",
+      "external_outcome": "ONE_EFFECT_MATCHING",
+      "externally_verified": true
+    },
+    "effect_before_lost_receipt": {
+      "protocol_valid": true,
+      "observation_availability": "FULL",
+      "client_claim": "LOST",
+      "external_outcome": "ONE_EFFECT_MATCHING",
+      "externally_verified": true
+    },
+    "stopped_before_effect": {
+      "protocol_valid": true,
+      "observation_availability": "FULL",
+      "client_claim": "LOST",
+      "external_outcome": "NO_EFFECT",
+      "externally_verified": true
+    },
+    "naive_retry": {
+      "protocol_valid": true,
+      "observation_availability": "FULL",
+      "client_claim": "SUCCESS",
+      "external_outcome": "MULTIPLE_EFFECTS_MATCHING",
+      "externally_verified": true
+    },
+    "payload_mismatch": {
+      "protocol_valid": true,
+      "observation_availability": "FULL",
+      "client_claim": "SUCCESS",
+      "external_outcome": "ONE_EFFECT_MISMATCHED",
+      "externally_verified": true
+    },
+    "unavailable_readback": {
+      "protocol_valid": true,
+      "observation_availability": "UNAVAILABLE",
+      "client_claim": "SUCCESS",
+      "external_outcome": "INDETERMINATE",
+      "externally_verified": false
+    }
+  },
+  "notes": {
+    "effect_before_lost_receipt_vs_naive_retry": "Both kill Worker A at the identical post_effect_pre_receipt barrier, after independently confirming the receiver has recorded the effect. effect_before_lost_receipt stops there (client_claim=LOST, exactly one effect, no automatic replay). naive_retry additionally dispatches a fresh Worker B with no receiver-side deduplication, which is expected to produce a second, matching effect recorded strictly after the first in the raw ledger.",
+    "payload_mismatch_vs_clean": "Same admitted action_id and normal (non-killed) Worker A lifecycle as clean, but Worker A deliberately dispatches a payload that differs from the one it just read from the committed admission row. The effect is expected to be recorded under the correct action_id with a digest that does NOT match the admission's digest - exposing effect-identity/pre-dispatch-identity substitution rather than treating action_id agreement alone as intended-action success.",
+    "unavailable_readback": "Worker A completes normally and the effect is recorded exactly as in clean; the harness then deliberately deletes the raw ledger file before the observer runs. The prediction is explicitly NOT externally_verified even though protocol_valid=true and the trial is expected to match this very prediction (passed=true) - matching a prediction of 'we could not verify' is not the same claim as verified success, and the schema keeps these separate on purpose."
+  }
+}

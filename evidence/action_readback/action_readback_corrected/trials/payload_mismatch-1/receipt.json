@@ -1,0 +1,81 @@
+{
+  "action_id": "50b56ef3-1a07-4074-8260-fc460a9a5a52",
+  "action_type": "action_readback_local_action",
+  "admission_commit_confirmed": true,
+  "admission_journal_mode": "wal",
+  "admission_payload_digest": "4653f917ccb1857ce9c00bcf8fcbab45fa048201335e4f2ed1173ff516ac5a31",
+  "admission_synchronous": "2",
+  "admitted_at_utc": "2026-09-20T10:09:51.877801+00:00",
+  "case": "payload_mismatch",
+  "client_claim": "SUCCESS",
+  "crashpoint_commit": "b66e205e69927626072cb4a130351258e9ac282d",
+  "crashpoint_version": "0.0.0",
+  "digests_match_admission": false,
+  "effect_attempt_ids": [
+    "50b56ef3-1a07-4074-8260-fc460a9a5a52:worker-a"
+  ],
+  "effect_count": 1,
+  "effect_ledger_classification": "EXACTLY_ONCE",
+  "effect_payload_digests": [
+    "4e2ced83367501b1ffab2652977375e84c2f7feb9db1b47eb280d3c9938cb883"
+  ],
+  "expected_result": {
+    "client_claim": "SUCCESS",
+    "external_outcome": "ONE_EFFECT_MISMATCHED",
+    "externally_verified": true,
+    "observation_availability": "FULL",
+    "protocol_valid": true
+  },
+  "external_outcome": "ONE_EFFECT_MISMATCHED",
+  "externally_verified": true,
+  "injected_fault": "payload_mismatch",
+  "invalid_reason": null,
+  "limitations": "Same-host, same-user process separation (SIGKILL across local subprocesses on one macOS/POSIX host), not a sandbox, a container, or an independent organization boundary. The receiver ledger is authoritative only for this local fixture's harmless effect - it is not a payment provider or proof about an unobserved system. A hash proves consistency with retained bytes, not independent authorship, wall-clock truth, or tamper-proof publication. No global exactly-once claim, no distributed fencing, no host/power-loss durability test (the admission store's durability configuration is recorded per trial and the claim is restricted to a killed WORKER process, never a killed host). A zero-effect readback at the terminal fixture boundary is not general permission to replay an ambiguous real-world operation. A small, deterministic, predeclared trial count (3 per cell, 18 total): no statistical reliability-rate claim. No CrewAI, LangGraph, SafeAgent, payment provider, or SABLE integration - this is a bounded fixture for a future native-vs-SafeAgent-Control field comparison, not that comparison itself.",
+  "observation_availability": "FULL",
+  "observation_complete": true,
+  "observed_result": {
+    "client_claim": "SUCCESS",
+    "external_outcome": "ONE_EFFECT_MISMATCHED",
+    "externally_verified": true,
+    "observation_availability": "FULL",
+    "protocol_valid": true
+  },
+  "observer_exit_status": 0,
+  "observer_pid": 53490,
+  "observer_raw_ledger_sha256": "0f7d92d92dc2b1847090083166bc01bee2fc73f4397425a936f2455ad50af4e8",
+  "observer_raw_ledger_state": "READ_OK",
+  "passed": true,
+  "protocol_valid": true,
+  "python_version": "3.12.13",
+  "receiver_baseline_established": true,
+  "receiver_ref": "/var/folders/8b/blch34j914xbz9lc1wv387f80000gn/T/cp-ar-ledger-em4frbnh/ledger/inv.sock",
+  "receiver_seal_dump_count": 1,
+  "receiver_seal_dump_head": "9f1fa44ea66e13fcfb2860ce236a87da2d492a704d3c88d3607b22fbfd4086d4",
+  "run_id": "action_readback_corrected-2d4c1533-9969-4f9c-a79c-84374548059f",
+  "schema": "crashpoint.action_readback.receipt.v1",
+  "source_references": [
+    "crashpoint.ledger.daemon.execute(invoke_path, intent_id, key, payload, attempt_id=...) - the receiver; a keyless (key=None) call is always a distinct recorded side effect, never silently deduped, per crashpoint.ledger.core.LedgerState._crossed",
+    "crashpoint.ledger.core.LedgerState records payload_digest and attempt_id per record; it does NOT retain raw payload bytes, a generic receiver key, or a wall-clock timestamp - the comparison below is built only from what LedgerState.dump()/the raw JSONL actually store",
+    "the admission store is this experiment's own SQLite table (schema below), not a third-party package - there is no external claim/sweep API under test here"
+  ],
+  "trial_id": "payload_mismatch-1",
+  "worker_a_attempt_id": "50b56ef3-1a07-4074-8260-fc460a9a5a52:worker-a",
+  "worker_a_barrier_observed": false,
+  "worker_a_barrier_point": null,
+  "worker_a_dispatch_payload_digest": "4e2ced83367501b1ffab2652977375e84c2f7feb9db1b47eb280d3c9938cb883",
+  "worker_a_exit_status": 0,
+  "worker_a_killed": false,
+  "worker_a_local_receipt": {
+    "action_id": "50b56ef3-1a07-4074-8260-fc460a9a5a52",
+    "attempt_id": "50b56ef3-1a07-4074-8260-fc460a9a5a52:worker-a",
+    "completed_at_utc": "2026-09-20T10:09:51.907679+00:00",
+    "outcome": "OK"
+  },
+  "worker_a_pid": 53489,
+  "worker_a_read_admission_confirmed": true,
+  "worker_b_attempt_id": null,
+  "worker_b_exit_status": null,
+  "worker_b_local_receipt": null,
+  "worker_b_pid": null,
+  "worker_b_used": false
+}

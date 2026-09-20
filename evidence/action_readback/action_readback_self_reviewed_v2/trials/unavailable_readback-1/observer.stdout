@@ -1,0 +1,2 @@
+CRASHPOINT_ACTION_READBACK {"action_id": "c12aff4a-581a-4d9c-ab7f-d491c4e02306", "event": "observer_started", "pid": 64749}
+CRASHPOINT_ACTION_READBACK {"action_id": "c12aff4a-581a-4d9c-ab7f-d491c4e02306", "byte_length": null, "error": "ledger file does not exist", "event": "readback_result", "raw_sha256": null, "raw_state": "READ_FAILED"}
