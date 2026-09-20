@@ -1,0 +1,3 @@
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pending_before_ttl-0.1.24-1", "event": "retry_started", "pid": 9941}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pending_before_ttl-0.1.24-1", "admitted": false, "event": "retry_claim"}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pending_before_ttl-0.1.24-1", "admitted": false, "event": "retry_complete", "final_row": {"action": "safeagent_ttl_local_action", "agent_id": null, "claimed_at": 1789870849.889226, "committed_at": null, "request_id": "safeagent-ttl-pending_before_ttl-0.1.24-1", "result": null, "status": "PENDING"}, "performed_effect": false}

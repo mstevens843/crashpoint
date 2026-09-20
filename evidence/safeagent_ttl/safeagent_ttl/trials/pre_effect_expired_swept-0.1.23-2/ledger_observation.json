@@ -1,0 +1,27 @@
+{
+  "attempt_ids_by_intent": {
+    "safeagent-ttl-pre_effect_expired_swept-0.1.23-2": [
+      "safeagent-ttl-pre_effect_expired_swept-0.1.23-2:worker-b-retry"
+    ]
+  },
+  "attempts": {
+    "safeagent-ttl-pre_effect_expired_swept-0.1.23-2": 1
+  },
+  "broken_at_index": null,
+  "byte_length": 433,
+  "effect_digests": {
+    "safeagent-ttl-pre_effect_expired_swept-0.1.23-2": [
+      "d02696cb5c5540ff2f5ba918c4b0dd317fe98ac6c900b401c6c7ddeba44236ab"
+    ]
+  },
+  "effect_keys": {
+    "safeagent-ttl-pre_effect_expired_swept-0.1.23-2": [
+      null
+    ]
+  },
+  "raw_sha256": "c5193806621313608005ff011a178c7cbaef9f2e85fd7c139a9d448c166bd6b8",
+  "side_effects": {
+    "safeagent-ttl-pre_effect_expired_swept-0.1.23-2": 1
+  },
+  "status": "OK"
+}

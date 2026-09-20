@@ -1,0 +1,27 @@
+{
+  "attempt_ids_by_intent": {
+    "safeagent-ttl-pending_expired_swept-0.1.24-0": [
+      "safeagent-ttl-pending_expired_swept-0.1.24-0:worker-a"
+    ]
+  },
+  "attempts": {
+    "safeagent-ttl-pending_expired_swept-0.1.24-0": 1
+  },
+  "broken_at_index": null,
+  "byte_length": 421,
+  "effect_digests": {
+    "safeagent-ttl-pending_expired_swept-0.1.24-0": [
+      "d02696cb5c5540ff2f5ba918c4b0dd317fe98ac6c900b401c6c7ddeba44236ab"
+    ]
+  },
+  "effect_keys": {
+    "safeagent-ttl-pending_expired_swept-0.1.24-0": [
+      null
+    ]
+  },
+  "raw_sha256": "f122b114501344d10a776b2a073522cb2981b5366db4ba1b81af9fb2ee27118c",
+  "side_effects": {
+    "safeagent-ttl-pending_expired_swept-0.1.24-0": 1
+  },
+  "status": "OK"
+}

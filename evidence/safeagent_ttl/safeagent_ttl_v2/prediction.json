@@ -1,0 +1,116 @@
+{
+  "schema": "crashpoint.safeagent_ttl.prediction.v1",
+  "registered_before_execution": true,
+  "preregistration_kind": "local_predeclared_contract",
+  "preregistration_note": "This is a local predeclared contract recorded in this repository and hashed before the confirmatory batch ran. It is not a third-party timestamped preregistration (no OSF/AsPredicted-style external registry was used).",
+  "date": "2026-09-19",
+  "package": "safeagent-exec-guard",
+  "releases": {"old": "0.1.23", "new": "0.1.24"},
+  "source_commits": {
+    "behavior_change": "a0218fe3626886c887db8902ac21829b0dd208f4",
+    "packaging_followup": "b6e9daf589e80b98793f3bab7d10c18f5de82984"
+  },
+  "store_api": "SQLiteExecutionStore(db_path, pending_ttl_seconds=...).claim(request_id, action, agent_id=None) -> bool; .get(request_id); .settle(request_id, result); .sweep_stale_pending() -> int; .count_stale_pending() -> int (0.1.24 only)",
+  "mechanism_confirmed_by_reading_installed_source": "0.1.23 sweep_stale_pending() executes DELETE FROM execution_requests WHERE status='PENDING' AND claimed_at < cutoff and returns the deleted row count; a swept row's request_id becomes claimable again. 0.1.24 sweep_stale_pending() unconditionally 'return 0' and deletes no rows; count_stale_pending() (new) reports the same cutoff-based count without mutating. claim() always fails on any existing row (PENDING or COMMITTED) via a PRIMARY KEY IntegrityError, independent of staleness.",
+  "pending_ttl_seconds": {"default_expired_cases": 1.5, "pending_before_ttl": 30.0},
+  "trials_per_cell": 3,
+  "total_confirmatory_trials": 30,
+  "statistical_claim": "none - a small deterministic count, not a reliability rate",
+  "cases": {
+    "settled_control": {
+      "boundary": "Effect recorded and claim settled by Worker A (no kill); age beyond TTL; sweep; fresh retry.",
+      "0.1.23": {
+        "retry_claim_admitted": false,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "COMMITTED",
+        "task_completion_label": "settled_once_retry_blocked"
+      },
+      "0.1.24": {
+        "retry_claim_admitted": false,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "COMMITTED",
+        "task_completion_label": "settled_once_retry_blocked"
+      },
+      "rationale": "claim() always rejects an existing row regardless of status; sweep only touches PENDING rows so a COMMITTED row is untouched on both releases."
+    },
+    "pending_before_ttl": {
+      "boundary": "Effect recorded; Worker A killed before settle; sweep and retry attempted while still comfortably before TTL expiry.",
+      "0.1.23": {
+        "retry_claim_admitted": false,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "PENDING",
+        "task_completion_label": "blocked_pending_effect_already_recorded"
+      },
+      "0.1.24": {
+        "retry_claim_admitted": false,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "PENDING",
+        "task_completion_label": "blocked_pending_effect_already_recorded"
+      },
+      "rationale": "sweep_stale_pending() only deletes rows older than pending_ttl_seconds; a non-stale row is untouched by sweep on both releases, so claim() still rejects the retry regardless of the 0.1.23/0.1.24 sweep semantics difference. This case isolates 'sweep is a no-op on a non-stale row' from the central TTL+sweep comparison."
+    },
+    "pending_expired_no_sweep": {
+      "boundary": "Effect recorded; Worker A killed before settle; TTL passes; sweep is NOT called; fresh retry.",
+      "0.1.23": {
+        "retry_claim_admitted": false,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "PENDING",
+        "task_completion_label": "blocked_pending_effect_already_recorded"
+      },
+      "0.1.24": {
+        "retry_claim_admitted": false,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "PENDING",
+        "task_completion_label": "blocked_pending_effect_already_recorded"
+      },
+      "rationale": "claim() never itself checks TTL or age; only an explicit sweep_stale_pending() call can free a stale row on either release. Mere elapsed time without a sweep changes nothing on both releases."
+    },
+    "pending_expired_swept": {
+      "boundary": "Effect recorded; Worker A killed before settle; TTL passes; sweep IS called; fresh retry. The central scenario.",
+      "0.1.23": {
+        "retry_claim_admitted": true,
+        "effect_count": 2,
+        "effect_ledger_classification": "DUPLICATED",
+        "final_claim_status": "COMMITTED",
+        "task_completion_label": "duplicated_effect_after_reclaim"
+      },
+      "0.1.24": {
+        "retry_claim_admitted": false,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "PENDING",
+        "task_completion_label": "blocked_pending_effect_already_recorded"
+      },
+      "rationale": "0.1.23's sweep DELETEs the stale PENDING row, so the request_id becomes claimable again; the fresh retry claims it, performs the (already-once-performed) effect a second time, and settles. 0.1.24's sweep is an unconditional no-op, so the row is never released; the retry is denied and the original attempt's single effect is never duplicated - but is also never resolved beyond PENDING by this API."
+    },
+    "pre_effect_expired_swept": {
+      "boundary": "Claim durable; Worker A killed BEFORE calling the effect at all; TTL passes; sweep IS called; fresh retry.",
+      "0.1.23": {
+        "retry_claim_admitted": true,
+        "effect_count": 1,
+        "effect_ledger_classification": "EXACTLY_ONCE",
+        "final_claim_status": "COMMITTED",
+        "task_completion_label": "reclaimed_and_settled_once"
+      },
+      "0.1.24": {
+        "retry_claim_admitted": false,
+        "effect_count": 0,
+        "effect_ledger_classification": "ZERO",
+        "final_claim_status": "PENDING",
+        "task_completion_label": "blocked_pending_task_unperformed"
+      },
+      "rationale": "0.1.23's sweep frees the row; the retry performs the action's one and only effect and settles - the correct outcome, reached here only because the original attempt never got far enough to duplicate anything. 0.1.24's sweep is a no-op, so the row stays PENDING forever with zero effects ever recorded: not a duplication, but also not a completed task, and SQLiteExecutionStore's public API (claim/get/settle/sweep_stale_pending/count_stale_pending/audit_claims) exposes no method that releases this specific claim - only settle() can change its status, and settle() requires the caller to already have (or fabricate) a result for work that was never actually done."
+    }
+  },
+  "cross_case_prediction": "sweep_stale_pending()'s behavior, not claim()'s, is the entire locus of the 0.1.23/0.1.24 difference. Every case where sweep is never called or has nothing stale to act on (settled_control, pending_before_ttl, pending_expired_no_sweep) is predicted IDENTICAL across releases. Only the two cases that both wait past TTL and call sweep (pending_expired_swept, pre_effect_expired_swept) are predicted to differ, and in both, 0.1.24 trades the 0.1.23 duplication/successful-reclaim outcome for a permanently blocked PENDING claim.",
+  "known_new_failure_mode_flagged_in_advance": "pre_effect_expired_swept on 0.1.24 is expected to be the most consequential row: zero effects, permanently PENDING, and no store-level recovery path through this API. This is flagged here, before the confirmatory batch, specifically so it cannot later be mistaken for a discovery made only after seeing the data.",
+  "diagnostic_note": "One exploratory, unrecorded smoke trial per release was run against pending_expired_swept only, before this prediction was written, to sanity-check the harness mechanics (real SIGKILL, real elapsed TTL, real sweep, real fresh-process retry). It reproduced exactly the pending_expired_swept row above (0.1.23: sweep_return_value=1, effects=2; 0.1.24: sweep_return_value=0 with stale_count_before_sweep=1, effects=1). That exploratory run is not part of, and is not substituted for, the 30-trial confirmatory batch below.",
+  "missing_evidence_rule": "A trial whose barrier is not observed, whose kill does not produce the expected SIGKILL exit code, whose TTL margin check fails, or whose independent ledger readback does not succeed reports effect_count possibly non-null (whatever was actually captured) but observation_complete=false, invalid_reason set, task_completion_label='UNVERIFIED', and passed=false. It is retained, not discarded or silently repaired.",
+  "limits": "SQLiteExecutionStore only - no HTTP /sweep route, no PostgresExecutionStore, no MCP/HTTP server, no payment/x402/agent_id gating, no distributed fencing, no stale-owner overlap, no PostgreSQL, no production deployment. Same-host/same-user process separation, not a sandbox or independent organization boundary. A small deterministic trial count: no statistical reliability-rate claim."
+}

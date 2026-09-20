@@ -1,0 +1,11 @@
+{
+  "attempt_ids_by_intent": {},
+  "attempts": {},
+  "broken_at_index": null,
+  "byte_length": 0,
+  "effect_digests": {},
+  "effect_keys": {},
+  "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "side_effects": {},
+  "status": "EMPTY_CONFIRMED"
+}

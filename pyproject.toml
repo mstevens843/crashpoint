@@ -63,6 +63,10 @@ addopts = "-ra"
 line-length = 100
 target-version = "py312"
 src = ["src", "tests"]
+# evidence/ holds receipted results and, for safeagent_ttl, embedded provenance source snapshots
+# (this experiment's own harness files and the measured third-party sqlite_store.py, retained for
+# offline hash verification) - data, not code for this repo to lint or reformat.
+extend-exclude = ["evidence"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
@@ -75,7 +79,8 @@ files = ["src", "tests"]
 # The real runtimes are optional dependencies; the model core and its tests never import them.
 # mypy in the default (model-only) env cannot see their stubs, so their imports are ignored here.
 [[tool.mypy.overrides]]
-module = ["langgraph.*", "temporalio.*", "dbos.*", "hypercorn.*", "restate.*", "crewai.*"]
+module = ["langgraph.*", "temporalio.*", "dbos.*", "hypercorn.*", "restate.*", "crewai.*",
+    "safeagent_exec_guard.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]

@@ -1,0 +1,4 @@
+{"action_id": "safeagent-ttl-pending_before_ttl-0.1.24-2", "case": "pending_before_ttl", "event": "worker_started", "pid": 27595, "ttl": 30.0}
+{"action_id": "safeagent-ttl-pending_before_ttl-0.1.24-2", "claim_result": true, "event": "claimed"}
+{"action_id": "safeagent-ttl-pending_before_ttl-0.1.24-2", "attempt": "worker-a", "event": "effect_ack", "response": {"ok": true, "outcome": "OK", "receipt": "receipt-ok"}}
+{"action_id": "safeagent-ttl-pending_before_ttl-0.1.24-2", "event": "barrier", "pid": 27595, "point": "post_effect_pending"}

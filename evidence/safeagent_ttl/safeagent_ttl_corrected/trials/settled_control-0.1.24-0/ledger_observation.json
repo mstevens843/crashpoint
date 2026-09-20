@@ -1,0 +1,27 @@
+{
+  "attempt_ids_by_intent": {
+    "safeagent-ttl-settled_control-0.1.24-0": [
+      "safeagent-ttl-settled_control-0.1.24-0:worker-a"
+    ]
+  },
+  "attempts": {
+    "safeagent-ttl-settled_control-0.1.24-0": 1
+  },
+  "broken_at_index": null,
+  "byte_length": 409,
+  "effect_digests": {
+    "safeagent-ttl-settled_control-0.1.24-0": [
+      "d02696cb5c5540ff2f5ba918c4b0dd317fe98ac6c900b401c6c7ddeba44236ab"
+    ]
+  },
+  "effect_keys": {
+    "safeagent-ttl-settled_control-0.1.24-0": [
+      null
+    ]
+  },
+  "raw_sha256": "c8add5ac2219238b90cdf17623e3c7757cfc7af4e29f8f79e1790aaa6c354779",
+  "side_effects": {
+    "safeagent-ttl-settled_control-0.1.24-0": 1
+  },
+  "status": "OK"
+}

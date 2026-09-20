@@ -1,0 +1,4 @@
+{"action_id": "safeagent-ttl-pending_expired_swept-0.1.24-0", "case": "pending_expired_swept", "event": "worker_started", "pid": 10028, "ttl": 1.5}
+{"action_id": "safeagent-ttl-pending_expired_swept-0.1.24-0", "claim_result": true, "event": "claimed"}
+{"action_id": "safeagent-ttl-pending_expired_swept-0.1.24-0", "attempt": "worker-a", "event": "effect_ack", "response": {"ok": true, "outcome": "OK", "receipt": "receipt-ok"}}
+{"action_id": "safeagent-ttl-pending_expired_swept-0.1.24-0", "event": "barrier", "pid": 10028, "point": "post_effect_pending"}

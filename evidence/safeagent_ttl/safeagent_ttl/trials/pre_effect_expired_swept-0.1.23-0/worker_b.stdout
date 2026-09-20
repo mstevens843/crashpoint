@@ -1,0 +1,5 @@
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-0", "event": "retry_started", "pid": 10076}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-0", "admitted": true, "event": "retry_claim"}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-0", "attempt": "worker-b-retry", "event": "effect_ack", "response": {"ok": true, "outcome": "OK", "receipt": "receipt-ok"}}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-0", "attempt": "worker-b-retry", "event": "settled"}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-0", "admitted": true, "event": "retry_complete", "final_row": {"action": "safeagent_ttl_local_action", "agent_id": null, "claimed_at": 1789870880.939691, "committed_at": 1789870880.94028, "request_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-0", "result": {"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-0", "outcome": "retry-settled"}, "status": "COMMITTED"}, "performed_effect": true}

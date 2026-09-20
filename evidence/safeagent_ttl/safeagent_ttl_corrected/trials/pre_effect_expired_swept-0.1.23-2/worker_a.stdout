@@ -1,0 +1,3 @@
+{"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-2", "case": "pre_effect_expired_swept", "event": "worker_started", "pid": 27779, "ttl": 1.5}
+{"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-2", "claim_result": true, "event": "claimed"}
+{"action_id": "safeagent-ttl-pre_effect_expired_swept-0.1.23-2", "event": "barrier", "pid": 27779, "point": "post_claim_pre_effect"}

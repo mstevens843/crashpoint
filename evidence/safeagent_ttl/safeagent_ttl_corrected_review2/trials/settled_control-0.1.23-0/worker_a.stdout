@@ -1,0 +1,5 @@
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "case": "settled_control", "event": "worker_started", "pid": 32772, "ttl": 1.5}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "claim_result": true, "event": "claimed"}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "attempt": "worker-a", "event": "effect_ack", "response": {"ok": true, "outcome": "OK", "receipt": "receipt-ok"}}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "attempt": "worker-a", "event": "settled"}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "event": "worker_a_complete"}

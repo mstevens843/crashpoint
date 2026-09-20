@@ -1,0 +1,3 @@
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "event": "retry_started", "pid": 9845}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "admitted": false, "event": "retry_claim"}
+CRASHPOINT_SAFEAGENT_TTL {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "admitted": false, "event": "retry_complete", "final_row": {"action": "safeagent_ttl_local_action", "agent_id": null, "claimed_at": 1789870833.357471, "committed_at": 1789870833.3579168, "request_id": "safeagent-ttl-settled_control-0.1.23-0", "result": {"action_id": "safeagent-ttl-settled_control-0.1.23-0", "outcome": "worker-a-settled"}, "status": "COMMITTED"}, "performed_effect": false}
