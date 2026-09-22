@@ -1,0 +1,11 @@
+{
+  "action_id": "77896317-d6dd-4b04-ab6d-863486cc1be5",
+  "attempt_id": "8a9f63b4-40a9-4887-9f64-785d97ccb9c5",
+  "event": "post_effect_barrier",
+  "payload": {
+    "args": {},
+    "capability": "turn_on",
+    "device_id": "bedroom_light"
+  },
+  "pid": 41892
+}

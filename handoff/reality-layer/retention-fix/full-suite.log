@@ -1,0 +1,17 @@
+........................................................................ [ 14%]
+........................................................................ [ 28%]
+........................................................................ [ 42%]
+........................s............................................... [ 57%]
+........................................................................ [ 71%]
+...................................sssssssssssssssssss.................. [ 85%]
+...............................................................ss....... [ 99%]
+.                                                                        [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_isolation.py:103: native macOS isolation evidence absent
+SKIPPED [10] tests/test_safeagent_ttl.py:295: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [1] tests/test_safeagent_ttl.py:305: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [1] tests/test_safeagent_ttl.py:318: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [7] tests/test_safeagent_ttl.py:38: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [1] tests/test_trueforge_hidden.py:44: TrueForge fixture dependencies are not installed
+SKIPPED [1] tests/test_trueforge_hidden.py:54: TrueForge evidence absent
+483 passed, 22 skipped in 54.95s

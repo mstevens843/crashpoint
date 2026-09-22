@@ -1,0 +1,80 @@
+{
+  "case": "clean",
+  "errors": [
+    {
+      "artifact": ".",
+      "errno": null,
+      "message": "injected unexpected finalizer exception",
+      "stage": "trial_finalization",
+      "type": "RuntimeError"
+    }
+  ],
+  "evidence_valid": false,
+  "failpoint": "",
+  "findings": null,
+  "processes": [
+    {
+      "name": "receiver",
+      "pid": 44499,
+      "reaped": true,
+      "returncode": -15
+    },
+    {
+      "name": "observer-initial",
+      "pid": 44500,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "runtime-first",
+      "pid": 44501,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-plan",
+      "pid": 44502,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-execute",
+      "pid": 44503,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "observer-before_recovery",
+      "pid": 44504,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-status",
+      "pid": 44505,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-retry",
+      "pid": 44506,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "observer-after_retry",
+      "pid": 44507,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "observer-final",
+      "pid": 44508,
+      "reaped": true,
+      "returncode": 0
+    }
+  ],
+  "run_id": "726b9a5a-f02e-46d2-8b9f-b6aee9cb66d1",
+  "trial_id": "clean-0",
+  "version": 1
+}

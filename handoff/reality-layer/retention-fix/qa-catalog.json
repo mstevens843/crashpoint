@@ -1,0 +1,299 @@
+{
+  "scope": "Final focused gate only; QA is separate from the nine confirmatory measurements.",
+  "runs": 14,
+  "trial_records": 13,
+  "expected_complete_controls": 1,
+  "expected_invalid_runs": 13,
+  "captures": [
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/artifact_read-637a47ac-7ad1-4c04-9758-02fc35396bb3",
+      "run_id": "1d736ccf-94e9-45d4-991a-d8164d6c3c8b",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "artifact": "runtime-first.stdout",
+            "errno": 5,
+            "message": "review: final artifact hash read failed",
+            "stage": "artifact_read",
+            "type": "OSError"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/both_receipts-4878cb19-71f7-4c94-bff1-02f970def36d",
+      "run_id": "9e7ed162-2aa7-483a-8b5e-0c8babf8d65f",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "artifact": "receipt.json",
+            "errno": 13,
+            "message": "injected receipt destination unavailable",
+            "stage": "receipt_primary",
+            "type": "PermissionError"
+          },
+          {
+            "artifact": "partial-receipt.json",
+            "errno": 13,
+            "message": "injected receipt destination unavailable",
+            "stage": "receipt_fallback",
+            "type": "PermissionError"
+          }
+        ]
+      },
+      "receipt_files": []
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/cleanup_close-c7135316-aca1-4ae6-8b97-5c2b5f22539b",
+      "run_id": "9521c57e-d5aa-4e7c-8fe8-97111290d46c",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "artifact": ".",
+            "errno": 5,
+            "message": "injected cleanup log close failure",
+            "stage": "cleanup",
+            "type": "OSError"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/control-6d6498ff-2bbd-4743-936d-8808cdec71e7",
+      "run_id": "341982f7-c560-4948-b8dc-7fb180882cf0",
+      "state": "complete",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": []
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/incremental-424fee9f-b8e2-40ed-92ee-7b0d36e33fb2",
+      "run_id": "e520115b-b7b2-4bcf-b060-b4d086f3afc0",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [
+        {
+          "message": "injected incremental write failure",
+          "stage": "incremental",
+          "type": "OSError"
+        }
+      ],
+      "trial_errors": {
+        "clean-0": []
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/manifest-b9378d66-a0da-40cd-8e7d-3456e4a12c05",
+      "run_id": "8a8dfc5f-6184-47d5-8ce1-8d3d39d49059",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "partial-manifest.json",
+      "errors": [
+        {
+          "message": "injected final manifest retention failure",
+          "stage": "final_retention",
+          "type": "OSError"
+        }
+      ],
+      "trial_errors": {
+        "clean-0": []
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/observer_malformed-dd04dcb7-5713-47a4-a6b8-988cced1298f",
+      "run_id": "44f92d9b-79b7-4cf5-9d1c-95d4a0cf2f45",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "message": "json_parse: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+            "type": "Invalid"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/observer_nonzero-54b3dd56-a7e3-49a8-bb19-dc492f31d2a6",
+      "run_id": "3ccfa3a0-551d-492e-a421-03308b7f2cc3",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "message": "observer_exit: 72",
+            "type": "Invalid"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/reset-888d39b9-442c-4936-9355-13be57c9f3dc",
+      "run_id": "299b94e7-127d-4abf-bd0f-0e14b5cfce8b",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "message": "injected initial receiver reset failure",
+            "type": "OSError"
+          },
+          {
+            "capture": "controller-fallback-subject.raw",
+            "errno": 2,
+            "type": "FileNotFoundError"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/retention-34a180cf-ecc7-42ef-b251-47b3055481c4",
+      "run_id": "78b93402-75f1-4d59-a199-42ff47d01473",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "artifact": "receipt.json",
+            "errno": null,
+            "message": "injected final receipt retention failure",
+            "stage": "receipt_primary",
+            "type": "OSError"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/partial-receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/source-5684720f-3f30-49d6-9eb1-66ff0d26b541",
+      "run_id": "e0fa2227-0390-4089-b789-8195ff8cabc1",
+      "state": "invalid",
+      "trials": 0,
+      "manifest_used": "manifest.json",
+      "errors": [
+        {
+          "message": "injected source read failure",
+          "stage": "run",
+          "type": "OSError"
+        }
+      ],
+      "trial_errors": {},
+      "receipt_files": []
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/startup-28d07149-dc97-4583-b819-b140c68ea74a",
+      "run_id": "f1e0f1fb-2c2d-4b11-87b9-935e8d2e2c81",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "message": "child_exited_before_barrier: runtime-first: 71",
+            "type": "Invalid"
+          },
+          {
+            "capture": "controller-fallback-subject.raw",
+            "errno": 2,
+            "type": "FileNotFoundError"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/status-098eebe1-a4fe-4642-8044-b7335f4df9e4",
+      "run_id": "a41fcc5d-c8b7-4bb3-9194-fe3cbf6c0d61",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "message": "injected post-dispatch status transport failure; transcript retained",
+            "type": "OSError"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "bundle": "evidence/reality_layer/retention-fix-qa/unexpected-7073e4fc-fce5-4b1c-a1df-4b64fbc2feb2",
+      "run_id": "726b9a5a-f02e-46d2-8b9f-b6aee9cb66d1",
+      "state": "invalid",
+      "trials": 1,
+      "manifest_used": "manifest.json",
+      "errors": [],
+      "trial_errors": {
+        "clean-0": [
+          {
+            "artifact": ".",
+            "errno": null,
+            "message": "injected unexpected finalizer exception",
+            "stage": "trial_finalization",
+            "type": "RuntimeError"
+          }
+        ]
+      },
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    }
+  ]
+}

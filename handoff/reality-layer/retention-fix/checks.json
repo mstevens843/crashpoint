@@ -1,0 +1,84 @@
+[
+  {
+    "name": "offline",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "crashpoint.harness.reality_layer_verify",
+      "evidence/reality_layer/reality-layer-retention-fixed-20260922"
+    ],
+    "exit_status": 0,
+    "seconds": 0.191,
+    "log": "offline.log",
+    "path_redacted": false
+  },
+  {
+    "name": "focused",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_reality_layer.py"
+    ],
+    "exit_status": 0,
+    "seconds": 37.523,
+    "log": "focused.log",
+    "path_redacted": false
+  },
+  {
+    "name": "full-suite",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "exit_status": 0,
+    "seconds": 55.546,
+    "log": "full-suite.log",
+    "path_redacted": true
+  },
+  {
+    "name": "ruff",
+    "command": [
+      ".venv/bin/ruff",
+      "check",
+      "."
+    ],
+    "exit_status": 0,
+    "seconds": 0.043,
+    "log": "ruff.log",
+    "path_redacted": false
+  },
+  {
+    "name": "mypy",
+    "command": [
+      ".venv/bin/mypy"
+    ],
+    "exit_status": 0,
+    "seconds": 0.743,
+    "log": "mypy.log",
+    "path_redacted": false
+  },
+  {
+    "name": "format",
+    "command": [
+      ".venv/bin/ruff",
+      "format",
+      "--check",
+      "src/crashpoint/harness/reality_layer.py",
+      "tests/test_reality_layer.py",
+      "handoff/reality-layer/verify-relocated.py",
+      "handoff/reality-layer/format-comment.py"
+    ],
+    "exit_status": 0,
+    "seconds": 0.011,
+    "log": "format.log",
+    "path_redacted": false
+  }
+]

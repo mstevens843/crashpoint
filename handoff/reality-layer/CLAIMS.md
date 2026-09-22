@@ -1,7 +1,7 @@
 # Claim-to-evidence and regression matrix
 
 All artifact paths below are relative to
-`evidence/reality_layer/reality-layer-final-20260922/trials/`. Trial findings are recomputed by
+`evidence/reality_layer/reality-layer-retention-fixed-20260922/trials/`. Trial findings are recomputed by
 `derive_trial`; no stored `evidence_valid`, count, flag or aggregate is its oracle. Production
 references are at `c9d1ca86969f5567cf771ab8a0f3247770a1dfb7`.
 
@@ -16,8 +16,9 @@ references are at `c9d1ca86969f5567cf771ab8a0f3247770a1dfb7`.
 | Reconciliation on retained STARTED is unchanged in this attempt; public observation | same public reconciliation route, non-UNKNOWN branch | crash trials' `api-reconcile.jsonl`, `api-status_final.jsonl`, raw final ledger | reconciliation fields and final ledger equality; no claim about all possible recovery procedures |
 | Corrupt/missing subject history yields missing-action response despite one effect; reproduced public storage boundary | `action-ledger.read/ensure` → public `action.get` | `corrupt-0/` / `missing-0/` original bytes, mutation event, before/after restart/query bytes or ENOENT, receiver readback | `storage_mutation_premise`, `corrupt_bytes_premise`, `missing_bytes_premise`, `subject_capture_hash`, derived storage classification; missing archived evidence rejects separately |
 | Valid negative findings differ from valid evidence | offline verifier only | manifest/journal/full receipts and bundle receipt | `trial_inventory`, `journal_equality`, `receipt_equality`, `summary_recompute`; missing/duplicate/types/hash mutations |
-| Cleanup and partial retention | actual capture CLI / owned process controller | `qa-final/*/manifest.json` or partial manifest, per-trial progress/partial receipts/stdout | nine CLI failpoint tests inspect every spawned PID; no inference from a parent exit alone |
-| Portable verification, not external authorship | retained Python verifier, no runtime execution | `handoff/reality-layer/relocation.json` and relocation helper | `-S`, actual module-path assertion, original-path and socket/process audit denials; local relocation only |
+| Cleanup and partial retention | actual capture CLI / owned process controller | `retention-fix-qa/*/manifest.json` or partial manifest, per-trial progress/partial receipts/stdout | nine existing CLI failpoint tests plus five real capture cases inspect every spawned PID; no inference from a parent exit alone |
+| Finalization failures preserve identified invalid trial; corrected harness behavior | real `capture()` with actual pinned runtime/receiver, post-cleanup EIO | `retention-fix/paired-before.json`, `red-green.json`, `paired-after.json`, `qa-catalog.json`; new manifest/journal/receipts | five `test_capture_retains_trial_after_finalization_fault` cases and four `test_final_inventory_retains_readable_artifacts` cases; no findings from incomplete evidence; both receipts failing remains manifest-visible |
+| Portable verification, not external authorship | retained Python verifier, no runtime execution | `handoff/reality-layer/retention-fix/relocation.json` and relocation helper | `-S`, actual module-path assertion, original-path and socket/process audit denials; local relocation only |
 | Runtime source omitted for licensing; provenance check is separate | pinned Git blobs and 77-file inventory | frozen plan + execution-source hashes + `check-source-audit.log` | required source inventory/hash guards for own retained code; explicit retrieval audit for omitted runtime |
 
 Untested concerns: direct executor repeated calls, concurrent dispatch, non-array ledger JSON,

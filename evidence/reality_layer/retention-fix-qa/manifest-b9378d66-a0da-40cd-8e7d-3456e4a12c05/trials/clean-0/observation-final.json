@@ -1,0 +1,21 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "attempt_id": "a968ace5-869f-4f65-815f-35a5cd9e2199",
+      "deduped": false,
+      "intent_id": "2877fb3f-5a3b-42ed-9477-e795c12db4d1",
+      "keyed": false,
+      "op": "execute",
+      "payload_digest": "ba67288cd0625b246ef1f39d3c68d105c65bd95c319ab859b7d23835e708ba37"
+    }
+  ],
+  "availability": "readable",
+  "bytes": 396,
+  "effects": 1,
+  "head": "b93864df1d43f778482e2ed2f3e62d30d08265811cbe7fc3904d4df1997c295a",
+  "pid": 42484,
+  "sha256": "921a1e33156783775f19c290c77853852324404ae258cb8fd2dd6f2dedafbb7a",
+  "valid_chain": true,
+  "version": 1
+}

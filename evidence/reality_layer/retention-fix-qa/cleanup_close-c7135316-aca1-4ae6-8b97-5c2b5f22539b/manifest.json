@@ -1,0 +1,185 @@
+{
+  "base": "bb9cd47c4b0b02527aab7b369d17b32829cc4e20",
+  "cases": {
+    "clean": 1,
+    "corrupt": 1,
+    "missing": 1,
+    "ordinary_error": 1,
+    "post_crash": 3,
+    "pre_crash": 1,
+    "unknown_error": 1
+  },
+  "errors": [],
+  "inventory": [
+    "clean-0"
+  ],
+  "kind": "exploratory",
+  "plan_sha256": "93eb2b50875c49b7cf9e399b74fae1239ce13594a590b2fe1f5770ed4968e0fc",
+  "run_id": "9521c57e-d5aa-4e7c-8fe8-97111290d46c",
+  "source_hashes": {
+    "LICENSE": "3ef0b6b142452ad70cc6677debc1785372917ad1e202d6bd1785b798cf26e802",
+    "pyproject.toml": "ebf29eda69f1bd8bf7892ea54ac20aa286aea2d87d33a19cf1858b8244ddb008",
+    "runtime/reality-layer/client.cjs": "0142be294c534445688847bb9ed09690e9dc380831d4c4806273515ee1ee9903",
+    "runtime/reality-layer/contract_regression.py": "f2b00b74960f52dac2831942a0867b2eb8a438beb88961eeeaca89798a5e6f5f",
+    "runtime/reality-layer/dependencies.json": "3656ef6a549bdf49c021ffa0cb82b70634ae6b3916ec471fd355b362e1416364",
+    "runtime/reality-layer/shim.cjs": "01cfa6466fb56940b70f7e7c00b8fb520d4b4afd7e6009da4ab3f16719126859",
+    "src/crashpoint/canonical.py": "6389de2cb2130c761f4e29b33094b09adc36c988610bd805a5fc4e2dbadb6c8d",
+    "src/crashpoint/harness/reality_layer.py": "695017ca6855f2151b5a33f2b31245adf26d50be1b147d5ff7693d51f6cf5d55",
+    "src/crashpoint/harness/reality_layer_common.py": "27c74a3899cf2544992e1a9660801bc68730e84756d689995e6d732391b7f6b5",
+    "src/crashpoint/harness/reality_layer_observer.py": "a2100539f5f32180668f6654b25ad0db86382fbff107f8d12dc005d22356db84",
+    "src/crashpoint/harness/reality_layer_receiver.py": "a714d7f84a49a579bd26cca9c629883c4926712523b11acf647b67541e07895c",
+    "src/crashpoint/harness/reality_layer_verify.py": "756ac27650d2c65322c1a58313a0959aa113f9d2b1449b2b901ad556b2fff026",
+    "src/crashpoint/ledger/core.py": "a1f12a6ccb35e4257a39054ef39a117eb6491cf18df438da59aa215a066f8e76",
+    "tests/test_reality_layer.py": "87ad68bb51e722a1df39859968613b88ec399d0d6bca4e3df7b6fa7051c3554f",
+    "uv.lock": "4f2004ef7f23b8d6d5db4d53569a389d2bd27a95fd344e522fecfde421c30baf"
+  },
+  "started_at": "2026-09-22T19:40:53.521815+00:00",
+  "state": "invalid",
+  "subject_pin": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+  "summary": {
+    "findings": {
+      "clean-0": null
+    },
+    "invalid": 1,
+    "trials": 1,
+    "valid": 0
+  },
+  "trials": [
+    {
+      "artifacts": {
+        "api-execute.jsonl": "339d3f2ff265d533e78def6972e0ed7724ebfe07dcce41073f6e6e29888d45b0",
+        "api-execute.request.json": "c9ce034fd1791710b24de447aacfd597e8bddf9cd37c05132254f853f8190e50",
+        "api-plan.jsonl": "26fbce4d884ab2ce1203b8afcf6876093943e6512ac20fbba56ef0deae2c30eb",
+        "api-plan.request.json": "4964db0bfff53f6b78be05699eb70b2b97f2218a1be872a3651f13e6d3936f52",
+        "api-retry.jsonl": "3b8bcd37997cbb29dc6f870d02d725d850b617c7401f11c4e5ef124fd827e170",
+        "api-retry.request.json": "c9ce034fd1791710b24de447aacfd597e8bddf9cd37c05132254f853f8190e50",
+        "api-status.jsonl": "a8efc6fbd3886e714dff705e8a985eb32f4bd67aee7beeb3dc8bd0dbb7b50d89",
+        "api-status.request.json": "026b7fca399deaa2754862a33fcb08e4b37267ec6289a9cefa087ce39dd664b1",
+        "caller.json": "0b466e0599770105cd50548896ad2a4b1800e41fd76a2473704f62554c58c665",
+        "client-execute.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-execute.stdout": "e88bdd2d1fa6dc0ff573b7e347ecc61929b4389461b7e9a5dda8295461a9eb3f",
+        "client-plan.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-plan.stdout": "dee8a9c1868b451fe936b995228f2118c5c2d37fea0f00a13d49f0444a493f3f",
+        "client-retry.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-retry.stdout": "dc7dfeff5a844f23c5eb6b9b5a96f03f6828d071e88a4f094e8943144cf80236",
+        "client-status.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-status.stdout": "b77beb95d7748c58c08d5f345e7959f61b8769a83b23cb35135ddb53a37190bf",
+        "controller-fallback-effects.raw": "dfa6e2613cf3caaffac91f03a757926a8d309d696d97cb2de7134e88be94bb59",
+        "controller-fallback-subject.raw": "bd0d4078f8b22ea02c2ef6e4b37965269ca04bc673b9d6762922bc4445abb5ee",
+        "execution-source-hashes.json": "cd3089a12749d8c9f72c180e40a928d4f07a0aad77e78e75af6736e39b3a0552",
+        "observation-after_retry.json": "2127f675dc666ce53ff28347f78beb1272d51dc6f8b9388dd6b99471a012e544",
+        "observation-before_recovery.json": "d0d341f55c68eadf7e91a5fa4399279232efdd755e2fbc5ea04603988d3ac824",
+        "observation-final.json": "4752da2b685ca68ae54b460d779d2e2ba850291acfa008270c44212e0d4acc91",
+        "observation-initial.json": "0be76c191616b90be954ebc4473700ee3d7d96b5a41e68f2acc7af5c48ae0c8f",
+        "observer-after_retry.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-after_retry.stdout": "22e88963291ef22b592c1f78eec1eb6869ea0fd705449a2c955964e1df1929a9",
+        "observer-before_recovery.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-before_recovery.stdout": "5ba6d9adfe6714799f2e9dce7feba33b4f0f9c45d391397ac05e1b5c383b2739",
+        "observer-final.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-final.stdout": "738256ae62b301a9710bc78dceb21361506c4c10a0afaa3e802396875dcf60c6",
+        "observer-initial.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-initial.stdout": "80cb7d6491f0d45710426c96486072643b8cc79a72981c0cc7f007e9dfc50c07",
+        "progress.jsonl": "0634ad18af76a5d1b6d4701c94c99b84cf4528655bc72e73f0b6e17d55fa8056",
+        "receiver-after_retry.jsonl": "dfa6e2613cf3caaffac91f03a757926a8d309d696d97cb2de7134e88be94bb59",
+        "receiver-before_recovery.jsonl": "dfa6e2613cf3caaffac91f03a757926a8d309d696d97cb2de7134e88be94bb59",
+        "receiver-final.jsonl": "dfa6e2613cf3caaffac91f03a757926a8d309d696d97cb2de7134e88be94bb59",
+        "receiver-initial.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "receiver-requests.jsonl": "a8bcd1a72e0d3373f3a95c3c1e99954890c7075a2c29c3ed6ef6119fd55f782b",
+        "receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "receiver.stdout": "efa9b37f4020d45e68d65c6b0c3516b282fa080c6ee2318cbcf1fff93d5dbdd8",
+        "runtime-first.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-first.stdout": "de6558d02f41aaf0841deaad932706bf8118e106c99b415581342718e312c3fb",
+        "seal.json": "59373690dd4a7d3ba0f6747ad9714156e7389827c2620bc83f42a7dabc5c20af",
+        "subject-after_query.json": "497fef9ec82beff83327c2def1dd53479c4bb0cdc4b27f671b4bce2de9dd7915",
+        "subject-after_query.raw": "bd0d4078f8b22ea02c2ef6e4b37965269ca04bc673b9d6762922bc4445abb5ee",
+        "subject-after_restart.json": "497fef9ec82beff83327c2def1dd53479c4bb0cdc4b27f671b4bce2de9dd7915",
+        "subject-after_restart.raw": "bd0d4078f8b22ea02c2ef6e4b37965269ca04bc673b9d6762922bc4445abb5ee",
+        "subject-before_recovery.json": "497fef9ec82beff83327c2def1dd53479c4bb0cdc4b27f671b4bce2de9dd7915",
+        "subject-before_recovery.raw": "bd0d4078f8b22ea02c2ef6e4b37965269ca04bc673b9d6762922bc4445abb5ee",
+        "subject-before_restart.json": "497fef9ec82beff83327c2def1dd53479c4bb0cdc4b27f671b4bce2de9dd7915",
+        "subject-before_restart.raw": "bd0d4078f8b22ea02c2ef6e4b37965269ca04bc673b9d6762922bc4445abb5ee",
+        "subject-final.json": "497fef9ec82beff83327c2def1dd53479c4bb0cdc4b27f671b4bce2de9dd7915",
+        "subject-final.raw": "bd0d4078f8b22ea02c2ef6e4b37965269ca04bc673b9d6762922bc4445abb5ee"
+      },
+      "case": "clean",
+      "errors": [
+        {
+          "artifact": ".",
+          "errno": 5,
+          "message": "injected cleanup log close failure",
+          "stage": "cleanup",
+          "type": "OSError"
+        }
+      ],
+      "evidence_valid": false,
+      "failpoint": "",
+      "findings": null,
+      "processes": [
+        {
+          "name": "receiver",
+          "pid": 44687,
+          "reaped": true,
+          "returncode": -15
+        },
+        {
+          "name": "observer-initial",
+          "pid": 44688,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "runtime-first",
+          "pid": 44689,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-plan",
+          "pid": 44690,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-execute",
+          "pid": 44691,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-before_recovery",
+          "pid": 44692,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-status",
+          "pid": 44693,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-retry",
+          "pid": 44694,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-after_retry",
+          "pid": 44695,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-final",
+          "pid": 44696,
+          "reaped": true,
+          "returncode": 0
+        }
+      ],
+      "run_id": "9521c57e-d5aa-4e7c-8fe8-97111290d46c",
+      "trial_id": "clean-0",
+      "version": 1
+    }
+  ],
+  "version": 1
+}

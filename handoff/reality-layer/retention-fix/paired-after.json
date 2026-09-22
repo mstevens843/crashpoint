@@ -1,0 +1,143 @@
+{
+  "source": "Final focused test assertions passed; exit outcomes asserted in tests, not separate CLI invocations.",
+  "results": [
+    {
+      "case": "artifact_read",
+      "bundle": "evidence/reality_layer/retention-fix-qa/artifact_read-637a47ac-7ad1-4c04-9758-02fc35396bb3",
+      "expected_exit": 1,
+      "state": "invalid",
+      "trial_count": 1,
+      "trial_id": "clean-0",
+      "evidence_valid": false,
+      "findings": null,
+      "errors": [
+        {
+          "artifact": "runtime-first.stdout",
+          "errno": 5,
+          "message": "review: final artifact hash read failed",
+          "stage": "artifact_read",
+          "type": "OSError"
+        }
+      ],
+      "observation_completed": true,
+      "all_processes_reaped": true,
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "case": "both_receipts",
+      "bundle": "evidence/reality_layer/retention-fix-qa/both_receipts-4878cb19-71f7-4c94-bff1-02f970def36d",
+      "expected_exit": 1,
+      "state": "invalid",
+      "trial_count": 1,
+      "trial_id": "clean-0",
+      "evidence_valid": false,
+      "findings": null,
+      "errors": [
+        {
+          "artifact": "receipt.json",
+          "errno": 13,
+          "message": "injected receipt destination unavailable",
+          "stage": "receipt_primary",
+          "type": "PermissionError"
+        },
+        {
+          "artifact": "partial-receipt.json",
+          "errno": 13,
+          "message": "injected receipt destination unavailable",
+          "stage": "receipt_fallback",
+          "type": "PermissionError"
+        }
+      ],
+      "observation_completed": true,
+      "all_processes_reaped": true,
+      "receipt_files": []
+    },
+    {
+      "case": "cleanup_close",
+      "bundle": "evidence/reality_layer/retention-fix-qa/cleanup_close-c7135316-aca1-4ae6-8b97-5c2b5f22539b",
+      "expected_exit": 1,
+      "state": "invalid",
+      "trial_count": 1,
+      "trial_id": "clean-0",
+      "evidence_valid": false,
+      "findings": null,
+      "errors": [
+        {
+          "artifact": ".",
+          "errno": 5,
+          "message": "injected cleanup log close failure",
+          "stage": "cleanup",
+          "type": "OSError"
+        }
+      ],
+      "observation_completed": true,
+      "all_processes_reaped": true,
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "case": "control",
+      "bundle": "evidence/reality_layer/retention-fix-qa/control-6d6498ff-2bbd-4743-936d-8808cdec71e7",
+      "expected_exit": 0,
+      "state": "complete",
+      "trial_count": 1,
+      "trial_id": "clean-0",
+      "evidence_valid": true,
+      "findings": {
+        "action_id": "ccdff5f2-7953-4eec-9ac8-a18778453367",
+        "attempt_ids": [
+          "85e017bf-a00d-4bd6-af12-3ae5ac29ed71"
+        ],
+        "effect_count": 1,
+        "effect_observation": "observed",
+        "failed_with_observed_effect": false,
+        "history_missing_with_effect": false,
+        "invocation_attempt_ids": [
+          "85e017bf-a00d-4bd6-af12-3ae5ac29ed71"
+        ],
+        "original_plan_rejected": true,
+        "plan_id": "dee937e5-5ce9-4f53-bc88-7ea4e0355437",
+        "reconcile_changed": null,
+        "reconciled_status": null,
+        "reconciliation_required": false,
+        "retry_added_effects": 0,
+        "status": "SUCCEEDED",
+        "subject_storage_after_query": "json_nonempty",
+        "unresolved_marked_not_required": false
+      },
+      "errors": [],
+      "observation_completed": true,
+      "all_processes_reaped": true,
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    },
+    {
+      "case": "unexpected",
+      "bundle": "evidence/reality_layer/retention-fix-qa/unexpected-7073e4fc-fce5-4b1c-a1df-4b64fbc2feb2",
+      "expected_exit": 1,
+      "state": "invalid",
+      "trial_count": 1,
+      "trial_id": "clean-0",
+      "evidence_valid": false,
+      "findings": null,
+      "errors": [
+        {
+          "artifact": ".",
+          "errno": null,
+          "message": "injected unexpected finalizer exception",
+          "stage": "trial_finalization",
+          "type": "RuntimeError"
+        }
+      ],
+      "observation_completed": true,
+      "all_processes_reaped": true,
+      "receipt_files": [
+        "trials/clean-0/receipt.json"
+      ]
+    }
+  ]
+}

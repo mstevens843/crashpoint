@@ -8,11 +8,42 @@ reconciliation call left those records unchanged. Retrying the original plan was
 produced no additional receiver effect. This reproduces a recovery/status boundary, not a
 public duplicate-execution bypass.
 
-[Final evidence](../evidence/reality_layer/reality-layer-final-20260922) · [Frozen plan](14-reality-layer-plan.json) ·
+[Final evidence](../evidence/reality_layer/reality-layer-retention-fixed-20260922) · [Frozen plan](14-reality-layer-retention-plan.json) ·
 [Reproduction](../handoff/reality-layer/REPRODUCE.md) ·
 [Self-review](../handoff/reality-layer/SELF-REVIEW.md) ·
 [Claim matrix](../handoff/reality-layer/CLAIMS.md) ·
 [Handoff](../handoff/reality-layer/SUMMARY.md)
+
+## Capture-retention correction
+
+Independent review reproduced a defect in the already-published Crashpoint harness at
+`be91c322165f7bb472201e9ab99fed97f171a6d0`: one `OSError(EIO)` reading
+`runtime-first.stdout` during final hashing, after real subprocess cleanup, left an invalid
+manifest with zero trials and neither receipt. Observations had completed and all children
+were reaped. This did not disprove the published nine-trial measurements or expose a false-green
+verifier result; it broke the promised retention of a completed trial.
+
+The corrected harness records enumeration/stat/classification/read errors with artifact and
+stage context, preserves available hashes, and writes an invalid receipt without successful
+findings. Capture owns and persists the trial identity before dispatch, so an unexpected
+finalizer exception cannot erase the attempt. If both receipt destinations fail, their errors
+remain in the manifest when it is writable; no receipt persistence is claimed. Adjacent cleanup
+handling now preserves process results even when closing a log reports an error after reaping.
+No Reality Layer source or verifier acceptance rule was changed.
+
+The [retained red/green proof](../handoff/reality-layer/retention-fix/red-green.json) runs the
+new real-entry-point regression against the unchanged published harness in a disposable copy:
+it fails specifically because the completed trial is absent from the manifest. The corrected
+code passes. A paired valid control and failed artifact read use the same offline per-trial
+predicate; removing the required stdout rejects with `artifact_unavailable`, independently of
+the one-trial exploratory inventory. The
+[paired after-fix evidence](../handoff/reality-layer/retention-fix/paired-after.json) and
+[QA catalog](../handoff/reality-layer/retention-fix/qa-catalog.json) retain the final test captures.
+
+After code/tests were final, a new plan froze their corrected hashes and **one new nine-trial
+confirmatory bundle** was captured. The measurements below are that source-informed repetition,
+not a newly blinded discovery. Published and historical evidence remains byte-for-byte unchanged.
+This follow-up is uncommitted/unpushed; the previous commit is already published. No comment was posted.
 
 ## Pins and invitation
 
@@ -100,17 +131,21 @@ that agreement is separate from evidence validity and satisfaction of the intend
 
 ## Evidence and review
 
-Run ID: `f5c50fd0-f821-45ed-9c57-8920d673d4e8`. Manifest SHA-256:
-`48d8033761025e29c6da02ddbe12ca1f59de0cbf487c0138b45a0bf7f6a71b86`.
+Run ID: `91f1fc2d-5efd-43a4-a6dd-84f5f2f8d222`. Manifest SHA-256:
+`403921101a3aca6b64f3fe4142689609fba666e78a880f07e161a6430a7cb910`.
 All trial receipts equal their incremental journal records and manifest records in full.
 [`results-derived.json`](../handoff/reality-layer/results-derived.json) retains derived counts.
 
-The final repository gate passed **474 tests**, with **22 explicitly reported fixture-related
-skips**. All **59** new tests passed, including 35 semantic evidence mutations, 14 individual
-verifier-guard removal/restoration controls, and nine real harness failure-path injections.
-Ruff, mypy (88 files), scoped formatting, both Node syntax checks, source audit and upstream
-`npm test` passed. The adopted-contract assertion separately exits 1 for the baseline's four
-unresolved crash outcomes. See exact commands/statuses in the handoff.
+The follow-up repository gate passed **483 tests**, with **22 fixture-related skips**
+(19 SafeAgent, 1 macOS isolation, 2 TrueForge). The focused suite separately passed **68 tests**:
+35 semantic mutations, 14 verifier-guard controls, one recorded-findings test, nine existing
+real CLI failpoints, five new real capture cases (control, artifact read, both receipts,
+unexpected finalizer, cleanup close), and four deterministic inventory cases (disappearance,
+enumeration, stat, classification). The existing receipt failpoint covers writable fallback.
+Ruff, mypy (88 files) and scoped formatting passed. Exact commands, durations and logs are in
+[follow-up checks](../handoff/reality-layer/retention-fix/checks.json). Code/tests were unchanged
+between capture and these gates. The earlier Node/source-audit/upstream gates remain historical;
+no new upstream campaign was needed because no upstream code changed.
 
 The bundle verifies after local relocation using its retained verifier with site packages
 disabled, no Node in PATH, and audit-hook denials for network/process operations and original
@@ -118,13 +153,14 @@ checkout reads. Upstream source is omitted because redistribution permission was
 a separate retrieval audit matched all 77 tracked files to the baseline pin and declared hashes.
 Offline evidence verification does **not** verify an omitted runtime source copy.
 
-Development captures remain separate: 10 exploratory trials, 36 superseded confirmatory trials,
+The original published [run catalog](../handoff/reality-layer/run-catalog.json) remains historical: 10 exploratory trials, 36 superseded confirmatory trials,
 and one initial Node-version preflight rejection with no trial. Across review and final gates,
 25 deliberate harness-failure runs produced 23 trial records (two source-read failures launched
-none); these are QA negative controls, not additional subject findings. The final QA rerun contains
-nine rejected runs. Earlier captures are preserved locally and excluded from the publication
-file list. The [run catalog](../handoff/reality-layer/run-catalog.json) enumerates them without
-merging their counts into the final nine.
+none); these are QA negative controls, not additional subject findings. That original QA rerun contains
+nine rejected runs. The follow-up focused gate separately retains 14 QA runs: one valid
+one-trial control and 13 expected failures, with 13 total trial records (source preflight
+starts none). These QA controls are not part of the new nine-trial confirmatory matrix. Earlier captures are preserved locally and excluded from the publication
+file list. Both catalogs keep development and QA counts separate from confirmatory findings.
 
 ## Limits
 
@@ -136,4 +172,4 @@ to coordinated rewriting. No reliability-rate or general exactly-once claim. A r
 fixture store is not permission to replay an ambiguous real-world action. A lost/consumed plan
 handle is not a proof about external effects. Direct executor replay and other source concerns
 are untested here. No CrewAI, LangGraph or SafeAgent code was changed; no comment, commit or push
-was performed by this task.
+was performed during this retention follow-up. The prior experiment commit was already pushed.

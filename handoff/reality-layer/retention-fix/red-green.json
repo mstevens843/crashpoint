@@ -1,0 +1,16 @@
+{
+  "regression": "test_capture_retains_trial_after_finalization_fault[artifact_read]",
+  "red": {
+    "harness": "unchanged be91c322165f7bb472201e9ab99fed97f171a6d0 in disposable copy",
+    "exit_status": 1,
+    "reason": "completed trial identity lost from batch manifest; len(trials) was 0 after completed observations and PID checks",
+    "log": "red-baseline.log"
+  },
+  "green": {
+    "harness": "corrected current source",
+    "exit_status": 0,
+    "result": "1 passed",
+    "log": "green.log"
+  },
+  "log_redaction": "Local path prefixes are replaced and line-end whitespace trimmed in public log copies; assertions/error details are retained. Raw originals remain in ignored work/reality-layer-retention-fix."
+}

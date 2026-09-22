@@ -1,0 +1,38 @@
+{
+  "reproduction_exit_status": 0,
+  "meaning": "The unchanged reviewer probe asserts the broken signature; exit 0 confirms reproduction, not corrected behavior.",
+  "raw_sha256": "112255741d0e547467e815327e97d861ad80c4288368afe08d21190d6efd190a",
+  "path_redacted": true,
+  "results": [
+    {
+      "case": "control",
+      "status": 0,
+      "injected": false,
+      "manifest_state": "complete",
+      "manifest_trials": 1,
+      "manifest_errors": [],
+      "receipt_exists": true,
+      "partial_receipt_exists": false,
+      "observations_complete": true,
+      "owned_processes_still_alive": []
+    },
+    {
+      "case": "injected",
+      "status": 1,
+      "injected": true,
+      "manifest_state": "invalid",
+      "manifest_trials": 0,
+      "manifest_errors": [
+        {
+          "message": "[Errno 5] review: final artifact hash read failed: '<review-probe>/injected/trials/clean-0/runtime-first.stdout'",
+          "stage": "run",
+          "type": "OSError"
+        }
+      ],
+      "receipt_exists": false,
+      "partial_receipt_exists": false,
+      "observations_complete": true,
+      "owned_processes_still_alive": []
+    }
+  ]
+}

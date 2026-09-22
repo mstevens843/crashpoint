@@ -1,0 +1,96 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_capture_retains_trial_after_finalization_fault[artifact_read] ______
+
+tmp_path = PosixPath('<temporary-path>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1069eb440>
+fault = 'artifact_read'
+
+    @pytest.mark.parametrize(
+        "fault", ["control", "artifact_read", "both_receipts", "unexpected", "cleanup_close"]
+    )
+    def test_capture_retains_trial_after_finalization_fault(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch, fault: str
+    ) -> None:
+        """Real capture, real receiver; only post-cleanup retention I/O is faulted."""
+        configured_subject = os.environ.get("CRASHPOINT_REALITY_SUBJECT")
+        if not configured_subject:
+            pytest.skip("set CRASHPOINT_REALITY_SUBJECT for real retention integration")
+        subject = Path(configured_subject)
+        qa_root = Path(os.environ.get("CRASHPOINT_REALITY_RETENTION_QA", str(tmp_path)))
+        qa_root.mkdir(parents=True, exist_ok=True)
+        output = qa_root / f"{fault}-{uuid.uuid4()}"
+        plan = tmp_path / "plan.json"
+        capture_harness.freeze(subject, plan)
+        original_close = capture_harness.Owned.close
+        original_read = Path.read_bytes
+        original_write = capture_harness.write
+        state: dict[str, Any] = {"closed": False, "injected": False, "processes": []}
+
+        def close(owned: capture_harness.Owned) -> list[dict[str, Any]]:
+            result = original_close(owned)
+            state.update(closed=True, processes=result)
+            if fault == "cleanup_close":
+                state["injected"] = True
+                raise OSError(errno.EIO, "injected cleanup log close failure")
+            return result
+
+        def read(path: Path) -> bytes:
+            if (
+                fault == "artifact_read"
+                and state["closed"]
+                and not state["injected"]
+                and path == output / "trials/clean-0/runtime-first.stdout"
+            ):
+                state["injected"] = True
+                raise OSError(errno.EIO, "review: final artifact hash read failed", str(path))
+            return original_read(path)
+
+        def write(path: Path, value: Any) -> None:
+            if fault == "both_receipts" and path.name in {"receipt.json", "partial-receipt.json"}:
+                state["injected"] = True
+                raise OSError(errno.EACCES, "injected receipt destination unavailable", str(path))
+            original_write(path, value)
+
+        def unexpected(directory: Path, record: dict[str, Any]) -> None:
+            state["injected"] = True
+            raise RuntimeError("injected unexpected finalizer exception")
+
+        with monkeypatch.context() as injection:
+            injection.setattr(capture_harness.Owned, "close", close)
+            injection.setattr(Path, "read_bytes", read)
+            injection.setattr(capture_harness, "write", write)
+            if fault == "unexpected":
+                injection.setattr(capture_harness, "artifact_inventory", unexpected)
+            try:
+                status = capture_harness.capture(
+                    subject, output, plan, only="clean-0", exploratory=True
+                )
+            finally:
+                # Check every spawned PID before an assertion about receipts can exit the test.
+                progress_path = output / "trials/clean-0/progress.jsonl"
+                events = jsonl(progress_path) if progress_path.exists() else []
+                alive = []
+                for event in events:
+                    if event.get("event") == "spawn":
+                        try:
+                            os.kill(event["pid"], 0)
+                        except ProcessLookupError:
+                            continue
+                        alive.append(event["pid"])
+                assert not alive, f"owned processes remain: {alive}"
+        assert any(e.get("event") == "trial_observations_complete" for e in events)
+        assert state["closed"] and state["processes"]
+        assert all(p["reaped"] for p in state["processes"])
+        m = get(output / "manifest.json")
+>       assert len(m["trials"]) == 1, "completed trial identity lost from batch manifest"
+E       AssertionError: completed trial identity lost from batch manifest
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+work/reality-layer-retention-fix/red-baseline/tests/test_reality_layer.py:629: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"run_id": "f2ccb140-8418-48a2-b9a7-cdafdd63a468", "state": "invalid", "summary": null}
+=========================== short test summary info ============================
+FAILED work/reality-layer-retention-fix/red-baseline/tests/test_reality_layer.py::test_capture_retains_trial_after_finalization_fault[artifact_read]
+1 failed in 3.36s

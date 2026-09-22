@@ -1,0 +1,24 @@
+{"event": "trial_started"}
+{"event": "source_copied"}
+{"event": "spawn", "name": "receiver", "pid": 42014}
+{"event": "spawn", "name": "observer-initial", "pid": 42015}
+{"event": "observed", "phase": "initial", "pid": 42015, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{"event": "spawn", "name": "runtime-first", "pid": 42016}
+{"event": "spawn", "name": "client-plan", "pid": 42017}
+{"event": "api_completed", "name": "plan", "returncode": 0}
+{"action_id": "80d8a44a-4684-4abb-bd13-8de335ef23b8", "event": "caller_retained", "plan_id": "0f9ebb2d-0679-4a86-814f-f82e908f0540"}
+{"event": "spawn", "name": "client-execute", "pid": 42020}
+{"event": "spawn", "name": "observer-before_recovery", "pid": 42021}
+{"event": "observed", "phase": "before_recovery", "pid": 42021, "sha256": "d8f5b372a7373744e8250b370a70a0f259ac61c53b156dd3a200341717849cf6"}
+{"event": "subject_storage_mutation", "operation": "corrupt", "preserved": "subject-before_recovery.raw"}
+{"event": "spawn", "name": "runtime-recovery", "pid": 42022}
+{"event": "spawn", "name": "client-status", "pid": 42024}
+{"event": "api_completed", "name": "status", "returncode": 0}
+{"event": "spawn", "name": "client-retry", "pid": 42025}
+{"event": "api_completed", "name": "retry", "returncode": 0}
+{"event": "spawn", "name": "observer-after_retry", "pid": 42027}
+{"event": "observed", "phase": "after_retry", "pid": 42027, "sha256": "d8f5b372a7373744e8250b370a70a0f259ac61c53b156dd3a200341717849cf6"}
+{"event": "receiver_sealed"}
+{"event": "spawn", "name": "observer-final", "pid": 42028}
+{"event": "observed", "phase": "final", "pid": 42028, "sha256": "d8f5b372a7373744e8250b370a70a0f259ac61c53b156dd3a200341717849cf6"}
+{"event": "trial_observations_complete"}

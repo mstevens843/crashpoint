@@ -24,7 +24,7 @@ if not remote or remote[0] != sha:
     raise SystemExit("Push this commit first; no publication URLs have been asserted.")
 paths = {
     "REPORT_URL": ("blob", "results/14-reality-layer-crash-readback.md"),
-    "EVIDENCE_URL": ("tree", "evidence/reality_layer/reality-layer-final-20260922"),
+    "EVIDENCE_URL": ("tree", "evidence/reality_layer/reality-layer-retention-fixed-20260922"),
     "REPRODUCE_URL": ("blob", "handoff/reality-layer/REPRODUCE.md"),
 }
 text = (root / "handoff/reality-layer/github-comment-draft.md").read_text()

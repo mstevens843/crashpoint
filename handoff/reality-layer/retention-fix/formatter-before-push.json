@@ -1,0 +1,6 @@
+{
+  "exit_status": 1,
+  "stdout": "",
+  "stderr": "fatal: path 'evidence/reality_layer/reality-layer-retention-fixed-20260922' exists on disk, but not in 'be91c322165f7bb472201e9ab99fed97f171a6d0'\nTraceback (most recent call last):\n  File \"<experiment-worktree>/handoff/reality-layer/format-comment.py\", line 32, in <module>\n    git(\"cat-file\", \"-e\", f\"{sha}:{path}\")\n  File \"<experiment-worktree>/handoff/reality-layer/format-comment.py\", line 14, in git\n    return subprocess.check_output([\"git\", \"-C\", str(root), *args], text=True).strip()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<pinned-python>/lib/python3.12/subprocess.py\", line 466, in check_output\n    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<pinned-python>/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['git', '-C', '<experiment-worktree>', 'cat-file', '-e', 'be91c322165f7bb472201e9ab99fed97f171a6d0:evidence/reality_layer/reality-layer-retention-fixed-20260922']' returned non-zero exit status 128.\n",
+  "expected": "Must refuse new evidence links because the corrected bundle is absent from already-pushed be91c322; no new commit yet."
+}

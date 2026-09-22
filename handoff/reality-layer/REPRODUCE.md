@@ -6,7 +6,7 @@ From this Crashpoint worktree, with Python 3.12 (capture used 3.12.13):
 
 ```bash
 set -euo pipefail
-bundle="$PWD/evidence/reality_layer/reality-layer-final-20260922"
+bundle="$PWD/evidence/reality_layer/reality-layer-retention-fixed-20260922"
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$bundle/sources/src" \
   .venv/bin/python -S -m crashpoint.harness.reality_layer_verify "$bundle"
 ```
@@ -38,19 +38,38 @@ uv run --no-sync ruff check .
 uv run --no-sync mypy
 ```
 
-The nine real-process failure-path tests skip unless `CRASHPOINT_REALITY_SUBJECT` names the
-isolated baseline checkout. The remaining 50 tests are offline, including 35 evidence mutations,
-14 single-guard removal/restoration tests, and the recorded public-API findings.
+The 14 real-process cases (nine existing failpoints and five new retention/control cases) skip unless `CRASHPOINT_REALITY_SUBJECT` names the
+isolated baseline checkout. The remaining 54 tests are offline: 35 evidence mutations,
+14 single-guard removal/restoration tests, one recorded-findings test, and four new inventory tests.
 
 To run all relevant tests, including real failure paths, select Node **v22.22.1** in PATH first:
 
 ```bash
 set -euo pipefail
+export PATH=/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin
+export PYTHONDONTWRITEBYTECODE=1
 test "$(node --version)" = v22.22.1
 export CRASHPOINT_REALITY_SUBJECT="$PWD/../reality-layer-c9d1ca8-2026-09-22"
 export CRASHPOINT_REALITY_QA="$PWD/work/reality-layer-qa-$(date -u +%Y%m%dT%H%M%SZ)"
-uv run --no-sync pytest
+export CRASHPOINT_REALITY_RETENTION_QA="$CRASHPOINT_REALITY_QA"
+.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_reality_layer.py
+.venv/bin/python -m pytest -q -p no:cacheprovider
 ```
+
+For only the new regressions, with the subject and pinned PATH set as above:
+
+```bash
+.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_reality_layer.py \
+  -k 'capture_retains_trial_after_finalization_fault or final_inventory_retains_readable_artifacts'
+```
+
+The real control/read-fault pair uses the same offline `derive_trial` predicate. The required
+artifact removal must reject with `artifact_unavailable`, not an unrelated one-trial exploratory
+inventory mismatch. [Red/green proof](retention-fix/red-green.json) records the exact published
+baseline and inspected failure. The original reviewer probe asserts the old broken behavior and
+is **not** a post-fix gate. Final follow-up results are [68 focused and 483 full passed, 22
+optional-fixture skips](retention-fix/checks.json). The retained plan/bundle are source-informed
+confirmation after a capture-harness correction, not a newly blinded experiment.
 
 No dependency upgrades are needed. `uv.lock` is inherited and unchanged. Captures refuse a
 different Python patch version or Node version. On the measurement host `/usr/local/bin/node`
@@ -69,7 +88,7 @@ subject="$PWD/work/reality-layer-source-$(date -u +%Y%m%dT%H%M%SZ)"
 git clone --no-checkout https://github.com/shimjaemandu/reality-layer.git "$subject"
 git -C "$subject" checkout --detach c9d1ca86969f5567cf771ab8a0f3247770a1dfb7
 uv run --no-sync python -m crashpoint.harness.reality_layer \
-  --subject "$subject" --plan results/14-reality-layer-plan.json --audit-source
+  --subject "$subject" --plan results/14-reality-layer-retention-plan.json --audit-source
 ```
 
 The audit compares local bytes with Git's pinned blobs and the retained inventory. It does not

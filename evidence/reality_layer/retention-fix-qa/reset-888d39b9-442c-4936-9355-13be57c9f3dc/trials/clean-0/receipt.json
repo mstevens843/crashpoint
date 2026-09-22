@@ -1,0 +1,35 @@
+{
+  "artifacts": {
+    "controller-fallback-effects.raw": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execution-source-hashes.json": "cd3089a12749d8c9f72c180e40a928d4f07a0aad77e78e75af6736e39b3a0552",
+    "progress.jsonl": "0a0d2452880817e62104c2dc1ce19d9cde48c6b4902f88ff40032e39209b39c6",
+    "receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receiver.stdout": "3d2e5c7ed8f57a6d636ab70b368f1d3681553630afd25260d7bedf2952ed6293"
+  },
+  "case": "clean",
+  "errors": [
+    {
+      "message": "injected initial receiver reset failure",
+      "type": "OSError"
+    },
+    {
+      "capture": "controller-fallback-subject.raw",
+      "errno": 2,
+      "type": "FileNotFoundError"
+    }
+  ],
+  "evidence_valid": false,
+  "failpoint": "reset",
+  "findings": null,
+  "processes": [
+    {
+      "name": "receiver",
+      "pid": 42840,
+      "reaped": true,
+      "returncode": -15
+    }
+  ],
+  "run_id": "299b94e7-127d-4abf-bd0f-0e14b5cfce8b",
+  "trial_id": "clean-0",
+  "version": 1
+}

@@ -9,7 +9,7 @@ import tempfile
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[2]
-source = root / "evidence/reality_layer/reality-layer-final-20260922"
+source = root / "evidence/reality_layer/reality-layer-retention-fixed-20260922"
 relocation = Path(tempfile.mkdtemp(prefix="reality-layer-portable-"))
 bundle = relocation / "bundle"
 shutil.copytree(source, bundle)
@@ -60,7 +60,7 @@ print(result.stdout, end="")
 if result.stderr:
     print(result.stderr, file=sys.stderr, end="")
 # Retain the relocation directory locally; do not put private paths in publication output.
-(root / "work/reality-layer-final-gates/relocation-local-path.txt").write_text(
+(root / "work/reality-layer-retention-fix/relocation-local-path.txt").write_text(
     str(relocation) + "\n"
 )
 raise SystemExit(result.returncode)

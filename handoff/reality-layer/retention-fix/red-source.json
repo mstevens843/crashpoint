@@ -1,0 +1,6 @@
+{
+  "baseline_commit": "be91c322165f7bb472201e9ab99fed97f171a6d0",
+  "baseline_harness_sha256": "3605b0028b0d1d394c1ad0851f5e494784dcbe59c5f91b41ab5059e0660ca894",
+  "current_test_sha256": "87ad68bb51e722a1df39859968613b88ec399d0d6bca4e3df7b6fa7051c3554f",
+  "method": "New real-capture artifact-read regression run against the unchanged published harness in a disposable source tree."
+}

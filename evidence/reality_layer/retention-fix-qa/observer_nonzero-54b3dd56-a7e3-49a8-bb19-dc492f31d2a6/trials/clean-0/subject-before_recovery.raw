@@ -1,0 +1,28 @@
+[
+  {
+    "schema": "reality-action-outcome/1.0",
+    "action_id": "3f499f92-6057-447d-94e5-cbc38f9a8d6c",
+    "status": "SUCCEEDED",
+    "attempt": 1,
+    "created_at": "2026-09-22T19:40:40.454Z",
+    "updated_at": "2026-09-22T19:40:40.469Z",
+    "target_id": "bedroom_light",
+    "provenance": {
+      "source_text": "침실 불 켜줘",
+      "intent": "direct_command",
+      "plan_id": "2b768466-6732-4c06-a0f2-3299f462311a",
+      "actor_id": "owner"
+    },
+    "evidence": [
+      {
+        "at": "2026-09-22T19:40:40.469Z",
+        "source": "adapter",
+        "adapter_id": "virtual_light_beta",
+        "native_trace": {
+          "fixture": "fsynced-receiver",
+          "attempt_id": "3faabc0c-7e53-48a5-b7f0-57b7b93f8656"
+        }
+      }
+    ]
+  }
+]

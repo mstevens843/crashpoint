@@ -1,0 +1,130 @@
+{
+  "base": "bb9cd47c4b0b02527aab7b369d17b32829cc4e20",
+  "cases": {
+    "clean": 1,
+    "corrupt": 1,
+    "missing": 1,
+    "ordinary_error": 1,
+    "post_crash": 3,
+    "pre_crash": 1,
+    "unknown_error": 1
+  },
+  "errors": [],
+  "inventory": [
+    "clean-0"
+  ],
+  "kind": "exploratory",
+  "plan_sha256": "040b38b547764766f210230a9726f6f5738e94a0d5465e0abb720fffa227be3e",
+  "run_id": "726b9a5a-f02e-46d2-8b9f-b6aee9cb66d1",
+  "source_hashes": {
+    "LICENSE": "3ef0b6b142452ad70cc6677debc1785372917ad1e202d6bd1785b798cf26e802",
+    "pyproject.toml": "ebf29eda69f1bd8bf7892ea54ac20aa286aea2d87d33a19cf1858b8244ddb008",
+    "runtime/reality-layer/client.cjs": "0142be294c534445688847bb9ed09690e9dc380831d4c4806273515ee1ee9903",
+    "runtime/reality-layer/contract_regression.py": "f2b00b74960f52dac2831942a0867b2eb8a438beb88961eeeaca89798a5e6f5f",
+    "runtime/reality-layer/dependencies.json": "3656ef6a549bdf49c021ffa0cb82b70634ae6b3916ec471fd355b362e1416364",
+    "runtime/reality-layer/shim.cjs": "01cfa6466fb56940b70f7e7c00b8fb520d4b4afd7e6009da4ab3f16719126859",
+    "src/crashpoint/canonical.py": "6389de2cb2130c761f4e29b33094b09adc36c988610bd805a5fc4e2dbadb6c8d",
+    "src/crashpoint/harness/reality_layer.py": "695017ca6855f2151b5a33f2b31245adf26d50be1b147d5ff7693d51f6cf5d55",
+    "src/crashpoint/harness/reality_layer_common.py": "27c74a3899cf2544992e1a9660801bc68730e84756d689995e6d732391b7f6b5",
+    "src/crashpoint/harness/reality_layer_observer.py": "a2100539f5f32180668f6654b25ad0db86382fbff107f8d12dc005d22356db84",
+    "src/crashpoint/harness/reality_layer_receiver.py": "a714d7f84a49a579bd26cca9c629883c4926712523b11acf647b67541e07895c",
+    "src/crashpoint/harness/reality_layer_verify.py": "756ac27650d2c65322c1a58313a0959aa113f9d2b1449b2b901ad556b2fff026",
+    "src/crashpoint/ledger/core.py": "a1f12a6ccb35e4257a39054ef39a117eb6491cf18df438da59aa215a066f8e76",
+    "tests/test_reality_layer.py": "87ad68bb51e722a1df39859968613b88ec399d0d6bca4e3df7b6fa7051c3554f",
+    "uv.lock": "4f2004ef7f23b8d6d5db4d53569a389d2bd27a95fd344e522fecfde421c30baf"
+  },
+  "started_at": "2026-09-22T19:40:51.458227+00:00",
+  "state": "invalid",
+  "subject_pin": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+  "summary": {
+    "findings": {
+      "clean-0": null
+    },
+    "invalid": 1,
+    "trials": 1,
+    "valid": 0
+  },
+  "trials": [
+    {
+      "case": "clean",
+      "errors": [
+        {
+          "artifact": ".",
+          "errno": null,
+          "message": "injected unexpected finalizer exception",
+          "stage": "trial_finalization",
+          "type": "RuntimeError"
+        }
+      ],
+      "evidence_valid": false,
+      "failpoint": "",
+      "findings": null,
+      "processes": [
+        {
+          "name": "receiver",
+          "pid": 44499,
+          "reaped": true,
+          "returncode": -15
+        },
+        {
+          "name": "observer-initial",
+          "pid": 44500,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "runtime-first",
+          "pid": 44501,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-plan",
+          "pid": 44502,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-execute",
+          "pid": 44503,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-before_recovery",
+          "pid": 44504,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-status",
+          "pid": 44505,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-retry",
+          "pid": 44506,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-after_retry",
+          "pid": 44507,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-final",
+          "pid": 44508,
+          "reaped": true,
+          "returncode": 0
+        }
+      ],
+      "run_id": "726b9a5a-f02e-46d2-8b9f-b6aee9cb66d1",
+      "trial_id": "clean-0",
+      "version": 1
+    }
+  ],
+  "version": 1
+}

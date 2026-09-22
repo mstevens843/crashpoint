@@ -1,0 +1,51 @@
+{
+  "head": "be91c322165f7bb472201e9ab99fed97f171a6d0",
+  "remote_branch_head": "be91c322165f7bb472201e9ab99fed97f171a6d0",
+  "followup_unstaged_uncommitted_unpushed": true,
+  "historical_files_checked": 7252,
+  "historical_evidence_and_plans_byte_identical": true,
+  "historical_hash_differences": [],
+  "intentional_report_update_excluded": [
+    "results/14-reality-layer-crash-readback.md"
+  ],
+  "checkouts": {
+    "main": {
+      "head": "606893ebb353df5dab3ac68738051eb5fbb7286e",
+      "head_and_status_unchanged": true
+    },
+    "subject": {
+      "head": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+      "head_and_status_unchanged": true
+    }
+  },
+  "own_source_hashes_match_new_plan_and_retained_copy": true,
+  "own_source_count": 15,
+  "verifier_unchanged": true,
+  "manifest_sha256": "403921101a3aca6b64f3fe4142689609fba666e78a880f07e161a6430a7cb910",
+  "final_and_focused_qa_progress_files": 22,
+  "owned_spawn_pids_checked": 209,
+  "owned_pids_still_alive": [],
+  "process_records_all_reaped": true,
+  "publication_file_count": 1348,
+  "publication_list_sorted_unique_and_contains_all_modified_tracked_files": true,
+  "publication_scan": {
+    "patterns": [
+      "private_path",
+      "credential_value",
+      "conflict_marker"
+    ],
+    "findings": [],
+    "trailing_whitespace_findings": []
+  },
+  "local_document_links_checked": true,
+  "git_diff_check_exit": 0,
+  "publication_list_sha256": "691bc4673204cf334d9796ac3e3194a8bf6ffd98833bf20dff067633c3026d1b",
+  "notes": [
+    "Read-only closeout; no stage, commit, push or comment.",
+    "Regex publication scan is not a general secret-detection guarantee.",
+    "Red-baseline public log has path prefixes replaced and line-end whitespace trimmed; raw log retained locally."
+  ],
+  "staging_dry_run_exit": 0,
+  "staging_dry_run_file_count": 1348,
+  "index_still_empty": true
+}

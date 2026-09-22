@@ -1,8 +1,69 @@
 # Adversarial self-review
 
-One engineer performed implementation and review; no subagents or external reviewers were used.
-This document records corrections, not independent endorsement. See [claim matrix](CLAIMS.md),
-[final checks](checks.json), [run catalog](run-catalog.json), and [final bundle](../../evidence/reality_layer/reality-layer-final-20260922).
+The retention defect below was independently reproduced by the reviewer and supplied to this
+follow-up. Implementation and the review of the narrow correction used one agent, with no
+subagents. This is correction evidence, not independent endorsement of the fix. See the
+[current report](../../results/14-reality-layer-crash-readback.md),
+[follow-up checks](retention-fix/checks.json), and
+[new bundle](../../evidence/reality_layer/reality-layer-retention-fixed-20260922).
+
+## Retention follow-up at published parent be91c322
+
+The original review missed an unguarded inventory comprehension in `trial()`'s `finally` block.
+An artifact read error after completed observations and process cleanup escaped before either
+receipt write. Because the batch appended only a returned trial, it also lost the trial record.
+The published measurements remained valid; the failure-retention promise was incomplete.
+
+The unchanged reviewer probe was run before editing. Its exit 0 asserts the **broken** behavior,
+not successful retention: control complete/one trial/receipt; EIO invalid/zero trials/no receipt;
+no process leaks in either. See [paired before](retention-fix/paired-before.json). Raw local
+reproducer output remains in ignored `work/`; public logs replace private path prefixes and trim line-end whitespace.
+
+The fix guards inventory iteration, stat/classification and byte reads individually, preserving
+successful hashes and specific error context. Invalid records have no successful findings.
+Capture allocates and retains the attempted identity before dispatch and keeps the shared record
+if a finalizer escapes. Both failed receipt destinations are reported in the writable manifest.
+A narrow adjacent review found that log-close exceptions could discard otherwise complete process
+results; all handles are now attempted, and actual process records survive cleanup errors.
+No upstream runtime, frozen historical receipt, schema redesign or verifier guard was changed.
+
+New permanent coverage:
+
+- `test_capture_retains_trial_after_finalization_fault`: five real capture cases — valid control,
+  post-`Owned.close()` EIO on `runtime-first.stdout`, both receipt writes failing, unexpected
+  finalizer exception, and cleanup-close error after real reaping. Observations must complete;
+  each case checks every spawned PID in `finally` before receipt assertions. Failed cases must
+  retain one identified invalid manifest/journal record and specific error stages, exit 1 and
+  report no finding. A receipt is required whenever a destination remains writable.
+- `test_final_inventory_retains_readable_artifacts`: four deterministic cases — a file disappears
+  between stat and read, enumeration fails after an available entry, stat fails, and a nonregular
+  entry fails classification. Available hashes and a specific invalid receipt survive.
+- The existing `test_real_harness_failure_cleanup[retention]` still covers primary failure with a
+  writable partial receipt. It ran in the final focused and full gates.
+- The new read-failure case removes required stdout from a disposable copy and requires the
+  offline per-trial predicate to reject specifically with `artifact_unavailable`. The valid
+  control uses that same predicate successfully. This avoids an unrelated exploratory-inventory
+  rejection masking a missing-artifact check. Existing semantic mutation tests remain unchanged.
+
+[Red/green evidence](retention-fix/red-green.json) uses the exact published harness in a
+disposable source copy with the new test. Red is a missing completed manifest-trial assertion,
+after completed-observation and cleanup checks; it is not a syntax/import/setup error. Restored
+corrected source passes.
+
+After freezing the final code/tests, one new nine-trial capture completed and verified in place
+and after relocation. **68 focused passed; 483 full-suite passed, 22 skipped; Ruff, mypy (88
+files), formatting passed.** The 22 skips are inherited absent optional fixture/environment
+requirements (19 SafeAgent, 1 isolation, 2 TrueForge); all Reality Layer tests ran. No repeated
+baseline campaign or upstream suite was needed. The [QA catalog](retention-fix/qa-catalog.json)
+contains 14 final focused captures, separate from empirical confirmation. The
+[closeout](retention-fix/closeout.json) checks source freezes, historical bytes and checkout/process
+state. Retention still depends on at least one writable destination; an unwritable disk cannot
+be promised a receipt. Same-host fixture limits remain unchanged.
+
+## Original review at be91c322 (historical)
+
+The sections below describe the original published experiment and its 59-test/474-test gates;
+they are preserved as review history, not the current gate totals.
 
 ## Findings in the harness and tests
 
