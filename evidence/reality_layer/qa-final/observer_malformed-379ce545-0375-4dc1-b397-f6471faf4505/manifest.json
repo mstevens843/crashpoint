@@ -1,0 +1,130 @@
+{
+  "base": "bb9cd47c4b0b02527aab7b369d17b32829cc4e20",
+  "cases": {
+    "clean": 1,
+    "corrupt": 1,
+    "missing": 1,
+    "ordinary_error": 1,
+    "post_crash": 3,
+    "pre_crash": 1,
+    "unknown_error": 1
+  },
+  "errors": [],
+  "inventory": [
+    "clean-0"
+  ],
+  "kind": "exploratory",
+  "plan_sha256": "d55428f81317d74947c1de04435fd9601987cbec9969a940fbf25471885f2948",
+  "run_id": "034b8385-a1f6-4a95-a1ef-f7b8a5520eee",
+  "source_hashes": {
+    "LICENSE": "3ef0b6b142452ad70cc6677debc1785372917ad1e202d6bd1785b798cf26e802",
+    "pyproject.toml": "ebf29eda69f1bd8bf7892ea54ac20aa286aea2d87d33a19cf1858b8244ddb008",
+    "runtime/reality-layer/client.cjs": "0142be294c534445688847bb9ed09690e9dc380831d4c4806273515ee1ee9903",
+    "runtime/reality-layer/contract_regression.py": "f2b00b74960f52dac2831942a0867b2eb8a438beb88961eeeaca89798a5e6f5f",
+    "runtime/reality-layer/dependencies.json": "3656ef6a549bdf49c021ffa0cb82b70634ae6b3916ec471fd355b362e1416364",
+    "runtime/reality-layer/shim.cjs": "01cfa6466fb56940b70f7e7c00b8fb520d4b4afd7e6009da4ab3f16719126859",
+    "src/crashpoint/canonical.py": "6389de2cb2130c761f4e29b33094b09adc36c988610bd805a5fc4e2dbadb6c8d",
+    "src/crashpoint/harness/reality_layer.py": "3605b0028b0d1d394c1ad0851f5e494784dcbe59c5f91b41ab5059e0660ca894",
+    "src/crashpoint/harness/reality_layer_common.py": "27c74a3899cf2544992e1a9660801bc68730e84756d689995e6d732391b7f6b5",
+    "src/crashpoint/harness/reality_layer_observer.py": "a2100539f5f32180668f6654b25ad0db86382fbff107f8d12dc005d22356db84",
+    "src/crashpoint/harness/reality_layer_receiver.py": "a714d7f84a49a579bd26cca9c629883c4926712523b11acf647b67541e07895c",
+    "src/crashpoint/harness/reality_layer_verify.py": "756ac27650d2c65322c1a58313a0959aa113f9d2b1449b2b901ad556b2fff026",
+    "src/crashpoint/ledger/core.py": "a1f12a6ccb35e4257a39054ef39a117eb6491cf18df438da59aa215a066f8e76",
+    "tests/test_reality_layer.py": "7d49833aa64fc296bb36960f3bb1328dc9bb2937471a46d6c7db1cc313c3e4d5",
+    "uv.lock": "4f2004ef7f23b8d6d5db4d53569a389d2bd27a95fd344e522fecfde421c30baf"
+  },
+  "started_at": "2026-09-22T18:23:14.232913+00:00",
+  "state": "invalid",
+  "subject_pin": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+  "summary": {
+    "findings": {
+      "clean-0": null
+    },
+    "invalid": 1,
+    "trials": 1,
+    "valid": 0
+  },
+  "trials": [
+    {
+      "artifacts": {
+        "api-execute.jsonl": "8176b1ef53a4d3d667c79ca1ee5b1761ff80ef7d8b53e20d30d0a7fb6fd6e92c",
+        "api-execute.request.json": "c05d819721a995e56ca96561145a47d81e6588068b9c3c6c7587d0f6bde83df4",
+        "api-plan.jsonl": "5ab50d786e8b10478bc88187a6eccc3dd92e632a6f79f91a8495ec138593512b",
+        "api-plan.request.json": "4964db0bfff53f6b78be05699eb70b2b97f2218a1be872a3651f13e6d3936f52",
+        "caller.json": "afb48a69f8646e1728b2e93a846a0bf7820e20df1f9cd6f27c9a0516396fff42",
+        "client-execute.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-execute.stdout": "9bfcc348bb96afaba28f53ee9da3aa0d9549417398915f431224d29ac2e07d60",
+        "client-plan.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-plan.stdout": "92c42a5aaed102b9e6319d1482bf7c3ee1b58c628b97cada5ad3f800408755f8",
+        "controller-fallback-effects.raw": "ec231adfd036e5af5ac35724e92241685cda55f731c140f32a02612781ea62c3",
+        "controller-fallback-subject.raw": "ded93367bf0f97899d151883702cd2792724bb0397116004d7a216a007a1be55",
+        "execution-source-hashes.json": "cd3089a12749d8c9f72c180e40a928d4f07a0aad77e78e75af6736e39b3a0552",
+        "observation-initial.json": "6ab9dcd5444c5ac58ce971c12674148723b6385e32951687fc326e10238ddb79",
+        "observer-before_recovery.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-before_recovery.stdout": "65e112600cfe981a213a1c1f55f03e96b72c401751c66bc9ba58e309005e2720",
+        "observer-initial.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-initial.stdout": "5658d0fcf867f77f27b210afc03d18b47573518050025854ed54cae107a01727",
+        "progress.jsonl": "13da20863dedc246e8389ef8058dafdbb11651f896ada663aa8dc25d69d5f9bd",
+        "receiver-initial.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "receiver.stdout": "f9e44fc0c22143cc0ca1bb98a8c296264b9021667ca435c63956f108557a8bdf",
+        "runtime-first.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-first.stdout": "0693679e3b64411415bc3f5f1741598565e67c73b442b442770fcbd9b7309edc",
+        "subject-before_recovery.json": "f36ecdd62091a1b5ae7e5bd42cd2ff25e2cb318d08224a683da847c3a951d051",
+        "subject-before_recovery.raw": "ded93367bf0f97899d151883702cd2792724bb0397116004d7a216a007a1be55"
+      },
+      "case": "clean",
+      "errors": [
+        {
+          "message": "json_parse: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+          "type": "Invalid"
+        }
+      ],
+      "evidence_valid": false,
+      "failpoint": "observer_malformed",
+      "findings": null,
+      "processes": [
+        {
+          "name": "receiver",
+          "pid": 32552,
+          "reaped": true,
+          "returncode": -15
+        },
+        {
+          "name": "observer-initial",
+          "pid": 32553,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "runtime-first",
+          "pid": 32554,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-plan",
+          "pid": 32555,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-execute",
+          "pid": 32556,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-before_recovery",
+          "pid": 32558,
+          "reaped": true,
+          "returncode": 0
+        }
+      ],
+      "run_id": "034b8385-a1f6-4a95-a1ef-f7b8a5520eee",
+      "trial_id": "clean-0",
+      "version": 1
+    }
+  ],
+  "version": 1
+}

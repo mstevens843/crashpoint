@@ -1,0 +1,175 @@
+{
+  "artifacts": {
+    "api-execute.jsonl": "694c378e4e1289f4a2275c56cf7e386bb6ecb610e942f87f714e202a65ec8484",
+    "api-execute.request.json": "bff9e4644b5dadc90c5ecdab55271e1c5c14df0eee4d2783c065fc6a5bc23695",
+    "api-plan.jsonl": "2da4d8b0f38da3df32da55ce18fc167bb5ce3c823bb1aa8090d9dab780f50673",
+    "api-plan.request.json": "4964db0bfff53f6b78be05699eb70b2b97f2218a1be872a3651f13e6d3936f52",
+    "api-reconcile.jsonl": "e4d7826a2af5a1c772c42ce3e646c42b6013920d21f094faa98c6ceced45d6b5",
+    "api-reconcile.request.json": "99ebdc1d490e95e02a0260f0383c92d1f3544511131a9b50e4f5e66467d24718",
+    "api-retry.jsonl": "275af9d9a8c667ab79084f4c47b270792c71eea89da4d7b7109f9b9c2b52e099",
+    "api-retry.request.json": "bff9e4644b5dadc90c5ecdab55271e1c5c14df0eee4d2783c065fc6a5bc23695",
+    "api-status.jsonl": "25234470abaf387e456d0b163568b404955663ab671ece1d2370123c814e66bb",
+    "api-status.request.json": "6e7e1dc9d425cd81ad4ff25efc2ef014f902a3600dc9ec14375a8f854adef64b",
+    "api-status_final.jsonl": "25234470abaf387e456d0b163568b404955663ab671ece1d2370123c814e66bb",
+    "api-status_final.request.json": "6e7e1dc9d425cd81ad4ff25efc2ef014f902a3600dc9ec14375a8f854adef64b",
+    "barrier.json": "496973f32ecbef6319737444ba393e5b821870f7d94cc508be91f8d5d55d1ef0",
+    "caller.json": "9d4a9c6932a6f0419dc54e2967672bcf9277511db02335642d5a263bf432f88c",
+    "client-execute.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "client-execute.stdout": "4add2813a8587de21c7302b36e7794158a4d721beaf6375b00af1bfb36267eac",
+    "client-plan.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "client-plan.stdout": "14fced9ceb92ccb00431e92adb5ccb3c7193766a576768ef38cdf59bb061b969",
+    "client-reconcile.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "client-reconcile.stdout": "74a51c13bc97e2f23f9983cca233c71ef7d4bfea3e2600076b8032ae84e3c2d5",
+    "client-retry.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "client-retry.stdout": "68a20847ff05fbaf75d7fc2102fd1f68053c89bd5c63393f3389a7d137c322a8",
+    "client-status.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "client-status.stdout": "6409ad92e257c45ba7e817f6d1536859010c77a0b92ffd5bbbfa3e422fce38d1",
+    "client-status_final.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "client-status_final.stdout": "6409ad92e257c45ba7e817f6d1536859010c77a0b92ffd5bbbfa3e422fce38d1",
+    "execution-source-hashes.json": "cd3089a12749d8c9f72c180e40a928d4f07a0aad77e78e75af6736e39b3a0552",
+    "observation-after_retry.json": "593f8486f675708e27c7978795a2ddff8898c2cf96865df2ba845ff7ad5f14bc",
+    "observation-before_recovery.json": "aac147ab0fe476157207d1f51dfb879fb74aa590ba0c92c17930dc661cdee894",
+    "observation-final.json": "8d574ac2188b22070f4c88dd0b2b7942200e20eb452e43f654bb093bdc8e8296",
+    "observation-initial.json": "fa14e91d51d9462cc37c4e28530bb28c66e2ae6e4e84e240708b94d6350fc3c9",
+    "observer-after_retry.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observer-after_retry.stdout": "35ae42ffacd192f3db6404630121c075dcd3e9d4f1a4f401ef7a068d4f7cd6b8",
+    "observer-before_recovery.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observer-before_recovery.stdout": "1bf4d3ef714536184c601ae3fe83864eda85aee9777206447122bbae86d7c495",
+    "observer-final.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observer-final.stdout": "46b5dddc4627de0383310691abe3933d4b23823ce58bf2e6e0ed3f7365eeabc6",
+    "observer-initial.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observer-initial.stdout": "56481a658ff2e38de3f8f27cff8804a11e8f863b477342ccf01efe9d95ac564c",
+    "progress.jsonl": "a80a11011ef4ffe85d72bb251ff662ee33fc2a8551730a0bb782b5fdb0d65c3c",
+    "receiver-after_retry.jsonl": "71d2003ae36ed47699f0bbba00c07f53bbb4620e707b9f33c26691dacc3390b9",
+    "receiver-before_recovery.jsonl": "71d2003ae36ed47699f0bbba00c07f53bbb4620e707b9f33c26691dacc3390b9",
+    "receiver-final.jsonl": "71d2003ae36ed47699f0bbba00c07f53bbb4620e707b9f33c26691dacc3390b9",
+    "receiver-initial.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receiver-requests.jsonl": "1494bcae8649740d57799933b54c77183d427a50a075a2cc16487e7c09ab325a",
+    "receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receiver.stdout": "e3e7fb2f2b06c2eed1fce8554c76f3a6e4651810c22ce2bf397def6f53f8550d",
+    "runtime-first.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runtime-first.stdout": "ce6807fdb319b514c875725a4dac1f803eeb6c9b9b36895de3c203b9fd1c762c",
+    "runtime-recovery.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runtime-recovery.stdout": "e8c77af4f504d8cfe0589bc4eeb0e33e06f23f9ccbc72504f79ce9748e6842b2",
+    "seal.json": "59373690dd4a7d3ba0f6747ad9714156e7389827c2620bc83f42a7dabc5c20af",
+    "subject-after_query.json": "373b71bdf70de6317cf1d26dba5c14ab3b2e496ede03c92980f52a7c3fdf82f8",
+    "subject-after_query.raw": "3bc707f2ed6726d488845bf4e0ee70dd806ecb9f572573a24d2f2b1e5b76a9de",
+    "subject-after_restart.json": "373b71bdf70de6317cf1d26dba5c14ab3b2e496ede03c92980f52a7c3fdf82f8",
+    "subject-after_restart.raw": "3bc707f2ed6726d488845bf4e0ee70dd806ecb9f572573a24d2f2b1e5b76a9de",
+    "subject-before_recovery.json": "373b71bdf70de6317cf1d26dba5c14ab3b2e496ede03c92980f52a7c3fdf82f8",
+    "subject-before_recovery.raw": "3bc707f2ed6726d488845bf4e0ee70dd806ecb9f572573a24d2f2b1e5b76a9de",
+    "subject-before_restart.json": "373b71bdf70de6317cf1d26dba5c14ab3b2e496ede03c92980f52a7c3fdf82f8",
+    "subject-before_restart.raw": "3bc707f2ed6726d488845bf4e0ee70dd806ecb9f572573a24d2f2b1e5b76a9de",
+    "subject-final.json": "373b71bdf70de6317cf1d26dba5c14ab3b2e496ede03c92980f52a7c3fdf82f8",
+    "subject-final.raw": "3bc707f2ed6726d488845bf4e0ee70dd806ecb9f572573a24d2f2b1e5b76a9de"
+  },
+  "case": "post_crash",
+  "errors": [],
+  "evidence_valid": true,
+  "failpoint": "",
+  "findings": {
+    "action_id": "2345f6a6-b560-4ca4-b29f-a1f8f11ebd44",
+    "attempt_ids": [
+      "f496e677-25ca-444d-9773-488e12c667ac"
+    ],
+    "effect_count": 1,
+    "effect_observation": "observed",
+    "failed_with_observed_effect": false,
+    "history_missing_with_effect": false,
+    "invocation_attempt_ids": [
+      "f496e677-25ca-444d-9773-488e12c667ac"
+    ],
+    "original_plan_rejected": true,
+    "plan_id": "0f0ea1c7-5426-46d4-947c-348d72c1e571",
+    "reconcile_changed": false,
+    "reconciled_status": "STARTED",
+    "reconciliation_required": false,
+    "retry_added_effects": 0,
+    "status": "STARTED",
+    "subject_storage_after_query": "json_nonempty",
+    "unresolved_marked_not_required": true
+  },
+  "processes": [
+    {
+      "name": "receiver",
+      "pid": 31189,
+      "reaped": true,
+      "returncode": -15
+    },
+    {
+      "name": "observer-initial",
+      "pid": 31190,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "runtime-first",
+      "pid": 31191,
+      "reaped": true,
+      "returncode": -9
+    },
+    {
+      "name": "client-plan",
+      "pid": 31192,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-execute",
+      "pid": 31193,
+      "reaped": true,
+      "returncode": 2
+    },
+    {
+      "name": "observer-before_recovery",
+      "pid": 31194,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "runtime-recovery",
+      "pid": 31195,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-status",
+      "pid": 31196,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-retry",
+      "pid": 31197,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "observer-after_retry",
+      "pid": 31198,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-reconcile",
+      "pid": 31199,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "client-status_final",
+      "pid": 31200,
+      "reaped": true,
+      "returncode": 0
+    },
+    {
+      "name": "observer-final",
+      "pid": 31201,
+      "reaped": true,
+      "returncode": 0
+    }
+  ],
+  "run_id": "f5c50fd0-f821-45ed-9c57-8920d673d4e8",
+  "trial_id": "post_crash-2",
+  "version": 1
+}

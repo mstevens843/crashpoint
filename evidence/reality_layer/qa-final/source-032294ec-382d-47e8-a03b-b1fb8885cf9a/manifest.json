@@ -1,0 +1,32 @@
+{
+  "base": "bb9cd47c4b0b02527aab7b369d17b32829cc4e20",
+  "cases": {
+    "clean": 1,
+    "corrupt": 1,
+    "missing": 1,
+    "ordinary_error": 1,
+    "post_crash": 3,
+    "pre_crash": 1,
+    "unknown_error": 1
+  },
+  "errors": [
+    {
+      "message": "injected source read failure",
+      "stage": "run",
+      "type": "OSError"
+    }
+  ],
+  "inventory": [
+    "clean-0"
+  ],
+  "kind": "exploratory",
+  "plan_sha256": null,
+  "run_id": "188cb6ab-44e8-40c4-846f-ed423a53ed2c",
+  "source_hashes": {},
+  "started_at": "2026-09-22T18:23:09.786494+00:00",
+  "state": "invalid",
+  "subject_pin": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+  "summary": null,
+  "trials": [],
+  "version": 1
+}

@@ -1,0 +1,111 @@
+
+> reality-layer-v1.8.1-external-runtime@1.8.1 test
+> node tests/run-tests.js
+
+PASS 모든 기기가 UAG/0.1 인터페이스와 Adapter를 가진다
+PASS Reality Policy v1.4.3 + Device Graph + Context Graph 스펙이 존재한다
+PASS 데모 Identity는 실제 인증으로 표시되지 않지만 정책 실험에는 사용할 수 있다
+PASS Device Graph 모든 edge가 실제 node를 가리킨다
+PASS Device Graph가 소유자·공간·영향범위를 해석한다
+PASS Graph snapshot은 현재 관계와 일치해야 한다
+PASS Context Graph가 사람 위치·공간 점유·기기 상태를 동적 relation으로 만든다
+PASS Context Graph action context는 영향 공간의 다른 재실자를 찾는다
+PASS 다른 사람이 거실에 있으면 Owner의 거실 조명 OFF는 AUTO 대신 CONFIRM
+PASS 다른 재실자가 없으면 Owner의 거실 조명 OFF는 AUTO
+PASS Context Graph snapshot은 관련 사람 위치나 기기 상태가 바뀌면 stale이 된다
+PASS Reality Orchestrator v1.3이 외출 의도를 여러 현실 행동으로 분해한다
+PASS Orchestrator는 다른 재실자가 있는 공간의 환경 변경을 자동 생략한다
+PASS Orchestrator의 각 실행 단계는 독립 Policy와 UAG 명령을 가진다
+PASS 동일한 공통 turn_off 명령을 서로 다른 조명 Adapter에 전달할 수 있다
+PASS Alpha/Beta 조명은 같은 UAG 명령을 서로 다른 native protocol로 번역한다
+PASS 낮은 위험의 조명 제어는 Owner에게 AUTO
+PASS Family/Guest는 Device Graph상 개인 노트북 제어가 차단된다
+PASS Guest는 공유 거실 조명을 제어할 수 있지만 private 침실 조명은 차단된다
+PASS Guest는 중간 위험 앱 종료가 차단된다
+PASS Owner의 PC 종료는 확인 필요
+PASS Guest의 현관문 잠금 해제는 차단된다
+PASS Owner도 현관 Context 없이는 잠금 해제할 수 없다
+PASS Owner + 현관 Context에서는 잠금 해제가 CONFIRM
+PASS 현관문 자연어 명령이 UAG 행동으로 해석된다
+PASS 가상 Door Adapter는 lock/unlock을 native 명령으로 번역한다
+PASS 자연어: 거실 불 꺼줘
+PASS 자연어: 거실 조명 밝기 80%로 해줘
+PASS 자연어: 침실 불 켜줘
+PASS 자연어: 안내판에 점검 중이라고 표시해줘
+PASS 자연어: 계산기 켜줘
+PASS 자연어: 유튜브 열어줘
+PASS 자연어: 구글에서 양자역학 검색해줘
+PASS 자연어: 다운로드 폴더 열어줘
+PASS 자연어: 현관문 잠가줘
+PASS 자연어: 현관문 열어줘
+PASS YouTube 검색어는 문서/폴더가 아니라 web_search로 정확히 해석된다
+PASS 웹 검색 실행은 explorer.exe보다 Microsoft Edge를 우선한다
+PASS VS Code 자동 탐색은 Program Files (x86) 경로까지 확인한다
+PASS VS Code 표준 경로와 PATH가 없어도 Windows 시작 메뉴에서 자동 발견한다
+PASS 앱 경로 입력은 따옴표·환경변수·추가 인자를 정리한다
+PASS 시작 메뉴에서 찾은 VS Code는 AppsFolder 경로로 실행한다
+PASS 애매한 단일 명령은 임의 실행 대신 clarification을 반환한다
+PASS 사용자가 명시적으로 등록한 Windows 앱 경로는 Registry에 추가된다
+PASS HTTP: Owner 조명 AUTO 실행
+PASS HTTP: 민감 행동은 Identity + Context + 확인을 모두 요구한다
+PASS HTTP: Identity 변경 시 대기 중 명령은 무효화된다
+PASS HTTP: Context Graph 변화는 대기 중 행동을 실행 직전에 무효화한다
+PASS HTTP: Orchestrator가 외출 계획을 만들고 확인 후 순서대로 실행한다
+PASS HTTP: 계획 생성 후 Context Graph가 바뀌면 Orchestrator는 전체 계획을 stale 처리한다
+ALL TESTS PASSED
+PASS session token, origin, host 검증이 기기 API를 보호한다
+PASS v1.7은 Everyday를 앱 계층으로 유지하고 Identity를 데모로 명시한다
+PASS 내 설정 검증·저장·새 프로세스 복원
+PASS 계획만 만들거나 취소하면 기기가 움직이지 않는다
+PASS 공부 시작 → 메모장 모의 실행 → 활동 시간 저장
+PASS 일시정지 → 공간 이동 → 이어가기는 활동과 남은 시간을 유지한다
+PASS 공간 변경 후 오래된 계획은 실행 전에 폐기된다
+PASS 설정 변경 후 오래된 계획은 실행 전에 폐기된다
+PASS 계획 생성 후 재실자가 들어오면 기존 계획은 실행되지 않는다
+PASS 가족이 있는 거실 조명은 외출 계획에서 생략한다
+PASS 부정·복합·불명확한 요청은 임의 행동을 만들지 않는다
+PASS 애매한 앱 명령은 에러 대신 clarification 정보로 되묻는다
+PASS 개인 기기 권한은 일상 계획에서도 유지된다
+PASS 한 단계 실패는 부분 완료로 표시하고 활동을 시작하지 않는다
+PASS Home Assistant는 허용 조명만 등록한다
+PASS Home Assistant 밝기 명령은 REST 전송 후 상태를 다시 읽어 검증한다
+PASS 기기 API 실패·unavailable·읽기 불일치가 성공으로 기록되지 않는다
+PASS 비동기 기기 동작 중 중복 실행과 공간 변경을 차단한다
+PASS 사용 화면과 정적 파일을 제공하고 비밀 설정은 제공하지 않는다
+EVERYDAY TESTS PASSED: 19
+PASS Capability Model 1.0이 기기 타입별 capability를 선언한다
+PASS Capability 입력 타입과 범위를 강제한다
+PASS 기존 UAG 동작은 Capability semantics로 양방향 변환된다
+PASS Typed Action IR이 target/capability/operation/semantics/provenance를 고정한다
+PASS Executor는 Action IR을 검증한 뒤 기존 Adapter bridge로 실행한다
+PASS Orchestrator 계획의 실행 단계마다 Typed Action IR이 포함된다
+PASS Device Registry가 Capability Model과 Action IR 스펙을 노출한다
+PASS 자연어 해석 결과에 Typed Action IR이 생성된다
+V1.5 TESTS PASSED (8)
+PASS Reality Graph 1.6은 topology만 보관하고 실시간 상태를 포함하지 않는다
+PASS State Store 1.6은 Actor/Device/Sensor의 현재값을 별도 보관한다
+PASS Actor 위치 변경은 State Store만 변경하고 Reality Graph topology를 오염시키지 않는다
+PASS Context Graph는 Reality Graph + State Store의 compatibility projection이다
+PASS Executor 실행은 State Store 최신값과 Event Store 실행 이력을 동시에 갱신한다
+PASS Event Store는 순서가 있는 append-only history를 제공한다
+PASS HTTP API가 Reality Graph / State Store / Event Store를 각각 노출한다
+PASS 센서 HTTP 이벤트는 현재값과 과거이력을 서로 다른 Store에 기록한다
+V1.6 TESTS PASSED (8)
+PASS MCP v1.7 스펙이 5개 northbound tool을 노출한다
+PASS MCP endpoint는 Bearer token 없이는 사용할 수 없다
+PASS server/discover와 tools/list가 modern MCP 2026-07-28로 응답한다
+PASS Mcp-Method/Mcp-Name header와 JSON-RPC body 불일치는 거부한다
+PASS reality.discover/observe가 Graph와 State/Event를 읽기 전용으로 노출한다
+PASS reality.plan은 직접 자연어를 Typed Action IR 계획으로 만들고 AUTO 계획은 MCP로 실행된다
+PASS 외부 Agent는 CONFIRM 계획을 스스로 승인할 수 없다
+PASS MCP clientInfo는 감사 메타데이터일 뿐 Reality Identity를 바꾸지 않는다
+PASS reality.explain은 실행된 plan의 Policy/Audit 흔적을 반환한다
+V1.7 TESTS PASSED (9)
+PASS legacy initialize negotiates Gemini-compatible 2025-11-25 and returns session id
+PASS legacy initialized notification and ping succeed
+PASS legacy tools/list exposes five Reality tools without modern-only headers
+PASS legacy tools/call records initialize clientInfo in audit
+PASS legacy session can be deleted
+V1.7.1 TESTS PASSED (5)
+V1.8 TESTS PASSED
+V1.8.1 TESTS PASSED

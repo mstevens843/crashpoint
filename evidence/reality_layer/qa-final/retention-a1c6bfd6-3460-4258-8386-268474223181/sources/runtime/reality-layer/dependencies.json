@@ -1,0 +1,8 @@
+{
+  "node": "v22.22.1",
+  "python": "3.12.13",
+  "subject_commit": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+  "subject_npm_dependencies": [],
+  "experiment_python_dependencies": "standard library plus existing Crashpoint ledger/canonical modules",
+  "development_lock": "uv.lock"
+}

@@ -1,0 +1,326 @@
+{
+  "counts": {
+    "confirmatory_superseded": {
+      "runs": 4,
+      "trials": 36,
+      "valid_observations": 36,
+      "invalid_observations": 0
+    },
+    "exploratory": {
+      "runs": 2,
+      "trials": 10,
+      "valid_observations": 10,
+      "invalid_observations": 0
+    },
+    "qa_failure_injection": {
+      "runs": 25,
+      "trials": 23,
+      "valid_observations": 5,
+      "invalid_observations": 18
+    },
+    "confirmatory_final": {
+      "runs": 1,
+      "trials": 9,
+      "valid_observations": 9,
+      "invalid_observations": 0
+    }
+  },
+  "runs": [
+    {
+      "path": "evidence/reality_layer/confirmatory-v1",
+      "run_id": "61d0d0c6-8f3d-42b9-9c5a-7c3e9afb253c",
+      "category": "confirmatory_superseded",
+      "state": "complete",
+      "trials": 9,
+      "valid_observations": 9,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/confirmatory-v2",
+      "run_id": "80065d83-c45f-4d19-b0e2-1cbee71b8f3f",
+      "category": "confirmatory_superseded",
+      "state": "complete",
+      "trials": 9,
+      "valid_observations": 9,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/confirmatory-v3",
+      "run_id": "78543161-84c4-4f27-9bfd-0385c177e717",
+      "category": "confirmatory_superseded",
+      "state": "complete",
+      "trials": 9,
+      "valid_observations": 9,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/confirmatory-v4",
+      "run_id": "2b7e6788-497b-40f1-a412-af5014471235",
+      "category": "confirmatory_superseded",
+      "state": "complete",
+      "trials": 9,
+      "valid_observations": 9,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/exploratory-02",
+      "run_id": "b10e4d52-50bc-4357-9e25-e3a053a73057",
+      "category": "exploratory",
+      "state": "complete",
+      "trials": 1,
+      "valid_observations": 1,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/exploratory-03",
+      "run_id": "039195b1-1831-4648-b4f5-9d24012157ea",
+      "category": "exploratory",
+      "state": "complete",
+      "trials": 9,
+      "valid_observations": 9,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/incremental-592e321f-3b58-4fc3-a043-104f02ed2683",
+      "run_id": "9e720417-7487-4fa0-8d41-22cc279d1a9d",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 1,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/manifest-dec844ea-9b88-43cc-be7a-4b71793d8ca8",
+      "run_id": "d68d08f0-8f3a-408b-a778-9e9e38c0940d",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 1,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/observer_malformed-379ce545-0375-4dc1-b397-f6471faf4505",
+      "run_id": "034b8385-a1f6-4a95-a1ef-f7b8a5520eee",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/observer_nonzero-e57de0e5-78b4-4050-8c14-8740456a0155",
+      "run_id": "ad01cd46-98d9-40af-b41f-7a2d7e815121",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/reset-b9e2e98a-70e5-47f9-929a-f73d6ef343c5",
+      "run_id": "2cc7f5e9-2880-47c5-8fc7-337678182981",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/retention-a1c6bfd6-3460-4258-8386-268474223181",
+      "run_id": "bff86f5b-d7e7-4189-8fcd-8ba7fdd10d40",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/source-032294ec-382d-47e8-a03b-b1fb8885cf9a",
+      "run_id": "188cb6ab-44e8-40c4-846f-ed423a53ed2c",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 0,
+      "valid_observations": 0,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/startup-31f2104e-c767-4264-b63c-4231866496a0",
+      "run_id": "dcd56c17-97e4-48b9-ae0b-63e105f0e17a",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-final/status-dd7420a9-8b55-4497-95c5-1ecded684a6c",
+      "run_id": "e2e6beb7-639f-4576-811e-375697d870b8",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review2/incremental-743342e4-1d59-43a3-86b0-e4dec2792928",
+      "run_id": "26d15886-94d2-404f-bc29-7a22e8a9674c",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 1,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-review2/observer_malformed-66cd43d1-573c-42c0-9192-c5aa0ed376ca",
+      "run_id": "50ed0a8a-b909-453a-9b05-33c8bcf3a1b9",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review2/observer_nonzero-b36eb64e-2f70-4f24-afba-b51b1584d28c",
+      "run_id": "3f7f1fc3-88e4-42bb-a51a-eb35aaf7f7aa",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review2/reset-f6682d11-f5a4-4830-8433-f40dbdb4d07d",
+      "run_id": "94c1a3b5-b68b-4185-8cb8-9c8a9bfef574",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review2/retention-065aed7f-458b-4676-8ca3-a182e36c7afd",
+      "run_id": "002dc17b-eb74-4a3c-8ee1-d2c3366e3efd",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review2/startup-eddc5a0a-d550-46a8-85df-4591992195cc",
+      "run_id": "80c927f0-566f-4301-b4c0-95758afac4b6",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review2/status-80721cc0-6581-45a3-9d21-5731e42d3a33",
+      "run_id": "d1253371-542e-4f8e-8c47-dde8c23c3c9f",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/incremental-c517e038-778b-43df-88b5-f32668c2c4d1",
+      "run_id": "8fd3a9bf-beb2-4323-a1cb-cd46a02d9e8c",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 1,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/manifest-2bd0f04d-13ab-49a9-9290-ab807d5f1942",
+      "run_id": "725aa2da-6a99-4a07-b5b8-6793dbfb7685",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 1,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/observer_malformed-024cf26b-31a7-4e75-be29-6f17aec5afe2",
+      "run_id": "0b09003f-d3c6-4053-9954-1ca39a8b8c50",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/observer_nonzero-ed470161-73e4-4abf-9e82-3e12ae0b3c70",
+      "run_id": "ab9379f7-4a55-4e6f-8a7c-1cb92d612330",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/reset-9c5d0119-4c7a-44ed-bb73-56de7a25b1be",
+      "run_id": "6e68ef32-a7df-481e-a473-c288e88a271a",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/retention-1f0f33b2-c21e-4c38-82a2-b00a93deac92",
+      "run_id": "19724c43-23f2-4b7b-b35d-dfefb5b02463",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/source-18c35080-e91c-4478-9e20-9adf31c68b2f",
+      "run_id": "c432113f-e1fb-47c9-8461-d76f5be7d7f5",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 0,
+      "valid_observations": 0,
+      "invalid_observations": 0
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/startup-b704c17d-d70b-47ed-9a77-fe771467562a",
+      "run_id": "4fcf3a63-ad3d-4c59-be3c-3c1b07ed2238",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/qa-review4/status-d2d12285-4244-4803-a635-6ab4bc3bcdbd",
+      "run_id": "4c72992f-864f-422d-bef9-2bef8c01a65d",
+      "category": "qa_failure_injection",
+      "state": "invalid",
+      "trials": 1,
+      "valid_observations": 0,
+      "invalid_observations": 1
+    },
+    {
+      "path": "evidence/reality_layer/reality-layer-final-20260922",
+      "run_id": "f5c50fd0-f821-45ed-9c57-8920d673d4e8",
+      "category": "confirmatory_final",
+      "state": "complete",
+      "trials": 9,
+      "valid_observations": 9,
+      "invalid_observations": 0
+    }
+  ],
+  "preflight_attempts_without_trials": [
+    {
+      "plan": "evidence/reality_layer/exploratory-plan-01.json",
+      "reason": "node_pin rejected PATH-selected v22.21.0 before trial launch",
+      "exit_status": 1
+    }
+  ],
+  "publication": "Only final confirmatory bundle and qa-final are selected; earlier captures stay local, unchanged."
+}

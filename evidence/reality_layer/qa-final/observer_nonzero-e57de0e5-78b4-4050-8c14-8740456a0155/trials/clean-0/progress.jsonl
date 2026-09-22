@@ -1,0 +1,11 @@
+{"event": "trial_started"}
+{"event": "source_copied"}
+{"event": "spawn", "name": "receiver", "pid": 32731}
+{"event": "spawn", "name": "observer-initial", "pid": 32732}
+{"event": "observed", "phase": "initial", "pid": 32732, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{"event": "spawn", "name": "runtime-first", "pid": 32734}
+{"event": "spawn", "name": "client-plan", "pid": 32735}
+{"event": "api_completed", "name": "plan", "returncode": 0}
+{"action_id": "36ee95da-d556-43a1-9cf1-8c0de12f310b", "event": "caller_retained", "plan_id": "3c195253-6161-4711-bea9-e27d263f8ece"}
+{"event": "spawn", "name": "client-execute", "pid": 32736}
+{"event": "spawn", "name": "observer-before_recovery", "pid": 32740}

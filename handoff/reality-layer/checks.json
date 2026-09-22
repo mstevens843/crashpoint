@@ -1,0 +1,177 @@
+[
+  {
+    "name": "offline",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "python",
+      "-m",
+      "crashpoint.harness.reality_layer_verify",
+      "evidence/reality_layer/reality-layer-final-20260922"
+    ],
+    "exit_status": 0,
+    "seconds": 0.604,
+    "log": "check-offline.log",
+    "path_redacted": false
+  },
+  {
+    "name": "pytest",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "pytest"
+    ],
+    "exit_status": 0,
+    "seconds": 43.953,
+    "log": "check-pytest.log",
+    "path_redacted": true
+  },
+  {
+    "name": "ruff",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "check",
+      "."
+    ],
+    "exit_status": 0,
+    "seconds": 0.069,
+    "log": "check-ruff.log",
+    "path_redacted": false
+  },
+  {
+    "name": "mypy",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "mypy"
+    ],
+    "exit_status": 0,
+    "seconds": 10.408,
+    "log": "check-mypy.log",
+    "path_redacted": false
+  },
+  {
+    "name": "format",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "format",
+      "--check",
+      "src/crashpoint/harness/reality_layer.py",
+      "src/crashpoint/harness/reality_layer_common.py",
+      "src/crashpoint/harness/reality_layer_receiver.py",
+      "src/crashpoint/harness/reality_layer_observer.py",
+      "src/crashpoint/harness/reality_layer_verify.py",
+      "tests/test_reality_layer.py",
+      "runtime/reality-layer/contract_regression.py"
+    ],
+    "exit_status": 0,
+    "seconds": 0.023,
+    "log": "check-format.log",
+    "path_redacted": false
+  },
+  {
+    "name": "node-shim",
+    "command": [
+      "node",
+      "--check",
+      "runtime/reality-layer/shim.cjs"
+    ],
+    "exit_status": 0,
+    "seconds": 0.017,
+    "log": "check-node-shim.log",
+    "path_redacted": false
+  },
+  {
+    "name": "node-client",
+    "command": [
+      "node",
+      "--check",
+      "runtime/reality-layer/client.cjs"
+    ],
+    "exit_status": 0,
+    "seconds": 0.018,
+    "log": "check-node-client.log",
+    "path_redacted": false
+  },
+  {
+    "name": "source-audit",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "python",
+      "-m",
+      "crashpoint.harness.reality_layer",
+      "--subject",
+      "../reality-layer-c9d1ca8-2026-09-22",
+      "--plan",
+      "results/14-reality-layer-plan.json",
+      "--audit-source"
+    ],
+    "exit_status": 0,
+    "seconds": 0.382,
+    "log": "check-source-audit.log",
+    "path_redacted": false
+  },
+  {
+    "name": "contract-regression",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "python",
+      "runtime/reality-layer/contract_regression.py",
+      "evidence/reality_layer/reality-layer-final-20260922"
+    ],
+    "exit_status": 1,
+    "seconds": 0.219,
+    "log": "check-contract-regression.log",
+    "path_redacted": false
+  },
+  {
+    "name": "upstream-tests",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "cwd": "isolated audited Reality Layer checkout",
+    "exit_status": 0,
+    "log": "check-upstream-tests.log",
+    "path_redacted": false
+  },
+  {
+    "name": "relocation",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "python",
+      "handoff/reality-layer/verify-relocated.py"
+    ],
+    "exit_status": 0,
+    "log": "relocation.json",
+    "path_redacted": false
+  },
+  {
+    "name": "handoff-script-lint",
+    "command": [
+      "uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "check",
+      "handoff/reality-layer/verify-relocated.py",
+      "handoff/reality-layer/format-comment.py"
+    ],
+    "exit_status": 0
+  }
+]

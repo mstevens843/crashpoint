@@ -1,0 +1,25 @@
+# Claim-to-evidence and regression matrix
+
+All artifact paths below are relative to
+`evidence/reality_layer/reality-layer-final-20260922/trials/`. Trial findings are recomputed by
+`derive_trial`; no stored `evidence_valid`, count, flag or aggregate is its oracle. Production
+references are at `c9d1ca86969f5567cf771ab8a0f3247770a1dfb7`.
+
+| Claim and classification | Production entry point | Retained evidence | Verifier guard / test |
+|---|---|---|---|
+| Clean single action completes, one matching effect; public observation | upstream client → `/mcp` `reality.plan/execute/action.get` → `server.js` → executor | `clean-0/caller.json`, `api-*.jsonl`, `receiver-final.jsonl`, subject snapshots | `caller_plan_equality`, `ir_operation_binding`, `clean_control`, `effect_binding`; recorded findings test |
+| Three real post-effect kills retain queryable `STARTED` and false reconciliation; reproduced public boundary | `src/executor.js` `ledger.start`, `server.js` `northboundActionGet` | `post_crash-{0,1,2}/barrier.json`, runtime stdout, pre-kill observer bytes, raw STARTED, spawn/kill log, recovery status | `started_premise`, `real_kill`, `kill_observation_order`, `fresh_runtime`, `status_ledger_equality`, `findings_recompute`; false-status/flag mutations; proposed contract regression |
+| One pre-effect kill has independently readable empty effects, yet same recovery flags; reproduced public boundary | same path, adapter blocked before receiver request | `pre_crash-0/receiver-before_recovery.jsonl` (existing zero bytes), observer stdout, raw STARTED, recovery status | `effect_premise`, `observer_recompute`, `observer_process`; missing raw empty-evidence mutation |
+| Original plan retry rejected without another effect; public observation, no duplicate-bypass claim | `northboundExecute` / `executeOrchestrationPlan` process-local consumed plans | every `api-retry.jsonl`, before/after receiver reads and request order | `api_request_binding`, `wire_request_binding`, `attempt_order`, `receiver_request_binding`, derived retry count; order/cross-trial mutations |
+| Ordinary post-effect exception yields FAILED; explicit unknown signal yields UNKNOWN; injected adapter integration boundary | shim exported Beta adapter → `recordFailure` → public `action.get` | `ordinary_error-0/` and `unknown_error-0/` effect ack, subject evidence, API status | `injected_error_premise`, `status_ledger_equality`, `effect_binding`; recorded findings test |
+| Genuine UNKNOWN reconciles to SUCCEEDED with no added effect; public test primitive | `northboundActionReconcile` → `ledger.reconcile` | `unknown_error-0/api-reconcile.jsonl`, note containing observer digest, final query/ledger/receiver | `reconciled_query_equality`, `reconciled_ledger_equality`, `reconciliation_added_effect`; recorded findings test |
+| Reconciliation on retained STARTED is unchanged in this attempt; public observation | same public reconciliation route, non-UNKNOWN branch | crash trials' `api-reconcile.jsonl`, `api-status_final.jsonl`, raw final ledger | reconciliation fields and final ledger equality; no claim about all possible recovery procedures |
+| Corrupt/missing subject history yields missing-action response despite one effect; reproduced public storage boundary | `action-ledger.read/ensure` → public `action.get` | `corrupt-0/` / `missing-0/` original bytes, mutation event, before/after restart/query bytes or ENOENT, receiver readback | `storage_mutation_premise`, `corrupt_bytes_premise`, `missing_bytes_premise`, `subject_capture_hash`, derived storage classification; missing archived evidence rejects separately |
+| Valid negative findings differ from valid evidence | offline verifier only | manifest/journal/full receipts and bundle receipt | `trial_inventory`, `journal_equality`, `receipt_equality`, `summary_recompute`; missing/duplicate/types/hash mutations |
+| Cleanup and partial retention | actual capture CLI / owned process controller | `qa-final/*/manifest.json` or partial manifest, per-trial progress/partial receipts/stdout | nine CLI failpoint tests inspect every spawned PID; no inference from a parent exit alone |
+| Portable verification, not external authorship | retained Python verifier, no runtime execution | `handoff/reality-layer/relocation.json` and relocation helper | `-S`, actual module-path assertion, original-path and socket/process audit denials; local relocation only |
+| Runtime source omitted for licensing; provenance check is separate | pinned Git blobs and 77-file inventory | frozen plan + execution-source hashes + `check-source-audit.log` | required source inventory/hash guards for own retained code; explicit retrieval audit for omitted runtime |
+
+Untested concerns: direct executor repeated calls, concurrent dispatch, non-array ledger JSON,
+retention limits, actual Windows/Home Assistant devices, provider ambiguity, distributed fencing,
+and host/power loss. The experiment does not turn these source-level possibilities into findings.

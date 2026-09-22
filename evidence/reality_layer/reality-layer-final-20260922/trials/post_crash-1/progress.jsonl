@@ -1,0 +1,29 @@
+{"event": "trial_started"}
+{"event": "source_copied"}
+{"event": "spawn", "name": "receiver", "pid": 31164}
+{"event": "spawn", "name": "observer-initial", "pid": 31169}
+{"event": "observed", "phase": "initial", "pid": 31169, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{"event": "spawn", "name": "runtime-first", "pid": 31171}
+{"event": "spawn", "name": "client-plan", "pid": 31173}
+{"event": "api_completed", "name": "plan", "returncode": 0}
+{"action_id": "c17fb209-0849-4149-9a06-4a5f4bd838c6", "event": "caller_retained", "plan_id": "f8c6f6c7-2e7b-497b-bcdc-08865dcef457"}
+{"event": "spawn", "name": "client-execute", "pid": 31175}
+{"event": "spawn", "name": "observer-before_recovery", "pid": 31176}
+{"event": "observed", "phase": "before_recovery", "pid": 31176, "sha256": "5cd8efd54926cc39ac984266423fb6798c6a330346e9b0acefbc547acaf1bbde"}
+{"event": "kill_requested", "pid": 31171, "signal": "SIGKILL"}
+{"event": "killed", "pid": 31171, "returncode": -9}
+{"event": "spawn", "name": "runtime-recovery", "pid": 31178}
+{"event": "spawn", "name": "client-status", "pid": 31180}
+{"event": "api_completed", "name": "status", "returncode": 0}
+{"event": "spawn", "name": "client-retry", "pid": 31182}
+{"event": "api_completed", "name": "retry", "returncode": 0}
+{"event": "spawn", "name": "observer-after_retry", "pid": 31184}
+{"event": "observed", "phase": "after_retry", "pid": 31184, "sha256": "5cd8efd54926cc39ac984266423fb6798c6a330346e9b0acefbc547acaf1bbde"}
+{"event": "spawn", "name": "client-reconcile", "pid": 31185}
+{"event": "api_completed", "name": "reconcile", "returncode": 0}
+{"event": "spawn", "name": "client-status_final", "pid": 31186}
+{"event": "api_completed", "name": "status_final", "returncode": 0}
+{"event": "receiver_sealed"}
+{"event": "spawn", "name": "observer-final", "pid": 31187}
+{"event": "observed", "phase": "final", "pid": 31187, "sha256": "5cd8efd54926cc39ac984266423fb6798c6a330346e9b0acefbc547acaf1bbde"}
+{"event": "trial_observations_complete"}

@@ -1,0 +1,8 @@
+{
+  "arguments": {
+    "action_id": "b4a250b9-2d10-4221-9106-98dc989928c8",
+    "evidence_note": "fixture receiver sha256=9300477b8f819ae9b3472ceddb84eb39aff22dc6db2b611051e5a3114a2676b5; effects=1",
+    "outcome": "SUCCEEDED"
+  },
+  "name": "reality.action.reconcile"
+}

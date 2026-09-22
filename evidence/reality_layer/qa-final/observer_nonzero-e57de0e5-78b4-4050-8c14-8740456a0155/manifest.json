@@ -1,0 +1,130 @@
+{
+  "base": "bb9cd47c4b0b02527aab7b369d17b32829cc4e20",
+  "cases": {
+    "clean": 1,
+    "corrupt": 1,
+    "missing": 1,
+    "ordinary_error": 1,
+    "post_crash": 3,
+    "pre_crash": 1,
+    "unknown_error": 1
+  },
+  "errors": [],
+  "inventory": [
+    "clean-0"
+  ],
+  "kind": "exploratory",
+  "plan_sha256": "1f77d980ea44e33c0d593f9c16446717ac6ab896680ba9c91b8f1f8af75615be",
+  "run_id": "ad01cd46-98d9-40af-b41f-7a2d7e815121",
+  "source_hashes": {
+    "LICENSE": "3ef0b6b142452ad70cc6677debc1785372917ad1e202d6bd1785b798cf26e802",
+    "pyproject.toml": "ebf29eda69f1bd8bf7892ea54ac20aa286aea2d87d33a19cf1858b8244ddb008",
+    "runtime/reality-layer/client.cjs": "0142be294c534445688847bb9ed09690e9dc380831d4c4806273515ee1ee9903",
+    "runtime/reality-layer/contract_regression.py": "f2b00b74960f52dac2831942a0867b2eb8a438beb88961eeeaca89798a5e6f5f",
+    "runtime/reality-layer/dependencies.json": "3656ef6a549bdf49c021ffa0cb82b70634ae6b3916ec471fd355b362e1416364",
+    "runtime/reality-layer/shim.cjs": "01cfa6466fb56940b70f7e7c00b8fb520d4b4afd7e6009da4ab3f16719126859",
+    "src/crashpoint/canonical.py": "6389de2cb2130c761f4e29b33094b09adc36c988610bd805a5fc4e2dbadb6c8d",
+    "src/crashpoint/harness/reality_layer.py": "3605b0028b0d1d394c1ad0851f5e494784dcbe59c5f91b41ab5059e0660ca894",
+    "src/crashpoint/harness/reality_layer_common.py": "27c74a3899cf2544992e1a9660801bc68730e84756d689995e6d732391b7f6b5",
+    "src/crashpoint/harness/reality_layer_observer.py": "a2100539f5f32180668f6654b25ad0db86382fbff107f8d12dc005d22356db84",
+    "src/crashpoint/harness/reality_layer_receiver.py": "a714d7f84a49a579bd26cca9c629883c4926712523b11acf647b67541e07895c",
+    "src/crashpoint/harness/reality_layer_verify.py": "756ac27650d2c65322c1a58313a0959aa113f9d2b1449b2b901ad556b2fff026",
+    "src/crashpoint/ledger/core.py": "a1f12a6ccb35e4257a39054ef39a117eb6491cf18df438da59aa215a066f8e76",
+    "tests/test_reality_layer.py": "7d49833aa64fc296bb36960f3bb1328dc9bb2937471a46d6c7db1cc313c3e4d5",
+    "uv.lock": "4f2004ef7f23b8d6d5db4d53569a389d2bd27a95fd344e522fecfde421c30baf"
+  },
+  "started_at": "2026-09-22T18:23:15.285597+00:00",
+  "state": "invalid",
+  "subject_pin": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+  "summary": {
+    "findings": {
+      "clean-0": null
+    },
+    "invalid": 1,
+    "trials": 1,
+    "valid": 0
+  },
+  "trials": [
+    {
+      "artifacts": {
+        "api-execute.jsonl": "2b014163b9f74ce0dd989484c358af97c787906fc2dc789a83e108beb8343374",
+        "api-execute.request.json": "093e31e635602b4801472e2ab8fb9519a6fe2e191c26324f3d6afdbeee7bcf40",
+        "api-plan.jsonl": "21643ff4cda41d095e72871da66bcd20da341caccc3f7f57c4bd2c050f8d5772",
+        "api-plan.request.json": "4964db0bfff53f6b78be05699eb70b2b97f2218a1be872a3651f13e6d3936f52",
+        "caller.json": "7c948046ee65baf9b4a9c7fae12e8207ac7a798ccaeb1ec3527d70894aca569b",
+        "client-execute.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-execute.stdout": "dc2923a70545e7e2483599f5aaabe99639e58a6bdfd5cbfc3479c32eaa42c819",
+        "client-plan.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "client-plan.stdout": "5773417c1ba4b6b164d5dfa5e88f6f5a1c020eb23845e3d8db29e1a677039647",
+        "controller-fallback-effects.raw": "bf6419d079bdd537d701d64955db0044f4a332c247d29bd593e12801e5fe8800",
+        "controller-fallback-subject.raw": "7700fc37b943817bc9c32530cab5395f965efe34dee93ac2301218a944dc4c7d",
+        "execution-source-hashes.json": "cd3089a12749d8c9f72c180e40a928d4f07a0aad77e78e75af6736e39b3a0552",
+        "observation-initial.json": "a3679b641e7a9e94fb130109db7544d65f3feba028d9b7b7bb2aee714b43a2d6",
+        "observer-before_recovery.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-before_recovery.stdout": "1cab54812667cb1661a9355c480403f310cfe13ef1636e1b335f1031f322ec66",
+        "observer-initial.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observer-initial.stdout": "cdd75fc0a259046edca6f90c8dbf9880b2d6b381e68534724df3453c0a5e42db",
+        "progress.jsonl": "ea8c23166dc1fff0e83ce9dcbcafe6923e1f279c43526ea1e7d07e5526bc744d",
+        "receiver-initial.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "receiver.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "receiver.stdout": "978b33a8f41eb5214038783399d7caf5f1ce92a81250f2eac0a692f9f6d8c205",
+        "runtime-first.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-first.stdout": "8ff085618ffaa12acf2cb0f9e3b070dc00f21399c8337ef651552a3c9bf799a0",
+        "subject-before_recovery.json": "17c4867d3e3620cfd5bd0dfb6dafda5522393056f35e1ee4870446353b909045",
+        "subject-before_recovery.raw": "7700fc37b943817bc9c32530cab5395f965efe34dee93ac2301218a944dc4c7d"
+      },
+      "case": "clean",
+      "errors": [
+        {
+          "message": "observer_exit: 72",
+          "type": "Invalid"
+        }
+      ],
+      "evidence_valid": false,
+      "failpoint": "observer_nonzero",
+      "findings": null,
+      "processes": [
+        {
+          "name": "receiver",
+          "pid": 32731,
+          "reaped": true,
+          "returncode": -15
+        },
+        {
+          "name": "observer-initial",
+          "pid": 32732,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "runtime-first",
+          "pid": 32734,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-plan",
+          "pid": 32735,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "client-execute",
+          "pid": 32736,
+          "reaped": true,
+          "returncode": 0
+        },
+        {
+          "name": "observer-before_recovery",
+          "pid": 32740,
+          "reaped": true,
+          "returncode": 72
+        }
+      ],
+      "run_id": "ad01cd46-98d9-40af-b41f-7a2d7e815121",
+      "trial_id": "clean-0",
+      "version": 1
+    }
+  ],
+  "version": 1
+}

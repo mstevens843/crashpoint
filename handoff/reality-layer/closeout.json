@@ -1,0 +1,25 @@
+{
+  "main_head_unchanged": "606893ebb353df5dab3ac68738051eb5fbb7286e",
+  "main_status_unchanged": [
+    "?? evidence/diag_lg_patched.json",
+    "?? evidence/diag_lg_unpatched.json"
+  ],
+  "main_inherited_files_verified": 33,
+  "worktree_inherited_files_verified": 2802,
+  "inherited_hash_mismatches": [],
+  "inherited_tracked_diff": [],
+  "staged_files": [],
+  "subject_checkout_clean": true,
+  "unique_owned_pids_checked": 795,
+  "owned_processes_remaining": [],
+  "publication_file_count": 996,
+  "publication_bytes_excluding_closeout": 8116601,
+  "publication_scan": {
+    "private_path_or_secret_matches": [],
+    "trailing_whitespace": [],
+    "conflict_markers": []
+  },
+  "frozen_plan_matches_bundle": true,
+  "no_commit_push_or_post_performed": true,
+  "limits": "Checks compare recorded main/worktree inventories. Other pre-existing sibling checkouts were not edited; this is not a recursive hash audit of every sibling file."
+}

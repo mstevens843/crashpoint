@@ -1,0 +1,49 @@
+{
+  "action_id": "65b8c585-a836-4949-8b23-2db53b539581",
+  "action_ir": {
+    "capability": {
+      "id": "power",
+      "kind": "property",
+      "model_version": "reality-capability/1.0"
+    },
+    "compatibility": {
+      "legacy_args": {},
+      "legacy_capability": "turn_on"
+    },
+    "id": "65b8c585-a836-4949-8b23-2db53b539581",
+    "input": {
+      "value": "on"
+    },
+    "operation": "write",
+    "provenance": {
+      "actor_id": "owner",
+      "intent": "direct_command",
+      "plan_id": "c62c91b2-87f3-4cc1-9dd6-fa497aa4efa2",
+      "source_text": "\uce68\uc2e4 \ubd88 \ucf1c\uc918"
+    },
+    "schema": "reality-action/1.0",
+    "semantics": {
+      "idempotent": true,
+      "reversible": true,
+      "risk": "low",
+      "tags": [
+        "environment",
+        "lighting"
+      ]
+    },
+    "target": {
+      "device_id": "bedroom_light",
+      "device_type": "light"
+    }
+  },
+  "payload": {
+    "args": {},
+    "capability": "turn_on",
+    "device_id": "bedroom_light"
+  },
+  "plan_id": "c62c91b2-87f3-4cc1-9dd6-fa497aa4efa2",
+  "run_id": "d68d08f0-8f3a-408b-a778-9e9e38c0940d",
+  "subject_pin": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+  "trial_id": "clean-0",
+  "version": 1
+}

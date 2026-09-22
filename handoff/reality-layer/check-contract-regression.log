@@ -1,0 +1,1 @@
+{"contract_failures": [{"reconciliation_required": false, "status": "STARTED", "trial": "post_crash-0"}, {"reconciliation_required": false, "status": "STARTED", "trial": "post_crash-1"}, {"reconciliation_required": false, "status": "STARTED", "trial": "post_crash-2"}, {"reconciliation_required": false, "status": "STARTED", "trial": "pre_crash-0"}], "evidence_valid": true}

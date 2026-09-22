@@ -1,0 +1,34 @@
+{
+  "run_id": "f5c50fd0-f821-45ed-9c57-8920d673d4e8",
+  "trials": 9,
+  "case_counts": {
+    "clean": 1,
+    "post_crash": 3,
+    "pre_crash": 1,
+    "ordinary_error": 1,
+    "unknown_error": 1,
+    "corrupt": 1,
+    "missing": 1
+  },
+  "statuses": {
+    "SUCCEEDED": 1,
+    "STARTED": 4,
+    "FAILED": 1,
+    "UNKNOWN": 1,
+    "NOT_FOUND": 2
+  },
+  "receiver_effects": 8,
+  "prediction_agreements": {
+    "clean-0": true,
+    "post_crash-0": true,
+    "post_crash-1": true,
+    "post_crash-2": true,
+    "pre_crash-0": true,
+    "ordinary_error-0": true,
+    "unknown_error-0": true,
+    "corrupt-0": true,
+    "missing-0": true
+  },
+  "original_plan_rejections": 9,
+  "retry_added_effects": 0
+}

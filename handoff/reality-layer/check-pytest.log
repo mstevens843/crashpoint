@@ -1,0 +1,51 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: <experiment-worktree>
+configfile: pyproject.toml
+testpaths: tests
+plugins: langsmith-0.11.1, anyio-4.14.2
+collected 496 items
+
+tests/test_action_readback.py ...............                            [  3%]
+tests/test_action_readback_receipt.py .................................. [  9%]
+......                                                                   [ 11%]
+tests/test_action_readback_verify.py ................................... [ 18%]
+........................                                                 [ 22%]
+tests/test_adapters_base.py .....                                        [ 23%]
+tests/test_barrier_inventory.py ..                                       [ 24%]
+tests/test_canonical.py ........                                         [ 26%]
+tests/test_contract.py ..............                                    [ 28%]
+tests/test_crewai_retry.py .....................                         [ 33%]
+tests/test_crewai_retry_artifact.py ...........                          [ 35%]
+tests/test_dbos_hidden.py ........                                       [ 36%]
+tests/test_deferred_runtimes.py ...                                      [ 37%]
+tests/test_determinism.py .........                                      [ 39%]
+tests/test_discrimination.py ....................................        [ 46%]
+tests/test_isolation.py .........s                                       [ 48%]
+tests/test_langgraph_admission.py .....                                  [ 49%]
+tests/test_langgraph_hidden.py ....                                      [ 50%]
+tests/test_ledger.py .........                                           [ 52%]
+tests/test_matrix.py ................................                    [ 58%]
+tests/test_model_sampler_evidence.py ...                                 [ 59%]
+tests/test_oracle.py ........                                            [ 60%]
+tests/test_predict.py .......                                            [ 62%]
+tests/test_reality_layer.py ............................................ [ 71%]
+...............                                                          [ 74%]
+tests/test_restate_matrix.py ...                                         [ 74%]
+tests/test_safeagent_ttl.py ...............sssssssssssssssssss           [ 81%]
+tests/test_safeagent_ttl_receipt.py ..................................   [ 88%]
+tests/test_safeagent_ttl_verify.py ...................................   [ 95%]
+tests/test_temporal_hidden.py .....                                      [ 96%]
+tests/test_trial.py ....                                                 [ 97%]
+tests/test_trueforge_hidden.py ...ss                                     [ 98%]
+tests/test_vercel_matrix.py ........                                     [100%]
+
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_isolation.py:103: native macOS isolation evidence absent
+SKIPPED [10] tests/test_safeagent_ttl.py:295: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [1] tests/test_safeagent_ttl.py:305: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [1] tests/test_safeagent_ttl.py:318: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [7] tests/test_safeagent_ttl.py:38: isolated SafeAgent venv for 0.1.23 not found at <experiment-worktree>/.local/safeagent-envs/0.1.23/bin/python - this experiment installs safeagent-exec-guard into two per-release venvs outside the normal uv-managed environment; see results/12-safeagent-ttl.md
+SKIPPED [1] tests/test_trueforge_hidden.py:44: TrueForge fixture dependencies are not installed
+SKIPPED [1] tests/test_trueforge_hidden.py:54: TrueForge evidence absent
+======================= 474 passed, 22 skipped in 42.13s =======================
