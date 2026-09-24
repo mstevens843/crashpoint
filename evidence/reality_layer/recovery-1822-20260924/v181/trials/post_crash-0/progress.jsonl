@@ -1,0 +1,34 @@
+{"event": "trial_started"}
+{"event": "source_copied"}
+{"event": "spawn", "name": "receiver", "pid": 28668}
+{"event": "spawn", "name": "observer-initial", "pid": 28669}
+{"event": "observed", "phase": "initial", "pid": 28669, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{"event": "runtime_start", "ledger_sha256": null, "name": "runtime-first", "state_key": "2231ff50-1004-4707-89c9-cfe1d0888bcb/post_crash-0"}
+{"event": "spawn", "name": "runtime-first", "pid": 28670}
+{"event": "spawn", "name": "client-plan", "pid": 28671}
+{"event": "api_completed", "name": "plan", "returncode": 0}
+{"action_id": "5aad01ce-0fb0-4970-85ab-83e6e077019c", "event": "caller_retained", "plan_id": "b67a4679-7180-46bd-adde-50851d488451"}
+{"event": "spawn", "name": "client-execute", "pid": 28676}
+{"event": "spawn", "name": "observer-before_recovery", "pid": 28682}
+{"event": "observed", "phase": "before_recovery", "pid": 28682, "sha256": "f593e43b9eadaf0e4e879df03a01b4bc33a0ee1faa23b746599785a7b275c84b"}
+{"action_id": "5aad01ce-0fb0-4970-85ab-83e6e077019c", "event": "started_readback", "sha256": "8ae87c7fe4747e7a252880e0675112ec3236ad1a1a91dd53773fa3abfe679d54"}
+{"event": "kill_requested", "pid": 28670, "signal": "SIGKILL"}
+{"event": "killed", "pid": 28670, "returncode": -9}
+{"event": "runtime_start", "ledger_sha256": "8ae87c7fe4747e7a252880e0675112ec3236ad1a1a91dd53773fa3abfe679d54", "name": "runtime-recovery", "state_key": "2231ff50-1004-4707-89c9-cfe1d0888bcb/post_crash-0"}
+{"event": "spawn", "name": "runtime-recovery", "pid": 28683}
+{"event": "spawn", "name": "client-status", "pid": 28684}
+{"event": "api_completed", "name": "status", "returncode": 0}
+{"event": "spawn", "name": "observer-after_restart", "pid": 28685}
+{"event": "observed", "phase": "after_restart", "pid": 28685, "sha256": "f593e43b9eadaf0e4e879df03a01b4bc33a0ee1faa23b746599785a7b275c84b"}
+{"event": "spawn", "name": "client-retry", "pid": 28686}
+{"event": "api_completed", "name": "retry", "returncode": 0}
+{"event": "spawn", "name": "observer-after_retry", "pid": 28689}
+{"event": "observed", "phase": "after_retry", "pid": 28689, "sha256": "f593e43b9eadaf0e4e879df03a01b4bc33a0ee1faa23b746599785a7b275c84b"}
+{"event": "spawn", "name": "client-reconcile", "pid": 28690}
+{"event": "api_completed", "name": "reconcile", "returncode": 0}
+{"event": "spawn", "name": "client-status_final", "pid": 28693}
+{"event": "api_completed", "name": "status_final", "returncode": 0}
+{"event": "receiver_sealed"}
+{"event": "spawn", "name": "observer-final", "pid": 28697}
+{"event": "observed", "phase": "final", "pid": 28697, "sha256": "f593e43b9eadaf0e4e879df03a01b4bc33a0ee1faa23b746599785a7b275c84b"}
+{"event": "trial_observations_complete"}

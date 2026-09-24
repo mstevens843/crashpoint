@@ -1,0 +1,4 @@
+{"event":"runtime_ready","pid":28926,"port":63524,"node":"v22.22.1","live":"0","dry_run":"1"}
+{"event":"adapter_entered","pid":28926,"action_id":"de4b86dc-0943-483a-a016-7c69b347be99","attempt_id":"4f381d29-efd4-4662-88fd-596a23aae92c","payload":{"device_id":"bedroom_light","capability":"turn_on","args":{}}}
+{"event":"effect_ack","pid":28926,"action_id":"de4b86dc-0943-483a-a016-7c69b347be99","attempt_id":"4f381d29-efd4-4662-88fd-596a23aae92c","payload":{"device_id":"bedroom_light","capability":"turn_on","args":{}},"ack":{"ok":true,"receipt":"receipt-ok","fsync":true}}
+{"event":"post_effect_barrier","pid":28926,"action_id":"de4b86dc-0943-483a-a016-7c69b347be99","attempt_id":"4f381d29-efd4-4662-88fd-596a23aae92c","payload":{"device_id":"bedroom_light","capability":"turn_on","args":{}}}

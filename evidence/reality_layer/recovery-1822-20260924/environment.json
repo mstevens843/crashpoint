@@ -1,0 +1,9 @@
+{
+  "PC_ADAPTER_DRY_RUN": "1",
+  "REALITY_LIVE": "0",
+  "environment_policy": "allowlist via safe_env; no inherited provider/device secrets",
+  "node_executable": "/usr/local/bin/node",
+  "node_version": "v22.22.1",
+  "python_executable": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/../crashpoint/.venv/bin/python",
+  "python_version": "3.12.13"
+}

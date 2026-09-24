@@ -1,0 +1,365 @@
+{
+  "evidence_valid": true,
+  "independence": "fresh observer processes and offline raw-byte derivation; same host/user/author",
+  "primary_trials": 8,
+  "versions": {
+    "v181": {
+      "evidence_valid": true,
+      "prediction_agreement": {
+        "clean-0": true,
+        "post_crash-0": true,
+        "post_crash-1": true,
+        "post_crash-2": true
+      },
+      "recovery_property": {
+        "clean-0": {
+          "differences": {},
+          "satisfied": true
+        },
+        "post_crash-0": {
+          "differences": {
+            "reconciliation_required": {
+              "expected": true,
+              "observed": false
+            },
+            "reconciliation_state": {
+              "expected": "REQUIRED",
+              "observed": "NOT_REQUIRED"
+            },
+            "status": {
+              "expected": "UNKNOWN",
+              "observed": "STARTED"
+            }
+          },
+          "satisfied": false
+        },
+        "post_crash-1": {
+          "differences": {
+            "reconciliation_required": {
+              "expected": true,
+              "observed": false
+            },
+            "reconciliation_state": {
+              "expected": "REQUIRED",
+              "observed": "NOT_REQUIRED"
+            },
+            "status": {
+              "expected": "UNKNOWN",
+              "observed": "STARTED"
+            }
+          },
+          "satisfied": false
+        },
+        "post_crash-2": {
+          "differences": {
+            "reconciliation_required": {
+              "expected": true,
+              "observed": false
+            },
+            "reconciliation_state": {
+              "expected": "REQUIRED",
+              "observed": "NOT_REQUIRED"
+            },
+            "status": {
+              "expected": "UNKNOWN",
+              "observed": "STARTED"
+            }
+          },
+          "satisfied": false
+        }
+      },
+      "run_id": "2231ff50-1004-4707-89c9-cfe1d0888bcb",
+      "subject_pin": "c9d1ca86969f5567cf771ab8a0f3247770a1dfb7",
+      "subject_source_verification": "not performed offline; separate pinned retrieval required",
+      "summary": {
+        "findings": {
+          "clean-0": {
+            "action_id": "96c05c3b-f59c-4837-9a7a-ae343b9f9000",
+            "attempt_ids": [
+              "eff7fc90-7055-43d5-88e8-8349f0d119b2"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "eff7fc90-7055-43d5-88e8-8349f0d119b2"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "3f87e7c2-38ef-4692-94e5-518c1f76edca",
+            "reconcile_changed": null,
+            "reconciled_status": null,
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": false,
+            "reconciliation_state": "NOT_REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "SUCCEEDED",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {},
+            "unresolved_marked_not_required": false
+          },
+          "post_crash-0": {
+            "action_id": "5aad01ce-0fb0-4970-85ab-83e6e077019c",
+            "attempt_ids": [
+              "162dd643-95b6-4597-b9a2-6e7601b1617b"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "162dd643-95b6-4597-b9a2-6e7601b1617b"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "b67a4679-7180-46bd-adde-50851d488451",
+            "reconcile_changed": false,
+            "reconciled_required": false,
+            "reconciled_state": "NOT_REQUIRED",
+            "reconciled_status": "STARTED",
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": false,
+            "reconciliation_state": "NOT_REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "STARTED",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {},
+            "unresolved_marked_not_required": true
+          },
+          "post_crash-1": {
+            "action_id": "e6f343c9-2b42-4b73-b09c-95017b4768e8",
+            "attempt_ids": [
+              "9f146967-9207-4d8f-b958-7238730a1318"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "9f146967-9207-4d8f-b958-7238730a1318"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "db1750c1-2d80-49ac-945d-20da1d749d04",
+            "reconcile_changed": false,
+            "reconciled_required": false,
+            "reconciled_state": "NOT_REQUIRED",
+            "reconciled_status": "STARTED",
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": false,
+            "reconciliation_state": "NOT_REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "STARTED",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {},
+            "unresolved_marked_not_required": true
+          },
+          "post_crash-2": {
+            "action_id": "4bc12842-133e-4a3b-981d-4580f6e8099f",
+            "attempt_ids": [
+              "9d794e2e-a7cd-4760-b7cb-b62854d29831"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "9d794e2e-a7cd-4760-b7cb-b62854d29831"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "8177e5d6-131c-4d66-8e66-68c87b593bb7",
+            "reconcile_changed": false,
+            "reconciled_required": false,
+            "reconciled_state": "NOT_REQUIRED",
+            "reconciled_status": "STARTED",
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": false,
+            "reconciliation_state": "NOT_REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "STARTED",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {},
+            "unresolved_marked_not_required": true
+          }
+        },
+        "invalid": 0,
+        "trials": 4,
+        "valid": 4
+      }
+    },
+    "v1822": {
+      "evidence_valid": true,
+      "prediction_agreement": {
+        "clean-0": true,
+        "post_crash-0": true,
+        "post_crash-1": true,
+        "post_crash-2": true
+      },
+      "recovery_property": {
+        "clean-0": {
+          "differences": {},
+          "satisfied": true
+        },
+        "post_crash-0": {
+          "differences": {},
+          "satisfied": true
+        },
+        "post_crash-1": {
+          "differences": {},
+          "satisfied": true
+        },
+        "post_crash-2": {
+          "differences": {},
+          "satisfied": true
+        }
+      },
+      "run_id": "9f1bf3c3-e0da-494e-8d46-cf0a0e9f8daf",
+      "subject_pin": "4213c479bd9333558522db1ca820d657b99effbf",
+      "subject_source_verification": "not performed offline; separate pinned retrieval required",
+      "summary": {
+        "findings": {
+          "clean-0": {
+            "action_id": "2672ed6f-bcb8-47be-9769-6ac3e89dc87c",
+            "attempt_ids": [
+              "2c0da696-37e6-4c8a-899e-bd306a9471f5"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "2c0da696-37e6-4c8a-899e-bd306a9471f5"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "6d3c8292-d114-4345-a4aa-599fd1941a6c",
+            "reconcile_changed": null,
+            "reconciled_status": null,
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": false,
+            "reconciliation_state": "NOT_REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "SUCCEEDED",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {},
+            "unresolved_marked_not_required": false
+          },
+          "post_crash-0": {
+            "action_id": "3ac8468a-18e4-4b96-9334-46ca2efa1e73",
+            "attempt_ids": [
+              "3977ff93-5c12-46fe-b632-6a6d1f27be22"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "3977ff93-5c12-46fe-b632-6a6d1f27be22"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "0d354cfc-2327-47f3-a4d1-b23e89c39fec",
+            "reconcile_changed": false,
+            "reconciled_required": true,
+            "reconciled_state": "REQUIRED",
+            "reconciled_status": "UNKNOWN",
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": true,
+            "reconciliation_state": "REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "UNKNOWN",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {
+              "mcp": {
+                "added_effects": 0,
+                "changed": null,
+                "error": "arguments.evidence_note is not allowed",
+                "http_status": 200,
+                "ok": false,
+                "required": true,
+                "route_prediction_agrees": true,
+                "state": "REQUIRED",
+                "status": "UNKNOWN",
+                "trust_boundary_satisfied": true
+              },
+              "rest": {
+                "added_effects": 0,
+                "changed": false,
+                "error": null,
+                "http_status": 200,
+                "ok": true,
+                "required": true,
+                "route_prediction_agrees": true,
+                "state": "REQUIRED",
+                "status": "UNKNOWN",
+                "trust_boundary_satisfied": true
+              }
+            },
+            "unresolved_marked_not_required": false
+          },
+          "post_crash-1": {
+            "action_id": "52a0a60b-9552-4786-a830-76b6e97b603f",
+            "attempt_ids": [
+              "1e4f6f9a-9673-4926-8c02-e1c63542c3b7"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "1e4f6f9a-9673-4926-8c02-e1c63542c3b7"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "a7b3a123-405d-4342-b385-3c49aa72dcbc",
+            "reconcile_changed": false,
+            "reconciled_required": true,
+            "reconciled_state": "REQUIRED",
+            "reconciled_status": "UNKNOWN",
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": true,
+            "reconciliation_state": "REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "UNKNOWN",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {},
+            "unresolved_marked_not_required": false
+          },
+          "post_crash-2": {
+            "action_id": "de4b86dc-0943-483a-a016-7c69b347be99",
+            "attempt_ids": [
+              "4f381d29-efd4-4662-88fd-596a23aae92c"
+            ],
+            "effect_count": 1,
+            "effect_observation": "observed",
+            "failed_with_observed_effect": false,
+            "history_missing_with_effect": false,
+            "invocation_attempt_ids": [
+              "4f381d29-efd4-4662-88fd-596a23aae92c"
+            ],
+            "original_plan_rejected": true,
+            "plan_id": "88387522-e37d-46aa-be92-a720aae72c1f",
+            "reconcile_changed": false,
+            "reconciled_required": true,
+            "reconciled_state": "REQUIRED",
+            "reconciled_status": "UNKNOWN",
+            "reconciliation_added_effects": 0,
+            "reconciliation_required": true,
+            "reconciliation_state": "REQUIRED",
+            "restart_added_effects": 0,
+            "retry_added_effects": 0,
+            "status": "UNKNOWN",
+            "subject_storage_after_query": "json_nonempty",
+            "trust_probes": {},
+            "unresolved_marked_not_required": false
+          }
+        },
+        "invalid": 0,
+        "trials": 4,
+        "valid": 4
+      }
+    }
+  }
+}

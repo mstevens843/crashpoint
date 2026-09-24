@@ -1,0 +1,132 @@
+{
+  "primary_trials": 8,
+  "raw_audit_valid": true,
+  "versions": {
+    "v181": [
+      {
+        "action_id": "96c05c3b-f59c-4837-9a7a-ae343b9f9000",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0
+        },
+        "recovery_property": true,
+        "required": false,
+        "state": "NOT_REQUIRED",
+        "status": "SUCCEEDED",
+        "trial": "clean-0"
+      },
+      {
+        "action_id": "5aad01ce-0fb0-4970-85ab-83e6e077019c",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0
+        },
+        "recovery_property": false,
+        "required": false,
+        "state": "NOT_REQUIRED",
+        "status": "STARTED",
+        "trial": "post_crash-0"
+      },
+      {
+        "action_id": "e6f343c9-2b42-4b73-b09c-95017b4768e8",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0
+        },
+        "recovery_property": false,
+        "required": false,
+        "state": "NOT_REQUIRED",
+        "status": "STARTED",
+        "trial": "post_crash-1"
+      },
+      {
+        "action_id": "4bc12842-133e-4a3b-981d-4580f6e8099f",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0
+        },
+        "recovery_property": false,
+        "required": false,
+        "state": "NOT_REQUIRED",
+        "status": "STARTED",
+        "trial": "post_crash-2"
+      }
+    ],
+    "v1822": [
+      {
+        "action_id": "2672ed6f-bcb8-47be-9769-6ac3e89dc87c",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0
+        },
+        "recovery_property": true,
+        "required": false,
+        "state": "NOT_REQUIRED",
+        "status": "SUCCEEDED",
+        "trial": "clean-0"
+      },
+      {
+        "action_id": "3ac8468a-18e4-4b96-9334-46ca2efa1e73",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0,
+          "probe_mcp": 1,
+          "probe_rest": 1
+        },
+        "recovery_property": true,
+        "required": true,
+        "state": "REQUIRED",
+        "status": "UNKNOWN",
+        "trial": "post_crash-0"
+      },
+      {
+        "action_id": "52a0a60b-9552-4786-a830-76b6e97b603f",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0
+        },
+        "recovery_property": true,
+        "required": true,
+        "state": "REQUIRED",
+        "status": "UNKNOWN",
+        "trial": "post_crash-1"
+      },
+      {
+        "action_id": "de4b86dc-0943-483a-a016-7c69b347be99",
+        "effects": {
+          "after_restart": 1,
+          "after_retry": 1,
+          "before_recovery": 1,
+          "final": 1,
+          "initial": 0
+        },
+        "recovery_property": true,
+        "required": true,
+        "state": "REQUIRED",
+        "status": "UNKNOWN",
+        "trial": "post_crash-2"
+      }
+    ]
+  }
+}

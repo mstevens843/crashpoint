@@ -1,0 +1,823 @@
+[
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "evidence/reality_layer/recovery-1822-20260924/v181",
+    "run_id": "2231ff50-1004-4707-89c9-cfe1d0888bcb",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 4,
+    "valid_trials": 4
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "evidence/reality_layer/recovery-1822-20260924/v1822",
+    "run_id": "9f1bf3c3-e0da-494e-8d46-cf0a0e9f8daf",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 4,
+    "valid_trials": 4
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/dev-01-v1822",
+    "run_id": "551d7b72-7510-461e-9723-3b7c02aa90c1",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": ".",
+            "errno": null,
+            "message": "mcp_forgery_response: ",
+            "stage": "derive_trial",
+            "type": "Invalid"
+          }
+        ],
+        "trial_id": "post_crash-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/dev-01-v181",
+    "run_id": "5ab11d79-b1ee-4968-938a-2fb840b7bb7e",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/retention-06bf18c9-55b4-408a-bff3-bbbb1da25ffd",
+    "run_id": "51f7298c-7f80-4cea-b656-1194e96724f0",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": "receipt.json",
+            "errno": null,
+            "message": "injected final receipt retention failure",
+            "stage": "receipt_primary",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-legacy/manifest-37d72cea-4b37-4184-91e6-4075a034a0c0",
+    "run_id": "3dd7f19a-ab88-457c-b262-358d05db9f89",
+    "state": "running",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [
+      {
+        "message": "injected source read failure",
+        "stage": "run",
+        "type": "OSError"
+      }
+    ],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-legacy/source-702e0f6b-42af-4edd-9fed-baf049bc9e01",
+    "run_id": "a1ba0c2c-0549-46b6-b61c-01e60e65d6e9",
+    "state": "invalid",
+    "trial_errors": [],
+    "trials": 0,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/reset-2d57dd1d-0803-4874-9f35-d6f641ac3245",
+    "run_id": "0badd3b9-bc7d-41db-aaef-59af1bc4834d",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "injected initial receiver reset failure",
+            "type": "OSError"
+          },
+          {
+            "capture": "controller-fallback-subject.raw",
+            "errno": 2,
+            "type": "FileNotFoundError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/retention-8a1c99c4-6e46-444e-8060-cb86a03014e0",
+    "run_id": "4178c8a4-c521-4d29-be09-d0333aaf61dc",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": "receipt.json",
+            "errno": null,
+            "message": "injected final receipt retention failure",
+            "stage": "receipt_primary",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/startup-8188b43b-1de1-44c6-af2b-e4e7155ce583",
+    "run_id": "14566c3f-6d2c-4526-8caa-c740469f867c",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "child_exited_before_barrier: runtime-first: 71",
+            "type": "Invalid"
+          },
+          {
+            "capture": "controller-fallback-subject.raw",
+            "errno": 2,
+            "type": "FileNotFoundError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/observer_malformed-86aebe0c-9999-4ce0-8f85-54260c623d5e",
+    "run_id": "a03c1a4a-51de-41a7-b957-dd06b08a7ece",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "json_parse: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+            "type": "Invalid"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/observer_malformed-1c1c2429-b1b3-409c-9515-f3fdacef4613",
+    "run_id": "3afc8324-b3cc-44d9-9fb7-c3f9db81c8b9",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "json_parse: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+            "type": "Invalid"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/startup-bd60903b-5a9e-4175-aaa3-d44d9f03f2f7",
+    "run_id": "82f95f84-9d25-4504-bc59-abec5728bf61",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "child_exited_before_barrier: runtime-first: 71",
+            "type": "Invalid"
+          },
+          {
+            "capture": "controller-fallback-subject.raw",
+            "errno": 2,
+            "type": "FileNotFoundError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [
+      {
+        "message": "injected incremental write failure",
+        "stage": "incremental",
+        "type": "OSError"
+      }
+    ],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-legacy/incremental-247f08d5-4d96-460e-b57e-b7bfbea73863",
+    "run_id": "ff25816f-dc03-40cf-8d0b-3fc43ce79354",
+    "state": "invalid",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [
+      {
+        "message": "injected incremental write failure",
+        "stage": "incremental",
+        "type": "OSError"
+      }
+    ],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-legacy/incremental-24d42a77-6586-4d1b-a034-86ca2f26f3de",
+    "run_id": "5331b934-f243-4ac1-9a5a-053d39bc3421",
+    "state": "invalid",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/observer_nonzero-6e9ad418-4c83-474a-8bb5-778e5b723ea4",
+    "run_id": "75af6452-eac3-494c-a391-5792cd6bfb57",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "observer_exit: 72",
+            "type": "Invalid"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/status-98f075e4-9d8d-4483-acb9-71f3e7b7ad5f",
+    "run_id": "2af283b6-dc7c-484d-b4b3-f63775b65ca3",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "injected post-dispatch status transport failure; transcript retained",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [
+      {
+        "message": "injected source read failure",
+        "stage": "run",
+        "type": "OSError"
+      }
+    ],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-legacy/source-7dd0d982-ec3c-4cfc-921b-6c0f87a137ab",
+    "run_id": "49d236df-a62c-40c5-bb4e-9973fa4f9d89",
+    "state": "invalid",
+    "trial_errors": [],
+    "trials": 0,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/status-df6ef0e2-2018-4665-939a-41ae1884d429",
+    "run_id": "ca590797-082f-4e62-a240-bf3359e400e0",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "injected post-dispatch status transport failure; transcript retained",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/observer_nonzero-eaaef686-9f22-4c17-8e12-be31a0514549",
+    "run_id": "f9e9da93-df30-490b-831a-8a522747ce60",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "observer_exit: 72",
+            "type": "Invalid"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-legacy/manifest-5a390c6f-4d85-4162-a87a-614a744a3228",
+    "run_id": "812db9bf-478a-4a32-aa41-6366a63f9cda",
+    "state": "running",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-legacy/reset-1ecdbb67-a923-4e3e-a2ff-7215839535ae",
+    "run_id": "ec1e4f34-55bc-4bb6-8dac-7cac367c447a",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "message": "injected initial receiver reset failure",
+            "type": "OSError"
+          },
+          {
+            "capture": "controller-fallback-subject.raw",
+            "errno": 2,
+            "type": "FileNotFoundError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/development-03/v181",
+    "run_id": "8ff57e0b-64c0-4484-8e70-82b5e73d80ab",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 4,
+    "valid_trials": 4
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/development-03/v1822",
+    "run_id": "3e438fda-e519-4cc9-8678-dc11fd3b016f",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 4,
+    "valid_trials": 4
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/development-02/v181",
+    "run_id": "c9b31f34-c27b-416f-ade1-23f19a503d8c",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 4,
+    "valid_trials": 4
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/development-02/v1822",
+    "run_id": "61e6d72f-d8f2-4b67-b80d-57276d56673c",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 4,
+    "valid_trials": 4
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v1822-clean-0-3cea7885-d5be-4e37-ac90-3e6c625a1f2f",
+    "run_id": "998159f7-949d-46d4-ad98-8e73846f54b8",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v1822-post_crash-0-3bc609b6-45c5-4989-a000-370721c0ce37",
+    "run_id": "baa91fdf-4e20-4b09-a037-fa0ea2017441",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v1822-post_crash-0-9301be45-c4c2-4058-b9c9-0834bbc0d4fe",
+    "run_id": "84fb7c28-aa76-43c8-9a13-a423b48e80e1",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v181-post_crash-0-e611d882-2fe4-4860-856e-ebe534938520",
+    "run_id": "1f667152-b9af-4d84-a7f2-7291f9198590",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v181-post_crash-0-487e82c8-9876-4a5d-853f-16d8d6dd242a",
+    "run_id": "7a7fdfe3-b213-41e1-9b88-dc18c7f4cbc7",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v181-clean-0-9ac6f7de-b3e8-4cbd-93f1-e80b875cdd9f",
+    "run_id": "6ec9d8d4-ada2-4f99-9909-14e4a997224d",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v181-clean-0-c404d7ed-8a21-496f-ae65-24de275412a9",
+    "run_id": "f73313f1-aa61-4675-aec4-55c39cc79d15",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-comparison/v1822-clean-0-500c5103-e589-4bf5-b4ea-32e729b80817",
+    "run_id": "1d7f8c6f-fdf9-4c1c-aa88-55af048b5674",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development-final/v1822-clean-0-1d680adb-7d59-4f71-b427-6c950fc71bce",
+    "run_id": "0eeb9b26-3e3d-4501-b973-5d8202632d78",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development-final/v1822-post_crash-0-e47496c4-0e9f-41fe-adeb-30bc7c3aedfe",
+    "run_id": "a6f3a971-1315-4381-a69b-ecc7f4ada389",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development-final/v181-post_crash-0-add50778-8f52-4276-838b-7054e51aba90",
+    "run_id": "215c6e48-675b-4aea-b52f-15eb3da6e02b",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development-final/v181-clean-0-f5c78b32-0ddf-4f9b-b888-021902f071c7",
+    "run_id": "aca0b2cb-62f0-4f9d-8ad0-458f65244d0d",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/artifact_read-450fda1c-c057-4842-bae8-d5265ec23330",
+    "run_id": "51a5cd4b-2911-4da8-bea9-b7cc02341c08",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": "runtime-first.stdout",
+            "errno": 5,
+            "message": "review: final artifact hash read failed",
+            "stage": "artifact_read",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/cleanup_close-968d10b0-f525-4049-ac7a-908daa7fc5eb",
+    "run_id": "fcb7f369-998a-457c-9d1c-fbecd5d13ea5",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": ".",
+            "errno": 5,
+            "message": "injected cleanup log close failure",
+            "stage": "cleanup",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-retention/control-b6503765-cc75-449a-bf88-fc2375a7b1c8",
+    "run_id": "86934212-f460-4ea5-9a4f-48159cb49d40",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/unexpected-e443d27a-0f36-4f5a-aac6-9da9eebbe722",
+    "run_id": "ce1e8604-6521-406c-b4df-02e96faef09c",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": ".",
+            "errno": null,
+            "message": "injected unexpected finalizer exception",
+            "stage": "trial_finalization",
+            "type": "RuntimeError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/both_receipts-86a62272-3db4-4c03-9802-8d2ce570da18",
+    "run_id": "b3c19518-5187-4d11-ae43-46ae6005191b",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": "receipt.json",
+            "errno": 13,
+            "message": "injected receipt destination unavailable",
+            "stage": "receipt_primary",
+            "type": "PermissionError"
+          },
+          {
+            "artifact": "partial-receipt.json",
+            "errno": 13,
+            "message": "injected receipt destination unavailable",
+            "stage": "receipt_fallback",
+            "type": "PermissionError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/unexpected-a8ea2e30-9802-426c-b670-03255f4b5941",
+    "run_id": "9987f93a-09d3-465c-bfb2-f5fef465ca68",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": ".",
+            "errno": null,
+            "message": "injected unexpected finalizer exception",
+            "stage": "trial_finalization",
+            "type": "RuntimeError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-final-retention/control-cf3007ae-f701-484e-9574-3542e9e9cd79",
+    "run_id": "aaf33d47-7427-452f-898b-2eeff13ab86b",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/both_receipts-b92a964d-1274-41fd-b484-844e022a8612",
+    "run_id": "b1085ea0-3b7d-44fa-a8a3-1f7ef14330d3",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": "receipt.json",
+            "errno": 13,
+            "message": "injected receipt destination unavailable",
+            "stage": "receipt_primary",
+            "type": "PermissionError"
+          },
+          {
+            "artifact": "partial-receipt.json",
+            "errno": 13,
+            "message": "injected receipt destination unavailable",
+            "stage": "receipt_fallback",
+            "type": "PermissionError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/cleanup_close-29b990b4-fdc9-4685-9cff-cbb9e1b32220",
+    "run_id": "312a6a8c-7179-4bde-8af3-b9f0f7af470e",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": ".",
+            "errno": 5,
+            "message": "injected cleanup log close failure",
+            "stage": "cleanup",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 1,
+    "path": "work/reality-layer-recovery/qa-final-retention/artifact_read-8066688b-60c2-4369-8b5a-48006ee79a86",
+    "run_id": "83e532f9-5913-4df4-8ba3-9076193a06a9",
+    "state": "invalid",
+    "trial_errors": [
+      {
+        "errors": [
+          {
+            "artifact": "runtime-first.stdout",
+            "errno": 5,
+            "message": "review: final artifact hash read failed",
+            "stage": "artifact_read",
+            "type": "OSError"
+          }
+        ],
+        "trial_id": "clean-0"
+      }
+    ],
+    "trials": 1,
+    "valid_trials": 0
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development/v181-clean-0-a9eb56d8-1c7f-4015-b6f3-126a318a3553",
+    "run_id": "3a336fd2-43ff-4b66-b977-6e52cbf3d954",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development/v1822-clean-0-1e99ca48-871c-4962-a96c-f789caf186fa",
+    "run_id": "1eff6982-554e-4efc-85a4-108891ca162d",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development/v1822-post_crash-0-b04a0c03-3bbc-4b11-8b3d-90e46d14d999",
+    "run_id": "533b1789-94d2-4f28-9483-48d97c19cc9a",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  },
+  {
+    "errors": [],
+    "invalid_trials": 0,
+    "path": "work/reality-layer-recovery/qa-development/v181-post_crash-0-893a2eba-e9cb-4f76-9eae-dcadc144181c",
+    "run_id": "d1708935-5b96-470a-a66f-6e22c558e1a5",
+    "state": "complete",
+    "trial_errors": [],
+    "trials": 1,
+    "valid_trials": 1
+  }
+]

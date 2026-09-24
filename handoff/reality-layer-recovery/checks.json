@@ -1,0 +1,279 @@
+{
+  "additional_checks": [
+    {
+      "command": "python3 handoff/reality-layer-recovery/format-comment.py",
+      "exit": 1,
+      "expected_exit": 1,
+      "log": "formatter-unpublished.log",
+      "log_sha256": "2ecdc17f7a5a1942a398b892d3404e1cb6dc22fbaf95168552891844ad328825",
+      "name": "formatter-unpublished"
+    }
+  ],
+  "checks": [
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "crashpoint.harness.reality_layer_recovery",
+        "--verify",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m crashpoint.harness.reality_layer_recovery --verify /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.234,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "verify-in-place.log",
+      "log_sha256": "abae950de46566b05d21923e0445710fb4adad2754f8de89ad86087b5b055558",
+      "name": "verify-in-place",
+      "started_at": "2026-09-24T09:12:51.617929+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "crashpoint.harness.reality_layer_recovery",
+        "--verify",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924",
+        "--property",
+        "v181"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m crashpoint.harness.reality_layer_recovery --verify /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924 --property v181",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.228,
+      "exit": 1,
+      "expected_exit": 1,
+      "log": "property-old.log",
+      "log_sha256": "abae950de46566b05d21923e0445710fb4adad2754f8de89ad86087b5b055558",
+      "name": "property-old",
+      "started_at": "2026-09-24T09:12:51.852250+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "crashpoint.harness.reality_layer_recovery",
+        "--verify",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924",
+        "--property",
+        "v1822"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m crashpoint.harness.reality_layer_recovery --verify /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924 --property v1822",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.227,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "property-new.log",
+      "log_sha256": "abae950de46566b05d21923e0445710fb4adad2754f8de89ad86087b5b055558",
+      "name": "property-new",
+      "started_at": "2026-09-24T09:12:52.080824+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/independent-audit.py",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/independent-audit.py /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/evidence/reality_layer/recovery-1822-20260924",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.025,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "independent-audit.log",
+      "log_sha256": "834f525a47764d76b80264575e0d37d3cbe4f7f0469dbd0a16e573ca96149ed2",
+      "name": "independent-audit",
+      "started_at": "2026-09-24T09:12:52.307733+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "crashpoint.harness.reality_layer_recovery",
+        "--baseline",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/reality-layer-c9d1ca8-2026-09-22",
+        "--candidate",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/reality-layer-4213c47-2026-09-24",
+        "--plan",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/results/15-reality-layer-recovery-plan.json",
+        "--audit-source"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m crashpoint.harness.reality_layer_recovery --baseline /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/reality-layer-c9d1ca8-2026-09-22 --candidate /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/reality-layer-4213c47-2026-09-24 --plan /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/results/15-reality-layer-recovery-plan.json --audit-source",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 1.238,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "source-audit.log",
+      "log_sha256": "83e8a30e017c833ae2eb7748beb74cd1b8d2b4f2d63b1657afb07ef32f25c48c",
+      "name": "source-audit",
+      "started_at": "2026-09-24T09:12:52.332907+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-I",
+        "-S",
+        "/var/folders/8b/blch34j914xbz9lc1wv387f80000gn/T/reality-layer-recovery-final-p50thy0a/bundle/v1822/sources/handoff/reality-layer-recovery/offline-check.py",
+        "/var/folders/8b/blch34j914xbz9lc1wv387f80000gn/T/reality-layer-recovery-final-p50thy0a/bundle",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -I -S /var/folders/8b/blch34j914xbz9lc1wv387f80000gn/T/reality-layer-recovery-final-p50thy0a/bundle/v1822/sources/handoff/reality-layer-recovery/offline-check.py /var/folders/8b/blch34j914xbz9lc1wv387f80000gn/T/reality-layer-recovery-final-p50thy0a/bundle /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.291,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "relocated-offline.log",
+      "log_sha256": "9f2a7cc33bc5dd9565a2a9d91a993d8769efdea2e75e463883f27b7694ce944b",
+      "name": "relocated-offline",
+      "started_at": "2026-09-24T09:12:53.646208+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_reality_layer.py",
+        "tests/test_reality_layer_recovery.py"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_reality_layer.py tests/test_reality_layer_recovery.py",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 46.404,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "focused-tests.log",
+      "log_sha256": "3002822c0a3aa992f3de0703f1d4b286f55c34bfff8660cc020057c178d6e1a3",
+      "name": "focused-tests",
+      "started_at": "2026-09-24T09:12:53.937152+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m pytest -q -p no:cacheprovider",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 69.457,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "full-tests.log",
+      "log_sha256": "57f484abed0b69989371bd781401ea64d79f9199df93d53fa5e6a45ce2fa349a",
+      "name": "full-tests",
+      "started_at": "2026-09-24T09:13:40.341542+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/independent-audit.py",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/offline-check.py",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/format-comment.py"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m ruff check src tests /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/independent-audit.py /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/offline-check.py /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/format-comment.py",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.057,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "ruff.log",
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "name": "ruff",
+      "started_at": "2026-09-24T09:14:49.799802+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "mypy",
+        "--no-incremental",
+        "src",
+        "tests"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m mypy --no-incremental src tests",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 11.062,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "mypy.log",
+      "log_sha256": "8ba9873e22426bcc7f35d8a5ef8518b9b69fb138ee78730ab64693a64293352c",
+      "name": "mypy",
+      "started_at": "2026-09-24T09:14:49.856796+00:00"
+    },
+    {
+      "argv": [
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src/crashpoint/harness/reality_layer.py",
+        "src/crashpoint/harness/reality_layer_common.py",
+        "src/crashpoint/harness/reality_layer_verify.py",
+        "src/crashpoint/harness/reality_layer_recovery.py",
+        "tests/test_reality_layer_recovery.py",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/independent-audit.py",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/offline-check.py",
+        "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/format-comment.py"
+      ],
+      "command": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint/.venv/bin/python -m ruff format --check src/crashpoint/harness/reality_layer.py src/crashpoint/harness/reality_layer_common.py src/crashpoint/harness/reality_layer_verify.py src/crashpoint/harness/reality_layer_recovery.py tests/test_reality_layer_recovery.py /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/independent-audit.py /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/offline-check.py /Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/handoff/reality-layer-recovery/format-comment.py",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.031,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "format.log",
+      "log_sha256": "8e93d18ae56550d4eef2feac77e6630617c7e169246e56e39c75d58b46167985",
+      "name": "format",
+      "started_at": "2026-09-24T09:15:00.918779+00:00"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "--check",
+        "runtime/reality-layer/client.cjs"
+      ],
+      "command": "/usr/local/bin/node --check runtime/reality-layer/client.cjs",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.018,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "node-client.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "node-client",
+      "started_at": "2026-09-24T09:15:00.949660+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-pager",
+        "diff",
+        "--check"
+      ],
+      "command": "git --no-pager diff --check",
+      "cwd": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24",
+      "duration_seconds": 0.052,
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "whitespace.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "whitespace",
+      "started_at": "2026-09-24T09:15:00.967595+00:00"
+    }
+  ],
+  "environment": {
+    "CRASHPOINT_REALITY_CANDIDATE": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/reality-layer-4213c47-2026-09-24",
+    "CRASHPOINT_REALITY_QA": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/work/reality-layer-recovery/qa-final-legacy",
+    "CRASHPOINT_REALITY_RETENTION_QA": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/work/reality-layer-recovery/qa-final-retention",
+    "CRASHPOINT_REALITY_SUBJECT": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/reality-layer-c9d1ca8-2026-09-22",
+    "CRASHPOINT_RECOVERY_QA": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/work/reality-layer-recovery/qa-final-comparison",
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "PYTHONPATH": "/Users/devlegacy/Desktop/projects/ai-gap-coverage-projects/third-party-systems/crashpoint-reality-layer-recovery-2026-09-24/src"
+  }
+}

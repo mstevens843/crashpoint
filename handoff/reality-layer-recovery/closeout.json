@@ -1,0 +1,39 @@
+{
+  "current_branch": "experiment/reality-layer-recovery-1822",
+  "frozen_capture_sources_unchanged": true,
+  "head": "4c51e30972afb3ec272cfde0278c6ec56acf86ee",
+  "historical_evidence_unchanged": true,
+  "historical_files_checked": 2272,
+  "index_empty": true,
+  "lockfile_unchanged": true,
+  "owned_processes_remaining": [],
+  "publication": "not committed, pushed or posted",
+  "sibling_checkouts": {
+    "crashpoint": {
+      "file_bytes_unchanged": true,
+      "files_checked": 129,
+      "head_unchanged": true,
+      "status_unchanged": true
+    },
+    "crashpoint-reality-layer-2026-09-22": {
+      "file_bytes_unchanged": true,
+      "files_checked": 9111,
+      "head_unchanged": true,
+      "status_unchanged": true
+    },
+    "reality-layer-4213c47-2026-09-24": {
+      "file_bytes_unchanged": true,
+      "files_checked": 80,
+      "head_unchanged": true,
+      "status_unchanged": true
+    },
+    "reality-layer-c9d1ca8-2026-09-22": {
+      "file_bytes_unchanged": true,
+      "files_checked": 77,
+      "head_unchanged": true,
+      "status_unchanged": true
+    }
+  },
+  "spawn_records_checked": 800,
+  "unique_spawned_pids_checked": 800
+}

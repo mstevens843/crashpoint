@@ -1,0 +1,8 @@
+{
+  "arguments": {
+    "action_id": "3ac8468a-18e4-4b96-9334-46ca2efa1e73",
+    "evidence_note": "forged caller assertion",
+    "outcome": "SUCCEEDED"
+  },
+  "name": "reality.action.reconcile"
+}

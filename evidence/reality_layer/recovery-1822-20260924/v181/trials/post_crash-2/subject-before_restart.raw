@@ -1,0 +1,18 @@
+[
+  {
+    "schema": "reality-action-outcome/1.0",
+    "action_id": "4bc12842-133e-4a3b-981d-4580f6e8099f",
+    "status": "STARTED",
+    "attempt": 1,
+    "created_at": "2026-09-24T09:11:57.835Z",
+    "updated_at": "2026-09-24T09:11:57.835Z",
+    "target_id": "bedroom_light",
+    "provenance": {
+      "source_text": "침실 불 켜줘",
+      "intent": "direct_command",
+      "plan_id": "8177e5d6-131c-4d66-8e66-68c87b593bb7",
+      "actor_id": "owner"
+    },
+    "evidence": []
+  }
+]

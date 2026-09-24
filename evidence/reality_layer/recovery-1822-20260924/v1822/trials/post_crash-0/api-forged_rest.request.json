@@ -1,0 +1,12 @@
+{
+  "arguments": {
+    "action_id": "3ac8468a-18e4-4b96-9334-46ca2efa1e73",
+    "evidence": {
+      "note": "forged evidence",
+      "source": "caller"
+    },
+    "evidence_note": "forged caller assertion",
+    "outcome": "SUCCEEDED"
+  },
+  "name": "/api/actions/reconcile"
+}

@@ -1,0 +1,3 @@
+{"event":"runtime_ready","pid":28659,"port":63448,"node":"v22.22.1","live":"0","dry_run":"1"}
+{"event":"adapter_entered","pid":28659,"action_id":"96c05c3b-f59c-4837-9a7a-ae343b9f9000","attempt_id":"eff7fc90-7055-43d5-88e8-8349f0d119b2","payload":{"device_id":"bedroom_light","capability":"turn_on","args":{}}}
+{"event":"effect_ack","pid":28659,"action_id":"96c05c3b-f59c-4837-9a7a-ae343b9f9000","attempt_id":"eff7fc90-7055-43d5-88e8-8349f0d119b2","payload":{"device_id":"bedroom_light","capability":"turn_on","args":{}},"ack":{"ok":true,"receipt":"receipt-ok","fsync":true}}
