@@ -1,0 +1,64 @@
+{
+  "barriers": [
+    "b0",
+    "b1",
+    "b2"
+  ],
+  "cells": [
+    {
+      "agrees": true,
+      "barrier": "b0",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_naive",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b1",
+      "counts": {
+        "duplicated": 10
+      },
+      "k": 10,
+      "modal": "duplicated",
+      "modal_rate": 1.0,
+      "predicted": "duplicated",
+      "runtime": "r_lg_naive",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    },
+    {
+      "agrees": true,
+      "barrier": "b2",
+      "counts": {
+        "exactly_once": 10
+      },
+      "k": 10,
+      "modal": "exactly_once",
+      "modal_rate": 1.0,
+      "predicted": "exactly_once",
+      "runtime": "r_lg_naive",
+      "wilson95": [
+        0.7225,
+        1.0
+      ]
+    }
+  ],
+  "disagreements": [],
+  "k": 10,
+  "name": "diag_lg_unpatched",
+  "receipt": "cp1_c25d552957e3ee083cd197ed621d41b4aa1941e5885c90ed7a3c87d813ebe9d0",
+  "runtimes": [
+    "r_lg_naive"
+  ]
+}
